@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
+.header {
+    margin-top: 0;
+    background: #6389FA;
+}
+
+.glava {
+    margin-top: 0;
+    margin-left: 15%;
+    margin-right: 15%;
+    display: flex;
+}
+
+.besedilo {
+    width: 50%;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.naslov {
+    font-weight: 700;
+    font-size: 60px;
+}
+
+.podnaslov {
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.slika-languages {
+    width: 50%;
+}
+
+.slika-languages img {
+    width: 100%;
+    float: right;
+}
+
+.zacni {
+    width: 30%;
+}
+
+.zacni button {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    background: #2F5AED;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-family: 'Outfits', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.zacni button:hover {
+    background: rgba(47, 90, 237, 0.8);
+    cursor: pointer;
+}
