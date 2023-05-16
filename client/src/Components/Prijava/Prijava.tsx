@@ -1,26 +1,18 @@
-import { Link } from "react-router-dom";
-import Obrazec from "./Obrazec/Obrazec";
 import "./Prijava.css";
+import Signin from "./Signin/Signin";
+import Dobrodosli from "./Dobrodosli/Dobrodosli";
+import { useLocation } from "react-router-dom";
+import Signup from "./Signup/Signup";
 
 const Prijava = () => {
+
+    const isLoginPage = useLocation().pathname === '/prijava';
+
     return (
         <div className="loginBox">
             <div className="login">
-                <Obrazec/>
-                <div className="dobrodosliBox">
-                    <div className="dobrodosli">
-                        Dobrodošli nazaj!
-                    </div>
-                    <div className="pridruzitev">
-                        Prijavite se in nadaljujte svoje jezikovno potovanje z LinguaLearn.
-                    </div>
-                    <div className="brezRacuna">
-                        <div>Še nimate računa?</div>
-                        <div className="ustvariButton">
-                            <Link to="/registracija"><button>Ustvari račun</button></Link>
-                        </div>
-                    </div>
-                </div>
+                {isLoginPage ? <Signin /> : <Signup/>}
+                <Dobrodosli/>
             </div>
 
         </div>
