@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import Onas from './Components/Onas/Onas';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Prijava from './Components/Prijava/Prijava';
-import Registracija from './Components/Registracija/Registracija';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +22,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/registracija',
-            element: <Registracija/>,
+            element: <Prijava/>,
           }
       ],
   },

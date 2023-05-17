@@ -1,4 +1,4 @@
-const Obrazec = () => {
+const Signin = () => {
     return (
         <div className="loginForm">
             <div className="prijavise">
@@ -20,4 +20,4 @@ const Obrazec = () => {
     );
 }
 
-export default Obrazec;
+export default Signin;
