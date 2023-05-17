@@ -14,8 +14,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 80%;
-    width: 60%;
+    height: 70%;
+    width: 55%;
 }
 
 .loginForm {
@@ -62,7 +62,7 @@
 
 .vnosnaPolja input {
     height: 40px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     border: 2px solid rgba(99, 137, 250, 0.5);
     border-radius: 10px;
     padding-left: 10px
