@@ -9,7 +9,7 @@ const Prijava = () => {
     const isLoginPage = useLocation().pathname === '/prijava';
 
     return (
-        <div className="loginBox">
+        <div className="login-box">
             <div className="login">
                 {isLoginPage ? <Signin /> : <Signup/>}
                 <Dobrodosli/>

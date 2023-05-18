@@ -1,6 +1,4 @@
-.ucenje,
-.napredek,
-.skupnost {
+.vsebina {
     height: 440px;
     display: flex;
     flex-direction: row;
@@ -9,38 +7,21 @@
     margin-right: 15%;
 }
 
-.slika-ucenje,
-.besedilo-ucenje,
-.slika-napredek,
-.besedilo-napredek,
-.slika-skupnost,
-.besedilo-skupnost {
+.slika-vsebina,
+.besedilo-vsebina {
     width: 50%;
 }
 
-.slika-ucenje img,
-.slika-napredek img,
-.slika-skupnost img {
+.slika-vsebina img {
     width: 90%;
 }
 
-.besedilo-ucenje,
-.besedilo-napredek,
-.besedilo-skupnost {
-    font-family: 'Outfit', sans-serif;
-}
-
-.naslov-ucenje,
-.naslov-skupnost,
-.naslov-napredek {
+.naslov-vsebina {
     font-size: 30px;
     font-weight: 700;
 }
 
-.opis-ucenje,
-.opis-napredek,
-.opis-skupnost {
+.opis-vsebina {
     font-size: 20px;
     font-weight: 400;
-
 }

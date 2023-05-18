@@ -15,10 +15,8 @@ const Navbar = () => {
                         <Link to="/onas">O nas</Link>
                     </div>
                     <div className="prijava">
-
                         <div><Link to="/prijava">Prijava</Link></div>
-                        <div className="ikona-user"><FontAwesomeIcon icon={faCircleUser} /></div>
-
+                        <div className="user-icon"><FontAwesomeIcon icon={faCircleUser} /></div>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,15 @@
 const Signin = () => {
     return (
-        <div className="loginForm">
+        <div className="login-form">
             <div className="prijavise">
                 Prijava
             </div>
-            <div className="loginInputs">
-                <div className="vnosnaPolja">
+            <div className="login-inputs">
+                <div className="vnosna-polja">
                     <input type="email" placeholder="Email" />
                     <input type="password" placeholder="Geslo" />
                 </div>
-                <div className="loginButton">
+                <div className="login-button">
                     <button>Prijava</button>
                 </div>
                 <div className="pozabljeno">

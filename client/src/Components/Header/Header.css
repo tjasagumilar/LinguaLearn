@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
-
 .header {
     margin-top: 0;
     background: #6389FA;
@@ -15,12 +13,10 @@
 .besedilo {
     width: 50%;
     color: white;
-    font-family: 'Outfit', sans-serif;
     justify-content: center;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
 }
 
 .naslov {
@@ -54,7 +50,6 @@
     border-radius: 30px;
     border: none;
     color: white;
-    font-family: 'Outfits', sans-serif;
     font-weight: 700;
     font-size: 17px;
 }

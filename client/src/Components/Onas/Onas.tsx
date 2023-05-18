@@ -5,8 +5,8 @@ import knjiga from "../../Assets/knjiga.jpg"
 
 const Onas = () => {
     return (
-        <div className="onasBox">
-            <div className="onasDiv">
+        <div className="onas-box">
+            <div className="onas-div">
                 <div className="slika-onas">
                     <div>
                         <img src={onas}></img>
@@ -29,8 +29,8 @@ const Onas = () => {
                 </div>
                 <div className="besedilo-onas">
 
-                    <div className="vizija-naslov">NAŠA VIZIJA</div>
-                    <div className="vizija-besedilo">
+                    <div className="onas-naslov">NAŠA VIZIJA</div>
+                    <div className="onas-besedilo">
                         Naša vizija je ustvariti večjezično skupnost, kjer se uporabniki medsebojno
                         povezujejo, izmenjujejo izkušnje in se podpirajo pri svojem učnem procesu. Verjamemo,
                         da je učenje jezikov več kot le pridobivanje znanja - gre za razumevanje drugih kultur,
