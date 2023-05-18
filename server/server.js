@@ -24,4 +24,4 @@ app.get('/', (req, res) => {
     return res.json("Backend")
 })
 
-app.listen(5000, () => {console.log("Listening on port 5000") })
+app.listen(4000, () => {console.log("Listening on port 5000") })
