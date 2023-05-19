@@ -1,7 +1,8 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+
 import { auth } from '../../Config/firebase';
 import logging from '../../Config/logging';
+import { Navigate } from 'react-router';
 
 export interface IAuthRouteProps {
     children: React.ReactNode;

@@ -1,0 +1,109 @@
+statement,word_count,lexical_density,lexical_diversity,reading_ease,grade_level,gunning_fog,difficulty
+I can run slow but fast I run slow fast,10,60.0,60.0,112.08500000000001,0.11000000000000121,4.0,easy
+Yuumi flower bark,3,100.0,100.0,62.79000000000002,5.246666666666666,1.2000000000000002,easy
+Hello hello hello hello hello,5,100.0,40.0,32.56000000000003,9.96,2.0,easy
+Bark bark bark bark bark,5,100.0,40.0,117.16000000000003,-1.8399999999999999,2.0,easy
+Writing essay,2,100.0,100.0,35.60500000000002,8.790000000000003,0.8,medium
+He is happy,3,33.33333333333333,100.0,90.99000000000004,1.3133333333333361,1.2000000000000002,easy
+She is driving,3,33.33333333333333,100.0,90.99000000000004,1.3133333333333361,1.2000000000000002,easy
+I see a bird,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+The sky is huge,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+This is my toy,4,25.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+The tree has green leaves,5,60.0,100.0,100.24000000000002,0.5199999999999996,2.0,easy
+i can count to ten,5,40.0,100.0,117.16000000000003,-1.8399999999999999,2.0,easy
+i have two eyes,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+I like to eat apples,5,60.0,100.0,100.24000000000002,0.5199999999999996,2.0,easy
+the butterfly is colorful,4,50.0,100.0,33.57500000000002,9.57,21.6,medium
+I like to drive,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+Jump jump jump jump,4,100.0,50.0,118.17500000000001,-2.2299999999999986,1.6,easy
+The sun is hot,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+I can swim in the pool,6,33.33333333333333,100.0,116.14500000000001,-1.4499999999999993,2.4000000000000004,easy
+I can ride a car,5,40.0,100.0,117.16000000000003,-1.8399999999999999,2.0,easy
+I like to play with my friends,7,42.857142857142854,100.0,115.13000000000002,-1.0599999999999987,2.8000000000000003,easy
+I like to eat potato,5,60.0,100.0,83.32000000000004,2.879999999999999,10.0,easy
+The rain makes everything wet,5,80.0,100.0,49.48000000000002,7.600000000000001,10.0,medium
+I am 10 years old,5,60.0,100.0,117.16000000000003,-1.8399999999999999,2.0,easy
+I have a pet dog,5,40.0,100.0,117.16000000000003,-1.8399999999999999,2.0,easy
+I like to play tennis,5,60.0,100.0,100.24000000000002,0.5199999999999996,2.0,easy
+I like to play football,5,60.0,100.0,100.24000000000002,0.5199999999999996,2.0,easy
+My favourite food is pizza,5,60.0,100.0,66.40000000000003,5.240000000000002,10.0,medium
+I have a best friend Erik,6,50.0,100.0,116.14500000000001,-1.4499999999999993,2.4000000000000004,easy
+I go to FERI,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+I like to paint,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+I want a mouse,4,50.0,100.0,118.17500000000001,-2.2299999999999986,1.6,easy
+Exploring new cultures broadens my perspective on the world,9,66.66666666666666,100.0,56.70000000000002,7.58666666666667,12.488888888888889,medium
+Balancing work and personal life can be challenging but important,10,60.0,100.0,44.405,9.55,20.0,medium
+Technology has revolutionized the way we communicate and connect with others,11,54.54545454545454,100.0,11.088181818181852,14.445454545454545,15.309090909090907,medium
+Climate change is a pressing global issue that requires immediate attention,11,72.72727272727273,100.0,41.8518181818182,10.154545454545456,15.309090909090907,medium
+Learning a new language opens doors to new opportunities and experiences,11,72.72727272727273,90.9090909090909,34.160909090909115,11.22727272727273,11.672727272727274,medium
+Critical thinking skills are essential for problem-solving and decision-making,9,66.66666666666666,100.0,34.160909090909115,11.22727272727273,15.309090909090907,medium
+Effective time management is key to achieving goals and reducing stress,11,72.72727272727273,100.0,49.54272727272729,9.081818181818182,15.309090909090907,medium
+The impact of social media on society is a topic of ongoing debate,13,53.84615384615385,92.3076923076923,56.97846153846157,8.541538461538462,8.276923076923078,medium
+Developing empathy and understanding for others fosters a more inclusive society,11,63.63636363636363,100.0,3.3972727272727354,15.518181818181823,22.581818181818182,hard
+Continuous learning is crucial for personal and professional growth,9,66.66666666666666,100.0,28.50000000000003,11.520000000000003,16.933333333333334,medium
+Change begins with a single step,6,66.66666666666666,100.0,102.045,0.5166666666666693,2.4000000000000004,medium
+Curiosity fuels the quest for knowledge,6,66.66666666666666,100.0,59.745000000000005,6.416666666666668,9.066666666666666,medium
+Kindness has the power to brighten someone's day,9,66.66666666666666,100.0,75.50000000000003,4.964444444444446,3.6,medium
+Challenges provide opportunities for growth,5,80.0,100.0,-1.2799999999999727,14.68,18.0,medium
+Persistence is the key to achieving success,7,57.14285714285714,100.0,54.70142857142861,7.368571428571428,14.228571428571428,medium
+Inclusion promotes a sense of belonging for all,8,50.0,100.0,61.24000000000001,6.705000000000002,13.200000000000001,medium
+Collaboration enhances problem-solving abilities,4,100.0,100.0,-68.95999999999995,24.120000000000008,26.0,hard
+Empathy fosters compassion and understanding,5,80.0,100.0,-1.2799999999999727,14.68,18.0,hard
+Resilience enables us to overcome obstacles,6,83.33333333333334,100.0,3.344999999999999,14.283333333333335,29.066666666666663,hard
+Innovation drives progress and transformation,5,80.0,100.0,-1.2799999999999727,14.68,18.0,hard
+Love conquers all,3,66.66666666666666,100.0,90.99000000000004,1.3133333333333361,1.2000000000000002,medium
+Time heals wounds,3,100.0,100.0,119.19000000000003,-2.619999999999999,1.2000000000000002,easy
+Actions speak louder than words,5,80.0,100.0,100.24000000000002,0.5199999999999996,2.0,medium
+Knowledge is power,3,66.66666666666666,100.0,62.79000000000002,5.246666666666666,1.2000000000000002,medium
+Silence is golden,3,66.66666666666666,100.0,62.79000000000002,5.246666666666666,1.2000000000000002,medium
+Beauty is in the eye of the beholder,8,37.5,87.5,82.39000000000001,3.7550000000000026,8.200000000000001,medium
+The pen is mightier than the sword,7,42.857142857142854,100.0,103.04428571428575,0.6257142857142846,2.8000000000000003,medium
+Hope springs eternal,3,100.0,100.0,62.79000000000002,5.246666666666666,14.533333333333331,medium
+"Life is a journey, not a destination",8,50.0,87.5,66.7871428571429,5.682857142857145,8.514285714285714,medium
+A picture is worth a thousand words,7,57.14285714285714,100.0,90.95857142857145,2.3114285714285714,2.8000000000000003,medium
+"Balancing the demands of work, family, and personal interests requires effective time management, prioritization skills, and the ability to set boundaries to ensure a healthy work-life integration",31,74.19354838709677,80.64516129032258,3.1721428571428874,19.772857142857145,26.91428571428571,hard
+"Building strong relationships with friends and family requires open communication, active listening, empathy, and a willingness to invest time and effort into nurturing meaningful connections, resulting in a support system that brings joy, understanding, and mutual growth",43,74.4186046511628,79.06976744186046,0.0800000000000125,22.44,27.772972972972976,hard
+The intricate interplay of quantum mechanics and general relativity challenges our understanding of the fundamental laws of the universe and presents complex mathematical models that require advanced theoretical frameworks to unravel,31,64.51612903225806,87.09677419354838,-18.39129032258063,23.52580645161291,30.46451612903226,hard
+"The abstruse intricacies of neurobiology and cognitive psychology necessitate a deep exploration of neuronal circuits, synaptic plasticity, and information processing mechanisms to elucidate the complexities of human perception, cognition, and behavior",35,71.42857142857143,80.0,-37.494516129032235,26.190322580645162,34.33548387096774,hard
+"The intricate field of astrophysics delves into the mysteries of cosmic inflation, dark matter, and black holes, requiring sophisticated mathematical models and cutting-edge observational techniques to probe the vastness of the universe",35,68.57142857142857,80.0,-0.9872727272727104,21.595151515151517,25.321212121212124,hard
+"The convoluted nature of international geopolitics involves analyzing intricate power dynamics, economic interdependencies, and cultural complexities to understand the intricate web of relationships between nations and the pursuit of national interests",33,69.6969696969697,81.81818181818183,-40.22354838709674,26.570967741935487,33.04516129032258,hard
+"Achieving true success requires relentless dedication, unwavering commitment, and the courage to embrace failure",16,81.25,93.75,5.296428571428578,15.99857142857143,19.885714285714286,hard
+"In the face of adversity, character is revealed, and those with resilience and perseverance emerge stronger than ever",20,55.00000000000001,90.0,33.465,13.063333333333333,18.311111111111114,hard
+Making decisions based on short-term gratification often hinders long-term personal growth and success,13,84.61538461538461,100.0,33.690000000000026,12.286666666666669,14.0,hard
+"The key to maintaining healthy relationships lies in mutual respect, open communication, and genuine support",17,76.47058823529412,94.11764705882352,22.410000000000025,13.860000000000003,14.0,hard
+Effective time management is vital for success,7,71.42857142857143,100.0,42.61571428571432,9.054285714285715,8.514285714285714,medium
+Active listening enhances communication skills,5,100.0,100.0,-18.19999999999996,17.040000000000003,26.0,hard
+Short-term gratification hinders long-term growth,5,100.0,100.0,54.70142857142861,7.368571428571428,8.514285714285714,medium
+Respect and open communication sustain healthy relationships,7,85.71428571428571,100.0,-17.812857142857126,17.482857142857146,14.228571428571428,hard
+Failure fuels personal development,4,100.0,100.0,-8.724999999999994,15.469999999999999,21.6,hard
+Joy in small things improves well-being,6,83.33333333333334,100.0,90.95857142857145,2.3114285714285714,8.514285714285714,medium
+Consistency leads to progress,4,75.0,100.0,33.57500000000002,9.57,11.600000000000001,medium
+Meaningful connections outweigh material possessions,5,100.0,100.0,-35.11999999999995,19.400000000000002,34.0,hard
+Hard work breeds success,4,100.0,100.0,97.025,0.7199999999999989,1.6,medium
+Listen to understand,3,66.66666666666666,100.0,34.59000000000003,9.180000000000003,14.533333333333331,medium
+"Delayed gratification, lasting growth",5,100.0,100.0,-8.724999999999994,15.469999999999999,11.600000000000001,hard
+Respect fuels strong bonds,4,100.0,100.0,97.025,0.7199999999999989,1.6,medium
+Failure fuels growth,3,100.0,100.0,90.99000000000004,1.3133333333333361,1.2000000000000002,medium
+Find joy in simplicity,4,75.0,100.0,54.72500000000002,6.620000000000001,11.600000000000001,medium
+Consistency breeds progress,3,100.0,100.0,6.390000000000015,13.113333333333333,14.533333333333331,hard
+Connections > possessions,3,100.0,100.0,-48.994999999999976,20.590000000000007,40.800000000000004,hard
+Cats and dogs bring comfort and companionship,7,71.42857142857143,85.71428571428571,66.7871428571429,5.682857142857145,8.514285714285714,medium
+"Birds chirping, nature's soothing melody",7,100.0,100.0,45.64500000000001,8.383333333333333,9.066666666666666,medium
+The loyalty of a dog is unmatched,7,42.857142857142854,100.0,78.87285714285717,3.997142857142858,8.514285714285714,medium
+"Butterflies, nature's delicate dancers",6,100.0,100.0,15.640000000000015,12.320000000000004,18.0,hard
+"The beauty of a sunset, a gift to cherish",10,50.0,90.0,84.90000000000003,3.653333333333336,3.6,medium
+"Curious squirrels, nature's acrobats",6,100.0,100.0,32.56000000000003,9.96,10.0,medium
+The gentle purr of a contented cat,7,57.14285714285714,100.0,90.95857142857145,2.3114285714285714,8.514285714285714,medium
+The grace of a soaring eagle,6,50.0,100.0,102.045,0.5166666666666693,2.4000000000000004,medium
+The mesmerizing dance of fireflies at dusk,7,57.14285714285714,100.0,54.70142857142861,7.368571428571428,14.228571428571428,medium
+"The playfulness of dolphins, a joy to witness",9,55.55555555555556,100.0,71.81500000000001,5.230000000000004,8.200000000000001,medium
+"The aroma of freshly brewed coffee, a morning delight",10,70.0,100.0,56.70000000000002,7.58666666666667,8.044444444444444,medium
+"Raindrops on a windowpane, nature's lullaby",8,75.0,100.0,42.61571428571432,9.054285714285715,14.228571428571428,medium
+The joy of a warm hug from a loved one,10,50.0,90.0,103.625,1.2900000000000027,4.0,medium
+The satisfaction of a home-cooked meal,6,50.0,100.0,66.7871428571429,5.682857142857145,8.514285714285714,medium
+The comfort of a cozy blanket on a chilly day,10,50.0,90.0,78.24500000000002,4.830000000000002,4.0,medium
+The laughter shared among friends,5,80.0,100.0,66.40000000000003,5.240000000000002,2.0,medium
+The tranquility of a peaceful walk in nature,8,50.0,100.0,50.66500000000002,8.180000000000003,13.200000000000001,medium
+The wonder of a starry night sky,7,57.14285714285714,100.0,90.95857142857145,2.3114285714285714,2.8000000000000003,medium
+The thrill of a good book that engrosses you,9,44.44444444444444,100.0,94.30000000000001,2.342222222222226,8.044444444444444,medium
+The simplicity of a heartfelt smile,6,50.0,100.0,59.745000000000005,6.416666666666668,9.066666666666666,medium
