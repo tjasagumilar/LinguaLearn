@@ -8,25 +8,45 @@ const csv = require('csv-parser');
 const { exec } = require('child_process');
 const translatte = require('translatte');
 const googleTTS = require('google-tts-api');
-
+const { initializeApp } = require('firebase/app')
+const { getFirestore, collection, getDocs } = require('firebase/firestore/lite');
 
 const app = express()
 app.use(cors())
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: '',
-  database: 'lingualearn'
-})
 
-app.get('/test', (req, res) => {
-  const sql = "SELECT * from TEST";
-  db.query(sql, (err, data) => {
-    if (err) return json(err);
-    return res.json(data);
-  })
-})
+const firebaseConfig = {
+  apiKey: "AIzaSyBveQTofx_gO7UhZ46n0jdOCFdmw1JcIGY",
+  authDomain: "lingualearn-dev.firebaseapp.com",
+  projectId: "lingualearn-dev",
+  storageBucket: "lingualearn-dev.appspot.com",
+  messagingSenderId: "169184155988",
+  appId: "1:169184155988:web:c9fd4d3b25ce4ab77590c1"
+};
+
+const appFire = initializeApp(firebaseConfig);
+const dbFire = getFirestore(appFire);
+
+async function getCities(dbFire) {
+  const citiesCol = collection(dbFire, 'test');
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map(doc => doc.data());
+  return cityList;
+}
+
+
+
+
+app.get('/fire', async (req, res) => {
+  try {
+    const cities = await getCities(dbFire);
+    res.json(cities);
+  } catch (error) {
+    console.error('Error :', error);
+    res.status(500).json({ error: 'Failed' });
+  }
+});
+
 
 app.get('/g', (req, res) => {
   const exercises = [];
@@ -86,5 +106,12 @@ app.get('/text', (req, res) => {
 
 
 
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: '',
+  database: 'lingualearn'
+})
 
 app.listen(5000, () => { console.log("Listening on port 5000") })
