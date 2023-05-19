@@ -32,8 +32,10 @@ a {
   font-size: 17px;
 }
 
+.domov,
 .onas,
-.prijava {
+.prijava,
+.odjava {
   margin-left: 15px;
 }
 
@@ -44,4 +46,15 @@ a {
 
 .user-icon {
   margin-left: 5px;
+}
+
+.odjava button {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

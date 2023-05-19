@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import Onas from './Components/Onas/Onas';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Prijava from './Components/Prijava/Prijava';
-import LogoutPage from "./Components/Prijava/LogoutPage/LogoutPage";
+import Profil from './Components/Profil/Profil';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +26,8 @@ const router = createBrowserRouter([
             element: <Prijava/>,
           },
           {
-            path: '/logout',
-            element: <LogoutPage name={"Opa!"}/>,
+            path: '/profil',
+            element: <Profil/>,
           }
       ],
   },

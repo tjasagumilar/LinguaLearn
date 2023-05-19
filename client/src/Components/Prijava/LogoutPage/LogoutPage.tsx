@@ -4,6 +4,7 @@ import { Button, FormGroup, Input } from 'reactstrap';
 import { auth } from '../../../Config/firebase';
 import logging from '../../../Config/logging';
 import ErrorText from "../../ErrorText/ErrorText";
+import "../Prijava.css"
 
 interface IPageProps {
     name: string;

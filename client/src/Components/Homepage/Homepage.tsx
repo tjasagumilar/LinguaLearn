@@ -5,14 +5,16 @@ import Header from "../Header/Header";
 import "./Homepage.css"
 
 const Homepage = () => {
+
     return (
         <div>
-            <Header/>
-            <Ucenje/>
-            <Skupnost/>
-            <Napredek/>
+            <Header />
+            <Ucenje />
+            <Skupnost />
+            <Napredek />
         </div>
     );
 }
 
 export default Homepage;
+

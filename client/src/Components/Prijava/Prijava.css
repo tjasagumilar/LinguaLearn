@@ -1,4 +1,5 @@
 .login-box {
+  min-height: 80vh;
     margin: 0;
     background: #6389FA;
     height: 600px;

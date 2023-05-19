@@ -7,6 +7,7 @@ import ErrorText from "../../ErrorText/ErrorText";
 
 const Signup = () => {
     const [registering, setRegistering] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirm, setConfirm] = useState<string>('');
@@ -15,8 +16,7 @@ const Signup = () => {
     const history = useNavigate();
 
     const signUpWithEmailAndPassword = () => {
-        if (password !== confirm)
-        {
+        if (password !== confirm) {
             setError('Please make sure your passwords match.');
             return;
         }
@@ -28,21 +28,34 @@ const Signup = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then(result => {
                 logging.info(result);
-                history('/prijava');
+
+                const user = result.user;
+                if (user) {
+                    // Set the display name for the user
+                    user.updateProfile({
+                        displayName: username
+                    })
+                    .then(() => {
+                        logging.info("Display name set successfully");
+                        history('/prijava');
+                    })
+                    .catch(error => {
+                        logging.error("Error setting display name:", error);
+                        history('/prijava');
+                    });
+                }
+
             })
             .catch(error => {
                 logging.error(error);
 
-                if (error.code.includes('auth/weak-password'))
-                {
+                if (error.code.includes('auth/weak-password')) {
                     setError('Please enter a stronger password.');
                 }
-                else if (error.code.includes('auth/email-already-in-use'))
-                {
+                else if (error.code.includes('auth/email-already-in-use')) {
                     setError('Email already in use.');
                 }
-                else
-                {
+                else {
                     setError('Unable to register.  Please try again later.')
                 }
 
@@ -57,10 +70,10 @@ const Signup = () => {
             </div>
             <div className="login-inputs">
                 <div className="vnosna-polja">
-                    <input type="text" placeholder="Uporabniško ime"/>
-                    <input type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email}/>
-                    <input type="password" placeholder="Geslo" onChange={event => setPassword(event.target.value)} value={password}/>
-                    <input type="password" placeholder="Ponovite geslo" onChange={event => setConfirm(event.target.value)} value={confirm}/>
+                    <input type="text" placeholder="Uporabniško ime" onChange={event => setUsername(event.target.value)} value={username} />
+                    <input type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
+                    <input type="password" placeholder="Geslo" onChange={event => setPassword(event.target.value)} value={password} />
+                    <input type="password" placeholder="Ponovite geslo" onChange={event => setConfirm(event.target.value)} value={confirm} />
                 </div>
                 <div className="login-button">
                     <button disabled={registering} onClick={() => signUpWithEmailAndPassword()}>Ustvari</button>
