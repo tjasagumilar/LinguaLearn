@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./lingualearn-dev-firebase-adminsdk-vanbq-f338b8cc1a.json");
+var serviceAccount = require("./adminsdk.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
