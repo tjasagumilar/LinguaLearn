@@ -3,6 +3,7 @@ import Skupnost from "./Skupnost/Skupnost";
 import Ucenje from "./Ucenje/Ucenje";
 import Header from "../Header/Header";
 import "./Homepage.css"
+import Footer from "../Footer/Footer";
 
 const Homepage = () => {
 
@@ -12,6 +13,7 @@ const Homepage = () => {
             <Ucenje />
             <Skupnost />
             <Napredek />
+            <Footer />
         </div>
     );
 }

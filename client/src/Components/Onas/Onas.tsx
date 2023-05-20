@@ -5,6 +5,7 @@ import knjiga from "../../Assets/knjiga.jpg"
 
 const Onas = () => {
     return (
+
         <div className="onas-box">
             <div className="onas-div">
                 <div className="slika-onas">
@@ -45,6 +46,8 @@ const Onas = () => {
                 </div>
             </div>
         </div>
+
+
     );
 }
 

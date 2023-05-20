@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, FormGroup, Input } from 'reactstrap';
-import { auth } from '../../../Config/firebase';
-import logging from '../../../Config/logging';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
 
 const Signup = () => {
@@ -13,9 +10,10 @@ const Signup = () => {
     const [confirm, setConfirm] = useState<string>('');
     const [error, setError] = useState<string>('');
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
-    const signUpWithEmailAndPassword = () => {
+    const handleSubmit = () => {
+
         if (password !== confirm) {
             setError('Please make sure your passwords match.');
             return;
@@ -23,45 +21,30 @@ const Signup = () => {
 
         if (error !== '') setError('');
 
-        setRegistering(true);
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(result => {
-                logging.info(result);
+        const formData = {
+            email: email,
+            password: password,
+            username: username
+        };
 
-                const user = result.user;
-                if (user) {
-                    // Set the display name for the user
-                    user.updateProfile({
-                        displayName: username
-                    })
-                    .then(() => {
-                        logging.info("Display name set successfully");
-                        history('/prijava');
-                    })
-                    .catch(error => {
-                        logging.error("Error setting display name:", error);
-                        history('/prijava');
-                    });
-                }
-
+        fetch('http://localhost:5000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    navigate('/prijava');
+                } 
             })
-            .catch(error => {
-                logging.error(error);
-
-                if (error.code.includes('auth/weak-password')) {
-                    setError('Please enter a stronger password.');
-                }
-                else if (error.code.includes('auth/email-already-in-use')) {
-                    setError('Email already in use.');
-                }
-                else {
-                    setError('Unable to register.  Please try again later.')
-                }
-
-                setRegistering(false);
+            .catch(err => {
+                console.log(err);
             });
-    }
+
+    };
 
     return (
         <div className="login-form">
@@ -76,7 +59,7 @@ const Signup = () => {
                     <input type="password" placeholder="Ponovite geslo" onChange={event => setConfirm(event.target.value)} value={confirm} />
                 </div>
                 <div className="login-button">
-                    <button disabled={registering} onClick={() => signUpWithEmailAndPassword()}>Ustvari</button>
+                    <button onClick={() => handleSubmit()}>Ustvari</button>
                 </div>
                 <ErrorText error={error} />
             </div>

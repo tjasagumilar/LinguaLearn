@@ -16,7 +16,7 @@ const Navbar = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 logging.info('User detected.');
-                setDisplayName(user.displayName || '');
+                setDisplayName(user.displayName || 'upime');
                 setUporabnik(true);
             } else {
                 logging.info('No user detected.');

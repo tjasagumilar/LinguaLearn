@@ -17,38 +17,17 @@ interface DataItem {
 */
 
 const PageBody = () => {
-  /*
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user)
-            {
-                logging.info('User detected.');
-            }
-            else
-            {
-                logging.info('No user detected');
-            }
-
-            setLoading(false);
-        })
-    }, []);
-
-    if (loading)
-        return <Spinner color="info" />
-        */
-
   return (
     <div>
       <Outlet />
     </div>
   );
 };
-
+ /*
 interface Slika {
   url: string
 }
+*/
 
 function App() {
 
@@ -59,7 +38,6 @@ function App() {
     <div>
       <Navbar />
       {isHomePage ? <Homepage /> : <PageBody />}
-      <Footer />
     </div>
   );
 

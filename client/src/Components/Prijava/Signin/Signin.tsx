@@ -1,9 +1,8 @@
-import React, {useState} from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, FormGroup, Input } from 'reactstrap';
-import { auth } from '../../../Config/firebase';
-import logging from '../../../Config/logging';
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
+import { auth } from "../../../Config/firebase";
+import logging from "../../../Config/logging";
 
 
 const Signin = () => {
@@ -12,9 +11,38 @@ const Signin = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
+/*
+    const navigate = useNavigate();
+
+    const handleSubmit = () => {
+
+        const formData = {
+            email: email,
+            password: password,
+        };
+
+        fetch('http://localhost:5000/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    navigate('/');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    };
+*/
+    
     const history = useNavigate();
 
-    const signInWithEmailAndPassword = () => {
+    const handleSubmit = () => {
         if (error !== '') setError('');
 
         setAuthenticating(true);
@@ -31,8 +59,6 @@ const Signin = () => {
             });
     }
 
-
-
     return (
         <div className="login-form">
             <div className="prijavise">
@@ -40,11 +66,11 @@ const Signin = () => {
             </div>
             <div className="login-inputs">
                 <div className="vnosna-polja">
-                    <input type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email}/>
-                    <input type="password" placeholder="Geslo" onChange={event => setPassword(event.target.value)} value={password}/>
+                    <input type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
+                    <input type="password" placeholder="Geslo" onChange={event => setPassword(event.target.value)} value={password} />
                 </div>
                 <div className="login-button">
-                    <button disabled={authenticating} onClick={() => signInWithEmailAndPassword()}>Prijava</button>
+                    <button onClick={() => handleSubmit()}>Prijava</button>
                 </div>
                 <div className="pozabljeno">
                     Pozabljeno geslo

@@ -9,10 +9,22 @@ const { exec } = require('child_process');
 const translatte = require('translatte');
 const googleTTS = require('google-tts-api');
 const { initializeApp } = require('firebase/app')
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 const { getFirestore, collection, getDocs } = require('firebase/firestore/lite');
+const bodyParser = require('body-parser');
 
-const app = express()
-app.use(cors())
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./lingualearn-dev-firebase-adminsdk-vanbq-f338b8cc1a.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 
 const firebaseConfig = {
@@ -25,7 +37,58 @@ const firebaseConfig = {
 };
 
 const appFire = initializeApp(firebaseConfig);
-const dbFire = getFirestore(appFire);
+const auth = getAuth(appFire);
+const dbFire = admin.firestore();
+
+
+//REGISTRACIJA UPORABNIKOV
+app.post('/signup', async (req, res) => {
+  const { email, password, username } = req.body;
+
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then(cred => {
+      
+      dbFire.collection('users').doc(cred.user.uid).set({
+        username: username
+      });
+      
+
+    }).then(() => {
+    
+      res.sendStatus(200);
+
+    })
+    .catch(error => {
+      /*
+      if (error.code.includes('auth/weak-password')) {
+        res.status(400).json({ message: 'Please enter a stronger password.' });
+      }
+      else if (error.code.includes('auth/email-already-in-use')) {
+        res.status(409).json({ message: 'Email already in use.' });
+      }
+      else {
+        res.status(500).json({ message: 'Unable to register.  Please try again later.' })
+      }
+      */
+      res.status(500).json({ message: 'Napaka' })
+    });
+});
+
+
+//PRIJAVA UPORABNIKOV 
+app.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
+
+  await signInWithEmailAndPassword(auth, email, password)
+    .then(result => {
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Napaka" });
+    });
+});
+
+//-------------------------------------------------
 
 async function getCities(dbFire) {
   const citiesCol = collection(dbFire, 'test');
@@ -33,7 +96,6 @@ async function getCities(dbFire) {
   const cityList = citySnapshot.docs.map(doc => doc.data());
   return cityList;
 }
-
 
 
 
@@ -70,17 +132,17 @@ app.get('/generate', (req, res) => {
 
   const pyProg = spawn('python', ['python/main.py']);
 
-  let outputData = ''; 
+  let outputData = '';
 
   pyProg.stdout.on('data', function (data) {
-    outputData += data.toString(); 
+    outputData += data.toString();
   });
 
   pyProg.stdout.on('end', function () {
     translatte(outputData, { to: 'de' })
       .then(translationResult => {
         console.log(translationResult.text);
-        res.write(translationResult.text); 
+        res.write(translationResult.text);
         res.end('end');
       })
       .catch(err => {
