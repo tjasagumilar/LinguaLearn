@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Footer from './Components/Footer/Footer';
-import Navbar from './Components/Navbar/Navbar';
 import Homepage from './Components/Homepage/Homepage';
 import { useLocation} from 'react-router-dom';
 import { auth } from './Config/firebase';
@@ -9,7 +8,6 @@ import {Spinner} from "reactstrap";
 import { Outlet } from 'react-router';
 import Navigation from './Components/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './custom.scss';
 
 
 /*
