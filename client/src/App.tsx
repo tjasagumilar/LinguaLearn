@@ -7,6 +7,9 @@ import { auth } from './Config/firebase';
 import logging from './Config/logging';
 import {Spinner} from "reactstrap";
 import { Outlet } from 'react-router';
+import Navigation from './Components/Navigation/Navigation';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss';
 
 
 /*
@@ -36,7 +39,7 @@ function App() {
 
   return (
     <div>
-      <Navbar />
+      <Navigation/>
       {isHomePage ? <Homepage /> : <PageBody />}
     </div>
   );
