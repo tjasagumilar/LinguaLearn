@@ -9,6 +9,7 @@ import Prijava from './Components/Prijava/Prijava';
 import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
 import IzberiJezik from './Components/IzberiJezik/IzberiJezik';
+import Chat from "./Components/Chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
           {
               path: '/onas',
               element: <Onas/>,
+          },
+          {
+              path: '/chat',
+              element: <Chat/>,
           },
           {
             path: '/prijava',
