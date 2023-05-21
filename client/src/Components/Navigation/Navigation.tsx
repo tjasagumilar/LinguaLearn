@@ -38,30 +38,24 @@ const Navigation = () => {
   if (uporabnik) {
     return (
       <Navbar bg="light" expand="lg">
-        <Container className=''>
+        <Container>
           <Navbar.Brand href="/">LinguaLearn</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/">Domov</Nav.Link>
               <Nav.Link href="/onas">O nas</Nav.Link>
-              <NavDropdown title="up. ime" id="basic-nav-dropdown">
+              <NavDropdown title={displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item href="/profil">Profil</NavDropdown.Item>
-                <NavDropdown.Item href="/jeziki">
-                  Moji jeziki
-                </NavDropdown.Item>
-                
+                <NavDropdown.Item href="/jeziki">Moji jeziki</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>
-                  Odjava
-                </NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}> Odjava</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
     );
-
   } else {
     return (
       <Navbar bg="light" expand="lg" >
@@ -78,9 +72,8 @@ const Navigation = () => {
         </Container>
       </Navbar>
     );
-
   }
-  
+
 }
 
 export default Navigation;
