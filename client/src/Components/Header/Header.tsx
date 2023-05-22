@@ -34,7 +34,7 @@ const Header = () => {
     if (uporabnik) {
         return (
             <div className="head">
-                <Container>
+                <Container className="glava">
                     <Row>
                         <Col className="pozdravljeni">
                             <h1>Pozdravljeni, {displayName}</h1>
@@ -48,7 +48,7 @@ const Header = () => {
     } else {
         return (
             <div className="head">
-                <Container>
+                <Container className="glava">
                     <Row>
                         <Col className="pozdravljeni">
                             <h1>Vstopi v svet <br /> večjezičnosti!</h1>
