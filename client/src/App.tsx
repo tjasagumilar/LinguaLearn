@@ -1,9 +1,9 @@
 import Homepage from './Components/Homepage/Homepage';
-import { useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Outlet } from 'react-router';
 import Navigation from './Components/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './custom.scss';
+import "./custom.scss";
 
 const PageBody = () => {
   return (
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div>
-      <Navigation/>
+      <Navigation />
       {isHomePage ? <Homepage /> : <PageBody />}
     </div>
   );

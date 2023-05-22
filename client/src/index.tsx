@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Prijava from './Components/Prijava/Prijava';
 import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
+import Chat from "./Components/Chat/Chat";
 import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: '/onas',
         element: <Onas />,
+      },
+      {
+        path: '/chat',
+        element: <Chat />,
       },
       {
         path: '/prijava',
