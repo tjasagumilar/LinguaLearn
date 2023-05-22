@@ -8,6 +8,7 @@ import {Spinner} from "reactstrap";
 import { Outlet } from 'react-router';
 import Navigation from './Components/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./custom.scss"
 
 
 /*
