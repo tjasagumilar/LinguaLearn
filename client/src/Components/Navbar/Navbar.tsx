@@ -50,9 +50,13 @@ const Navbar = () => {
                         <div className="onas">
                             <Link to="/jeziki">Moji jeziki</Link>
                         </div>
+                        <div className="naloge">
+                            <Link to="/exercises">Naloge</Link>
+                        </div>
                         <div className="odjava">
                             <button onClick={handleLogout}>Odjava</button>
                         </div>
+                        
                         <div className="prijava">
                             <div><Link to="/profil">{displayName}</Link></div>
                             <div className="user-icon"><FontAwesomeIcon icon={faCircleUser} /></div>
@@ -75,6 +79,9 @@ const Navbar = () => {
                         </div>
                         <div className="onas">
                             <Link to="/onas">O nas</Link>
+                        </div>
+                             <div className="test">
+                            <Link to="/tipnaloge1">O nas</Link>
                         </div>
                         <div className="prijava">
                             <div><Link to="/prijava">Prijava</Link></div>

@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import nltk
 import re
 import sys
-
+import json
 import numpy as np
 
 
@@ -25,7 +25,7 @@ def calculate_flesch_kincaid(text):
     sentences = re.split(r'[.!?]+', text)
     total_sentences = len(sentences)
 
- 
+
     total_syllables = 0
     for word in words:
         total_syllables += count_syllables(word)
@@ -78,7 +78,7 @@ def calculate_gunning_fog(text):
     words = re.findall(r'\w+', text)
     total_words = len(words)
 
- 
+
     sentences = re.split(r'[.!?]+', text)
     total_sentences = len(sentences)
 
@@ -200,9 +200,9 @@ def razvrsti_poved():
 
     with open(csv_path, 'r') as file:
         reader = csv.reader(file)
-        next(reader)  
+        next(reader)
         for row in reader:
-            data.append([float(value) for value in row[1:]])  
+            data.append([float(value) for value in row[1:]])
 
 
     X = [row[:-1] for row in data]
@@ -211,7 +211,7 @@ def razvrsti_poved():
 
     model = LinearRegression()
 
-  
+
     model.fit(X, y)
 
 
@@ -219,9 +219,11 @@ def razvrsti_poved():
     word_count = len(words)
 #    print("Word count: ", word_count)
 
+
     # lexical_density
     stop_words = set(nltk.corpus.stopwords.words('english'))
     non_stop_words = [word for word in words if word.lower() not in stop_words]
+
     lexical_density = len(non_stop_words) / len(words) * 100
 
   #  print("Lexical Density: {:.2f}%".format(lexical_density))
@@ -251,12 +253,13 @@ def razvrsti_poved():
 
 
     new_statement = [word_count, lexical_density, lexical_diversity, reading_ease, grade_level,
-                     gunning_fog]  
+                     gunning_fog]
 
 
     predicted_value = model.predict([new_statement])
 
-    print(statement)
+    output = {"statement": statement}
+    print(json.dumps(output))
     sys.stdout.flush()
 
 

@@ -9,6 +9,8 @@ import Prijava from './Components/Prijava/Prijava';
 import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
 import IzberiJezik from './Components/IzberiJezik/IzberiJezik';
+import TipNaloge1 from './Components/Naloge/Tip1/TipNaloge1';
+import Exercises from './Components/Naloge/Tip1/Exercises';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
           {
             path: '/izberijezik',
             element: <IzberiJezik/>
+          },
+          {
+            path: '/exercises',
+            element: <Exercises/>
           }
       ],
   },

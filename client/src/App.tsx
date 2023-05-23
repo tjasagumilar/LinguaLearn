@@ -9,12 +9,8 @@ import {Spinner} from "reactstrap";
 import { Outlet } from 'react-router';
 
 
-/*
-interface DataItem {
-  id: number;
-  ime: number
-}
-*/
+
+
 
 const PageBody = () => {
   return (
@@ -23,19 +19,17 @@ const PageBody = () => {
     </div>
   );
 };
- /*
-interface Slika {
-  url: string
-}
-*/
+
 
 function App() {
 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  
 
   return (
     <div>
+
       <Navbar />
       {isHomePage ? <Homepage /> : <PageBody />}
     </div>
