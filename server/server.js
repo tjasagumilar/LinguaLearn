@@ -47,14 +47,11 @@ app.post('/signup', async (req, res) => {
 
   await createUserWithEmailAndPassword(auth, email, password)
     .then(cred => {
-      
       dbFire.collection('users').doc(cred.user.uid).set({
         username: username
       });
-      
-
     }).then(() => {
-    
+
       res.sendStatus(200);
 
     })
@@ -87,6 +84,22 @@ app.post('/signin', async (req, res) => {
       res.status(500).json({ error: "Napaka" });
     });
 });
+
+//IZBIRA JEZIKA 
+app.post('/izbirajezika', (req, res) => {
+  const { jezik, nivo, uid } = req.body;
+
+  dbFire.collection('users').doc(uid).collection('jeziki')
+    .add({ jezik: jezik, nivo: nivo })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Napaka:', error);
+      res.status(500).send('Napaka bi dodajanju jezika.');
+    });
+});
+
 
 //-------------------------------------------------
 
