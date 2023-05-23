@@ -4,48 +4,47 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Onas from './Components/Onas/Onas';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Prijava from './Components/Prijava/Prijava';
 import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
-import IzberiJezik from './Components/IzberiJezik/IzberiJezik';
-import TipNaloge1 from './Components/Naloge/Tip1/TipNaloge1';
-import Exercises from './Components/Naloge/Tip1/Exercises';
+import Chat from "./Components/Chat/Chat";
+import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
 
 const router = createBrowserRouter([
   {
-      path: '/',
-      element: <App/>,
-      children: [
-          {
-              path: '/onas',
-              element: <Onas/>,
-          },
-          {
-            path: '/prijava',
-            element: <Prijava/>,
-          },
-          {
-            path: '/registracija',
-            element: <Prijava/>,
-          },
-          {
-            path: '/profil',
-            element: <Profil/>,
-          },
-          {
-          path: '/jeziki',
-          element: <MojiJeziki/>
-          },
-          {
-            path: '/izberijezik',
-            element: <IzberiJezik/>
-          },
-          {
-            path: '/exercises',
-            element: <Exercises/>
-          }
-      ],
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '/onas',
+        element: <Onas />,
+      },
+      {
+        path: '/chat',
+        element: <Chat />,
+      },
+      {
+        path: '/prijava',
+        element: <Prijava />,
+      },
+      {
+        path: '/registracija',
+        element: <Prijava />,
+      },
+      {
+        path: '/profil',
+        element: <Profil />,
+      },
+      {
+        path: '/jeziki',
+        element: <MojiJeziki />
+      },
+      {
+        path: '/izberijezik',
+        element: <IzberiJezik />
+      }
+    ],
   },
 ]);
 
@@ -54,7 +53,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

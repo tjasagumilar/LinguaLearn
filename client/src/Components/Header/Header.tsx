@@ -1,9 +1,12 @@
 import "./Header.css"
 import slika from "../../Assets/languages.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "../../Config/firebase";
 import logging from "../../Config/logging";
+import { Button, Container } from "react-bootstrap";
+import { Col } from "reactstrap";
+import Row from 'react-bootstrap/Row';
 
 
 const Header = () => {
@@ -11,12 +14,13 @@ const Header = () => {
     const [uporabnik, setUporabnik] = useState<boolean>(false);
     const [displayName, setDisplayName] = useState<string>('');
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 logging.info('User detected.');
-                setDisplayName(user.displayName || '');
+                setDisplayName(user.displayName || 'upime');
                 setUporabnik(true);
             } else {
                 logging.info('No user detected.');
@@ -25,46 +29,39 @@ const Header = () => {
         });
     }, []);
 
+
+
     if (uporabnik) {
         return (
-            <div className="header">
-                <div className="glava">
-                    <div className="besedilo">
-                        <div className="naslov">
-                            Pozdravljeni, {displayName}
-                        </div>
-                        <div className="podnaslov">
-                            Nadaljujte svojo jezikovno potovanje!
-                        </div>
-                    </div>
-                    <div className="slika-languages">
-                        <img src={slika}  ></img>
-                    </div>
-                </div>
+            <div className="head">
+                <Container className="glava">
+                    <Row>
+                        <Col className="pozdravljeni">
+                            <h1>Pozdravljeni, {displayName}</h1>
+                            <p> Nadaljujte svoje jezikovno potovanje!</p>
+                        </Col>
+                        <Col><img src={slika}></img></Col>
+                    </Row>
+                </Container>
             </div>
         );
     } else {
         return (
-            <div className="header">
-                <div className="glava">
-                    <div className="besedilo">
-                        <div className="naslov">
-                            Vstopi v svet večjezičnosti!
-                        </div>
-                        <div className="podnaslov">
-                            Pridruži se naši skupnosti učenja jezikov!
-                        </div>
-                        <div className="zacni">
-                            <Link to="/registracija"><button>Začni</button></Link>
-                        </div>
-                    </div>
-                    <div className="slika-languages">
-                        <img src={slika}  ></img>
-                    </div>
-                </div>
+            <div className="head">
+                <Container className="glava">
+                    <Row>
+                        <Col className="pozdravljeni">
+                            <h1>Vstopi v svet <br /> večjezičnosti!</h1>
+                            <p>Pridruži se naši skupnosti učenja jezikov!</p>
+                            <a href="/registracija"><Button>Začni</Button></a>
+                        </Col>
+                        <Col><img src={slika}></img></Col>
+                    </Row>
+                </Container>
             </div>
         );
     }
-}
+};
+
 
 export default Header;

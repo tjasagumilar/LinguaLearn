@@ -1,8 +1,10 @@
+import { Button, Container } from "react-bootstrap";
+
 const MojiJeziki = () => {
     return (
-        <div>
-            moji jeziki
-        </div>
+        <Container>
+            <a href="/izberijezik"><Button>Dodaj jezik</Button></a>
+        </Container>
     );
 }
 
