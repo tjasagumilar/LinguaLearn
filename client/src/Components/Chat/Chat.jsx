@@ -10,8 +10,6 @@ import './Chat.css';
 
 
 function Chat() {
-    const [user] = useAuthState(auth);
-
     return (
         <div className="App">
             <header>
@@ -22,7 +20,9 @@ function Chat() {
                 </h1>
             </header>
 
-            <section>{user ? <ChatRoom/> : <Signin/>}</section>
+            <section>
+                <ChatRoom/>
+            </section>
         </div>
     );
 }
