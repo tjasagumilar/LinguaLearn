@@ -1,0 +1,12 @@
+.available-word {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #e9e9e9;
+    cursor: pointer;
+  }
+  
+  .available-word.selected {
+    background-color: #4285f4;
+    color: #fff;
+  }
