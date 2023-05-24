@@ -1,12 +1,14 @@
+import { Container } from "react-bootstrap";
 import "./Footer.css"
 
 const Footer = () => {
     return (
         <div className="footer">
-            <div className="noga">
-                <div className="lingua-learn">LinguaLearn</div>
-            </div>
+            <Container>
+                LinguaLearn, 2023
+            </Container>
         </div>
+
     );
 }
 

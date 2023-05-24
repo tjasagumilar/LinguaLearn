@@ -5,15 +5,18 @@ import Header from "../Header/Header";
 import "./Homepage.css"
 import Footer from "../Footer/Footer";
 
+
 const Homepage = () => {
 
     return (
         <div>
             <Header />
-            <Ucenje />
-            <Skupnost />
-            <Napredek />
-            <Footer />
+            <div className="home">
+                <Ucenje />
+                <Skupnost />
+                <Napredek />
+            </div>
+            <Footer/>
         </div>
     );
 }
