@@ -1,15 +1,13 @@
-
-.ChatRoom {
+.App {
     text-align: center;
     max-width: 728px;
-    margin: 0 auto;
+    margin: -80px 25px auto auto;
 }
 
-.ChatRoom header {
-    background-color: #181717;
+.App header {
     height: 10vh;
     min-height: 50px;
-    color: white;
+    color: black;
     position: fixed;
     width: 100%;
     max-width: 728px;
@@ -17,20 +15,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 99;
+    z-index: 100; /* Increase z-index value */
     padding: 10px;
     box-sizing: border-box;
+    margin-top: 54px;
 }
 
-.ChatRoom section {
+.App section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
-    background-color: rgb(40, 37, 53);
+    background: white;
+    margin-top: 80px;
 }
 
-.Chat main {
+.App main {
     padding: 10px;
     height: 80vh;
     margin: 10vh 0 10vh;
@@ -39,35 +39,45 @@
     flex-direction: column;
 }
 
-.Chat main::-webkit-scrollbar {
+.App main::-webkit-scrollbar {
     width: 0.25rem;
 }
 
-.Chat main::-webkit-scrollbar-track {
+.App main::-webkit-scrollbar-track {
     background: #1e1e24;
 }
 
-.Chat main::-webkit-scrollbar-thumb {
-    background: #6649b8;
+.App main::-webkit-scrollbar-thumb {
+    background: #582533;
 }
 
-.Chat form {
+.App form {
     height: 10vh;
     position: fixed;
-    bottom: 0;
-    background-color: rgb(24, 23, 23);
+    bottom: 10px;
+    background: rgba(255, 255, 255, 0); /* Transparent background */
     width: 100%;
     max-width: 728px;
     display: flex;
     font-size: 1.5rem;
+    border-radius: 25px; /* Rounded corners */
 }
 
-.Chat form button {
-    width: 20%;
-    background-color: rgb(56, 56, 143);
+.App form button {
+    flex: 0.2; /* Expand to fill the available space */
+    background-color: #6389fa;
+    border-radius: 25px; /* Rounded corners */
+    margin-left: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow for depth effect */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
 }
 
-.Chat input {
+.App form button:hover {
+    transform: scale(1.05); /* Scale button on hover for depth effect */
+}
+
+.App input {
+    flex: 4; /* Expand to fill the available space */
     line-height: 1.5;
     width: 100%;
     font-size: 1.5rem;
@@ -76,6 +86,8 @@
     outline: none;
     border: none;
     padding: 0 10px;
+    border-radius: 25px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow for depth effect */
 }
 
 button {
@@ -93,7 +105,6 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
-
 
 ul,
 li {

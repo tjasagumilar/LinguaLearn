@@ -25,6 +25,9 @@
     "pip": "^0.0.1",
     "python": "^0.0.4",
     "python-shell": "^5.0.0",
+    "react-firebase-hooks": "^5.1.1",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.62.1",
     "translatte": "^3.0.1"
   }
 }

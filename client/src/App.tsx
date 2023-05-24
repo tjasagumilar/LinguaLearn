@@ -6,6 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./custom.scss";
 
 
+/*
+interface DataItem {
+  id: number;
+  ime: number
+}
+*/
+
 const PageBody = () => {
   return (
     <div>
@@ -13,7 +20,11 @@ const PageBody = () => {
     </div>
   );
 };
-
+ /*
+interface Slika {
+  url: string
+}
+*/
 
 function App() {
 
@@ -22,7 +33,11 @@ function App() {
 
   return (
     <div>
+<<<<<<< HEAD
       <Navigation />
+=======
+      <Navbar />
+>>>>>>> parent of 0a596271 (generiranje nalog, python, react)
       {isHomePage ? <Homepage /> : <PageBody />}
     </div>
   );
