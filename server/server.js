@@ -100,6 +100,43 @@ app.post('/izbirajezika', (req, res) => {
     });
 });
 
+// UREJANJE PROFILA 
+app.post('/uredi', (req, res) => {
+  const { uid, username, ime, priimek } = req.body;
+
+  dbFire.collection('users').doc(uid)
+    .set({ username: username, ime: ime, priimek: priimek }, { merge: true })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Napaka:', error);
+      res.status(500).send('Napaka');
+    });
+});
+
+
+//PRIDOBITEV PODATKOV DOLOČENEGA UPORABNIKA
+app.get('/uporabnik', (req, res) => {
+  const uid = req.query.uid;
+
+  dbFire.collection('users')
+    .doc(uid)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        res.status(200).json(data);
+      } else {
+        res.status(404).send('User not found');
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting user:', error);
+      res.status(500).send('Internal server error');
+    });
+
+});
 
 //-------------------------------------------------
 
@@ -163,6 +200,72 @@ app.get('/generate', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
+});
+
+app.get('/prevedi/:statement', (req, res) => {
+  const { statement } = req.params;
+
+  translatte(statement, { to: 'de' })
+    .then(translationResult => {
+      const translation = translationResult.text;
+      console.log(translation)
+      res.json({ translation });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Translation Error');
+    });
+});
+
+
+app.get('/generateWord', (req, res) => {
+  const words = [];
+  fs.createReadStream('csvBesede.csv')
+    .pipe(csv())
+    .on('data', (data) => {
+      words.push(data.word);
+    })
+    .on('end', () => {
+      const randomIndex = Math.floor(Math.random() * words.length);
+      const randomIndex2 = Math.floor(Math.random() * words.length);
+      const randomIndex3 = Math.floor(Math.random() * words.length);
+      const randomWord = words[randomIndex];
+      const randomWord2 = words[randomIndex2];
+      const randomWord3= words[randomIndex3];
+
+      res.json({randomWord, randomWord2, randomWord3});
+    });
+});
+
+app.get('/generateWordOne', (req, res) => {
+  const words = [];
+  fs.createReadStream('csvBesede.csv')
+    .pipe(csv())
+    .on('data', (data) => {
+      words.push(data.word);
+    })
+    .on('end', () => {
+      const randomIndex = Math.floor(Math.random() * words.length);
+
+      const randomWord = words[randomIndex];
+
+      res.json({randomWord});
+    });
+});
+
+app.get('/prevediW/:word', (req, res) => {
+  const { word } = req.params;
+
+  translatte(word, { to: 'de' })
+    .then(translationResult => {
+      const translation = translationResult.text;
+      console.log(translation)
+      res.json({ translation });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Translation Error');
+    });
 });
 
 

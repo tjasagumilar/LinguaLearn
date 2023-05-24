@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
-import { auth, firestore } from "../../../Config/firebase";
+import { auth } from "../../../Config/firebase";
 import logging from "../../../Config/logging";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
-import 'firebase/compat/analytics';
-
 
 
 const Signin = () => {
@@ -64,20 +59,6 @@ const Signin = () => {
             });
     }
 
-    const signInWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                logging.info(result);
-                history('/');
-            })
-            .catch((error) => {
-                logging.error(error);
-                setError(error.message);
-            });
-    };
-
-
     return (
         <div className="login-form">
             <div className="prijavise">
@@ -90,9 +71,6 @@ const Signin = () => {
                 </div>
                 <div className="login-button">
                     <button onClick={() => handleSubmit()}>Prijava</button>
-                </div>
-                <div className="login-button">
-                    <button onClick={signInWithGoogle}>Google Prijava</button>
                 </div>
                 <div className="pozabljeno">
                     Pozabljeno geslo
