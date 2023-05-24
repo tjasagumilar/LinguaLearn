@@ -18,6 +18,7 @@ const Navigation = () => {
     auth.onAuthStateChanged(user => {
       if (user) {
         logging.info('User detected.');
+        setDisplayName(user.displayName || 'upime');
         setUporabnik(true);
         fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())

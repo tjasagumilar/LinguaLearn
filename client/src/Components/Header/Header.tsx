@@ -17,6 +17,7 @@ const Header = () => {
             if (user) {
                 logging.info('User detected.');
                 setUporabnik(true);
+                setDisplayName(user.displayName || 'upime');
                 fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
