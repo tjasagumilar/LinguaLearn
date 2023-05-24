@@ -8,7 +8,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Prijava from './Components/Prijava/Prijava';
 import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
-<<<<<<< HEAD
 import Chat from "./Components/Chat/Chat";
 import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
 
@@ -46,40 +45,6 @@ const router = createBrowserRouter([
         element: <IzberiJezik />
       }
     ],
-=======
-import IzberiJezik from './Components/IzberiJezik/IzberiJezik';
-
-const router = createBrowserRouter([
-  {
-      path: '/',
-      element: <App/>,
-      children: [
-          {
-              path: '/onas',
-              element: <Onas/>,
-          },
-          {
-            path: '/prijava',
-            element: <Prijava/>,
-          },
-          {
-            path: '/registracija',
-            element: <Prijava/>,
-          },
-          {
-            path: '/profil',
-            element: <Profil/>,
-          },
-          {
-          path: '/jeziki',
-          element: <MojiJeziki/>
-          },
-          {
-            path: '/izberijezik',
-            element: <IzberiJezik/>
-          }
-      ],
->>>>>>> parent of 0a596271 (generiranje nalog, python, react)
   },
 ]);
 

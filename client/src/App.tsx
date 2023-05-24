@@ -33,11 +33,7 @@ function App() {
 
   return (
     <div>
-<<<<<<< HEAD
       <Navigation />
-=======
-      <Navbar />
->>>>>>> parent of 0a596271 (generiranje nalog, python, react)
       {isHomePage ? <Homepage /> : <PageBody />}
     </div>
   );
