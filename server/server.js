@@ -100,6 +100,43 @@ app.post('/izbirajezika', (req, res) => {
     });
 });
 
+// UREJANJE PROFILA 
+app.post('/uredi', (req, res) => {
+  const { uid, username, ime, priimek } = req.body;
+
+  dbFire.collection('users').doc(uid)
+    .set({ username: username, ime: ime, priimek: priimek }, { merge: true })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Napaka:', error);
+      res.status(500).send('Napaka');
+    });
+});
+
+
+//PRIDOBITEV PODATKOV DOLOČENEGA UPORABNIKA
+app.get('/uporabnik', (req, res) => {
+  const uid = req.query.uid;
+
+  dbFire.collection('users')
+    .doc(uid)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        res.status(200).json(data);
+      } else {
+        res.status(404).send('User not found');
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting user:', error);
+      res.status(500).send('Internal server error');
+    });
+
+});
 
 //-------------------------------------------------
 

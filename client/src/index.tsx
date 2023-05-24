@@ -10,6 +10,7 @@ import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
 import Chat from "./Components/Chat/Chat";
 import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
+import Uredi from './Components/Profil/Uredi/Uredi';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: '/izberijezik',
         element: <IzberiJezik />
+      },
+      {
+        path: '/uredi',
+        element: <Uredi/>
       }
     ],
   },

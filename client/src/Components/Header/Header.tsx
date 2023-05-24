@@ -1,6 +1,5 @@
 import "./Header.css"
 import slika from "../../Assets/languages.png"
-import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "../../Config/firebase";
 import logging from "../../Config/logging";
@@ -10,25 +9,28 @@ import Row from 'react-bootstrap/Row';
 
 
 const Header = () => {
-
     const [uporabnik, setUporabnik] = useState<boolean>(false);
     const [displayName, setDisplayName] = useState<string>('');
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 logging.info('User detected.');
-                setDisplayName(user.displayName || 'upime');
                 setUporabnik(true);
+                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setDisplayName(data.username);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             } else {
                 logging.info('No user detected.');
                 setUporabnik(false);
             }
         });
     }, []);
-
 
 
     if (uporabnik) {
