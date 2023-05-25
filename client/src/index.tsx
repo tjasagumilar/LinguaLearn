@@ -11,6 +11,9 @@ import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
 import Chat from "./Components/Chat/Chat";
 import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
 import Exercises from './Components/Naloge/Tip1/Exercises';
+import Uredi from './Components/Profil/Uredi/Uredi';
+import Forgot from "./Components/Prijava/Forgot/Forgot";
+import Reset from "./Components/Prijava/Reset/Reset";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +51,16 @@ const router = createBrowserRouter([
       {
         path: '/naloge',
         element: <Exercises />
+        path: '/uredi',
+        element: <Uredi/>
+      },
+      {
+        path: '/forgot',
+        element: <Forgot/>
+      },
+      {
+        path: '/reset',
+        element: <Reset/>
       }
     ],
   },

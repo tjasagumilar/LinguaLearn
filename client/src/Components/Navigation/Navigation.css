@@ -1,25 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
-
-
 .navbar-brand {
     color: white !important;
     font-family: "Outfit", sans-serif;
     font-weight: 700;
     font-size: 25px !important;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: color 0.3s ease; /* Add transition effect */
 }
 
 .nav-link {
     color: white !important;
     font-family: "Outfit", sans-serif;
-    white-space: nowrap ;
+    white-space: nowrap;
+    transition: color 0.3s ease; /* Add transition effect */
 }
 
 .nav-link:hover {
-    color: white;
+    color: #fa9746 !important; /* Change text color when hovering */
 }
 
 nav .container {
     width: 100% !important;
     margin: 0 15% !important;
+}
+
+.navbar .dropdown-menu {
+    background-color: #6389fa;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.navbar .dropdown-menu a {
+    color: white !important;
+    font-family: "Outfit", sans-serif;
+    transition: color 0.3s ease;
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #fa9746 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar .dropdown-menu .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.1);
 }

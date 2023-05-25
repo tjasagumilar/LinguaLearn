@@ -15,7 +15,7 @@ function Chat() {
             <header>
                 <h1>
                   <span role="img" aria-label="speech balloon">
-                    💬
+                    General Chat 💬
                   </span>
                 </h1>
             </header>

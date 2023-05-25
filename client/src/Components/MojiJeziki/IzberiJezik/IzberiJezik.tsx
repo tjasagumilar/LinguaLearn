@@ -2,7 +2,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import "./IzberiJezik.css";
 import { auth } from "../../../Config/firebase";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 
 const IzberiJezik = () => {
@@ -36,11 +36,13 @@ const IzberiJezik = () => {
         })
             .then(response => {
                 if (response.status === 200) {
-                    navigate('/jeziki')
+                    navigate('/jeziki');
+                } else {
+                    throw new Error('Error: ' + response.status);
                 }
             })
-            .catch(err => {
-                console.log(err);
+            .catch(error => {
+                console.log(error);
             });
     }
 
