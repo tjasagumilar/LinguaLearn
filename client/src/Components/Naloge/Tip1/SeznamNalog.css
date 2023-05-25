@@ -1,0 +1,40 @@
+.container-wrapper {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr); 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container-wrapper .container {
+    margin-top: 20px;
+  }
+  
+  .custom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    background-color: #076cdf;
+  }
+  
+  .custom-container:hover {
+    background-color: rgba(37, 34, 228, 0.8);
+  }
+  
+  .container-content {
+    text-align: center;
+    color: #fff;
+  }
+  
+  .container-content h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .container-content p {
+    font-size: 16px;
+  }
+  

@@ -190,13 +190,9 @@ app.get('/generate', (req, res) => {
     try {
       const jsonData = JSON.parse(outputData);
       const statement = jsonData.statement;
-      const difficulty = req.query.difficulty; // Assuming the difficulty is passed as a query parameter
+      const difficulty = req.query.difficulty; 
 
-      if (difficulty === 'easy') {
-        // Return something specific for easy difficulty
-        res.json({ message: 'Easy mode activated!', statement });
-      } else {
-        // Continue with the translation process for other difficulties
+     
         translatte(statement, { to: 'de' })
           .then(translationResult => {
             const translation = translationResult.text;
@@ -206,7 +202,7 @@ app.get('/generate', (req, res) => {
             console.error(err);
             res.status(500).send('Internal Server Error');
           });
-      }
+      
     } catch (err) {
       console.error(err);
       res.status(500).send('Invalid JSON data');
