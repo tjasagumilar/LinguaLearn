@@ -7,6 +7,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import 'firebase/compat/analytics';
+import Nav from "react-bootstrap/Nav";
 
 
 
@@ -44,7 +45,7 @@ const Signin = () => {
 
     };
 */
-    
+
     const history = useNavigate();
 
     const handleSubmit = () => {
@@ -94,8 +95,10 @@ const Signin = () => {
                 <div className="login-button">
                     <button onClick={signInWithGoogle}>Google Prijava</button>
                 </div>
-                <div className="pozabljeno">
-                    Pozabljeno geslo
+                <div className="login-button">
+                    <Nav.Link href="/forgot">
+                        <button>Pozabljeno geslo</button>
+                    </Nav.Link>
                 </div>
                 <ErrorText error={error} />
             </div>
