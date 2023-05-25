@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="877b8e64-1032-49f9-a042-3a4ceb0b1cb1" name="Changes" comment="">
+    <list default="true" id="5912bfdf-d535-44de-a5f7-a77260da13b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/src/Components/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/Components/Navbar/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../client/src/Components/Navigation/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/Components/Navigation/Navigation.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stavki.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../stavki.txt" afterDir="false" />
     </list>
@@ -50,7 +48,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.evaluate_words">
+  <component name="RunManager" selected="Python.open">
     <configuration name="besede" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -139,8 +137,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="open" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/open.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.open" />
         <item itemvalue="Python.evaluate_words" />
         <item itemvalue="Python.def" />
         <item itemvalue="Python.besede" />
@@ -164,6 +185,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/python$besede.coverage" NAME="besede Coverage Results" MODIFIED="1684798885238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$open.coverage" NAME="open Coverage Results" MODIFIED="1685009808280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$evaluate_words.coverage" NAME="evaluate_words Coverage Results" MODIFIED="1684844273361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$main.coverage" NAME="main Coverage Results" MODIFIED="1684429605048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$def.coverage" NAME="def Coverage Results" MODIFIED="1684800165901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

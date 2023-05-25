@@ -138,13 +138,11 @@ app.get('/g', (req, res) => {
     });
 });
 
-const { PythonShell } = require('python-shell');
+// generiraj poved glede na težavnost - RANDOM NALOGE
 
 app.get('/generate', (req, res) => {
   const { spawn } = require('child_process');
-
   const pyProg = spawn('python', ['python/main.py']);
-
   let outputData = '';
 
   pyProg.stdout.on('data', function (data) {
@@ -152,18 +150,39 @@ app.get('/generate', (req, res) => {
   });
 
   pyProg.stdout.on('end', function () {
-    translatte(outputData, { to: 'de' })
-      .then(translationResult => {
-        console.log(translationResult.text);
-        res.write(translationResult.text);
-        res.end('end');
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-      });
+    try {
+      const jsonData = JSON.parse(outputData);
+      const statement = jsonData.statement;
+      const difficulty = req.query.difficulty; // Assuming the difficulty is passed as a query parameter
+
+      if (difficulty === 'easy') {
+        // Return something specific for easy difficulty
+        res.json({ message: 'Easy mode activated!', statement });
+      } else {
+        // Continue with the translation process for other difficulties
+        translatte(statement, { to: 'de' })
+          .then(translationResult => {
+            const translation = translationResult.text;
+            res.json({ translation, statement });
+          })
+          .catch(err => {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+          });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Invalid JSON data');
+    }
+  });
+
+  pyProg.stderr.on('data', function (data) {
+    console.error(data.toString());
+    res.status(500).send('Python Process Error');
   });
 });
+
+// prevedi poved ali besedo
 
 app.get('/prevedi/:statement', (req, res) => {
   const { statement } = req.params;
@@ -180,6 +199,7 @@ app.get('/prevedi/:statement', (req, res) => {
     });
 });
 
+// generiraj 3 besede random
 
 app.get('/generateWord', (req, res) => {
   const words = [];
@@ -200,6 +220,8 @@ app.get('/generateWord', (req, res) => {
     });
 });
 
+// generiraj 1 besedo 
+
 app.get('/generateWordOne', (req, res) => {
   const words = [];
   fs.createReadStream('csvBesede.csv')
@@ -216,18 +238,49 @@ app.get('/generateWordOne', (req, res) => {
     });
 });
 
-app.get('/prevediW/:word', (req, res) => {
-  const { word } = req.params;
+app.get('/generirajSliko', (req, res) => {
+  const exercises = [];
 
-  translatte(word, { to: 'de' })
-    .then(translationResult => {
-      const translation = translationResult.text;
-      console.log(translation)
-      res.json({ translation });
+  fs.createReadStream('slike.csv')
+    .pipe(csv())
+    .on('data', (row) => {
+      if (row.difficulty === 'easy') {
+        exercises.push(row.label);
+      }
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Translation Error');
+    .on('end', () => {
+      const randomIndex = Math.floor(Math.random() * exercises.length);
+      const randomExercise = exercises[randomIndex];
+      res.json(randomExercise);
+    });
+});
+
+
+app.get('/slika', (req, res) => {
+  const API_KEY = '36374853-199e3fdaa90425e05a17a1fa2';
+
+  axios.get('http://localhost:4000/generirajSliko')
+    .then(response => {
+      const query = response.data; 
+      const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
+ 
+
+      axios.get(URL)
+        .then(response => {
+          const data = response.data;
+          if (parseInt(data.totalHits) > 0) {
+            const firstHit = data.hits[1];
+            res.json({ pageURL: firstHit.webformatURL, beseda: query });
+          } else {
+            res.json({ message: 'No hits' });
+          }
+        })
+        .catch(error => {
+          res.json({ error: error.message });
+        });
+    })
+    .catch(error => {
+      res.json({ error: error.message });
     });
 });
 
@@ -235,13 +288,13 @@ app.get('/prevediW/:word', (req, res) => {
 
 
 
-app.get('/text', (req, res) => {
+app.get('/tts', (req, res) => {
   const url = googleTTS.getAudioUrl('Hello World', {
-    lang: 'fr',
+    lang: 'en',
     slow: false,
     host: 'https://translate.google.com',
   });
-  console.log(url);
+  res.json({url: url})
 });
 
 

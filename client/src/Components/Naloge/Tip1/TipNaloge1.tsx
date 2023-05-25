@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './TipNaloge1.css'
 import { Exercise } from './Exercises';
+import TextToSpeech from './TextToSpeech';
 
 interface TipNaloge1Props {
   exercise: Exercise
@@ -56,9 +57,12 @@ const handleSubmit = (e: React.FormEvent) => {
 
 
 return (
+  <div>
+    <TextToSpeech text={'Hello'}></TextToSpeech>
   <form onSubmit={handleSubmit}>
     <div>
       <h1>Prevedite ta stavek</h1>
+ 
       <div>{exercise.sentence}</div>
       <br />
       ------------------------------------------
@@ -91,6 +95,7 @@ return (
     <button type="submit">Preveri</button>
     
   </form>
+  </div>
 );
 };
 

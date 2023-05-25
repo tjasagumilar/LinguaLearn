@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TipNaloge1 from './TipNaloge1';
 import TipNaloge2 from './TipNaloge2';
+import TipNaloge3 from './TipNaloge3';
+
+
 
 export interface Exercise {
     type: string,
     sentence: string;
-    availableWords: string[]
+    availableWords: string[];
+    pageURL?: string
 }
 
 const Exercises = () => {
@@ -23,18 +27,25 @@ const Exercises = () => {
     const generateExercises = async () => {
       try {
         const exercisePromises = [];
-
-       
-    for (let i = 0; i < 10; i++) {
-      const exercisePromise = Math.random() < 0.5
-        ? fetchStavekExercise()
-        : fetchStavek2Exercise();
+        const numExercises = 10;
+    
+        for (let i = 0; i < numExercises; i++) {
+          let exercisePromise;
+    
+          const random = Math.random();
+    
+          if (random < 0.33) {
+            exercisePromise = fetchStavekExercise();
+          } else if (random < 0.66) {
+            exercisePromise = fetchStavek2Exercise();
+          } else {
+            exercisePromise = fetchStavek3Exercise();
+          }
     
           exercisePromises.push(exercisePromise);
         }
-
+    
         const generatedExercises = await Promise.all(exercisePromises);
-
         setExercises(generatedExercises);
         setIsLoading(false);
       } catch (error) {
@@ -91,7 +102,7 @@ const Exercises = () => {
       throw new Error('Failed to fetch words');
     }
 
-    const prevodResponse = await fetch(`http://localhost:4000/prevediW/${data.randomWord}`);
+    const prevodResponse = await fetch(`http://localhost:4000/prevedi/${data.randomWord}`);
     if (!prevodResponse.ok) {
       throw new Error('Failed to fetch translation');
     }
@@ -114,6 +125,48 @@ const Exercises = () => {
       type: 'beseda',
       sentence: prevod.translation,
       availableWords: dataNew,
+    };
+
+    return exerciseData;
+  };
+
+  const fetchStavek3Exercise = async () => {
+    const response = await fetch('http://localhost:4000/slika');
+    if (!response.ok) {
+      throw new Error('Failed to fetch exercises');
+    }
+
+    const data = await response.json();
+    const wordsResponse = await fetch('http://localhost:4000/generateWord');
+    if (!wordsResponse.ok) {
+      throw new Error('Failed to fetch words');
+    }
+
+    const prevodResponse = await fetch(`http://localhost:4000/prevedi/${data.beseda}`);
+    if (!prevodResponse.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+
+    const prevod = await prevodResponse.json();
+    const wordsData = await wordsResponse.json();
+    const generatedWord1 = wordsData.randomWord; 
+    const generatedWord2 = wordsData.randomWord2;
+    const generatedWord3 = wordsData.randomWord3;
+    const dataNew = [generatedWord1, generatedWord2, generatedWord3, data.beseda];
+    console.log(dataNew)
+    
+    for (let i = dataNew.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
+    }
+    console.log(dataNew)
+    console.log(data.pageURL)
+
+    const exerciseData = {
+      type: 'slika',
+      sentence: prevod.translation,
+      availableWords: dataNew,
+      pageURL: data.pageURL
     };
 
     return exerciseData;
@@ -180,6 +233,8 @@ return (
       />
     ) : currentExercise.type === "beseda" ? (
       <TipNaloge2 exercise={currentExercise} />
+    ) : currentExercise.type === "slika" ? (
+      <TipNaloge3 exercise={currentExercise} />
     ) : null}
     {isLastExercise ? (
       <p>Zadnja naloga.</p>
@@ -187,9 +242,11 @@ return (
       <button type="button" onClick={handleNextExercise}>
         Naslednja naloga
       </button>
+      
     )}
   </div>
 );
 
 }
 export default Exercises;
+

@@ -47,6 +47,7 @@ const Navigation = () => {
               <Nav.Link href="/onas">O nas</Nav.Link>
               <NavDropdown title={displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item href="/profil">Profil</NavDropdown.Item>
+                <NavDropdown.Item href="/naloge">Naloge</NavDropdown.Item>
                 <NavDropdown.Item href="/jeziki">Moji jeziki</NavDropdown.Item>
                 <NavDropdown.Item href="/chat">Chat</NavDropdown.Item>
                 <NavDropdown.Divider />
