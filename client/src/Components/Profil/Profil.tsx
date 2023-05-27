@@ -1,3 +1,4 @@
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { auth } from "../../Config/firebase";
 import "./Profil.css"
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ const Profil = () => {
     const [priimek, setPriimek] = useState('');
     const [slika, setSlika] = useState('');
     const [path, setPath] = useState('');
+    const [opis, setOpis] = useState('');
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -20,6 +22,7 @@ const Profil = () => {
                         setPriimek(data.priimek);
                         setUsername(data.username);
                         setSlika(data.slika);
+                        setOpis(data.opis);
                         setPath(require(`../../Assets/${data.slika}`));
                     })
                     .catch(error => {
@@ -31,25 +34,28 @@ const Profil = () => {
     }, []);
 
     return (
-        <div className="profil-box">
-            <div className="profil">
-                <div className="uporabnik-box">
-                    <div className="uporabnik">
-                        <div className="uporabnik-slika">
-                        <img src={path}/>
-                        </div>
-                        <div className="uporabnik-podatki">
-                            <span>{username}</span>
-                            <span>{ime} {priimek}</span>
-                        </div>
+        <div className="profil-container">
+            <Row>
+                <Col md>
+                    <div>
+                        <img src={path} />
                     </div>
-                    <div className="uporabnik-uredi">
-                        <a href="/uredi"><button>Uredi profil</button></a>
+                </Col>
+            </Row>
+            <Row>
+                <Col md>
+                    <div className="profil-podatki">
+                        <div>{username}<br /> {ime} {priimek} <br/> {opis}</div>
                     </div>
-                </div>
-                <div className="ostalo">
-                </div>
-            </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col md>
+                    <div>
+                        <a href="/uredi"><Button className="uredi-profil">Uredi profil</Button></a>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 }

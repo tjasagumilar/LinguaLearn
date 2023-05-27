@@ -43,12 +43,13 @@ const dbFire = admin.firestore();
 
 //REGISTRACIJA UPORABNIKOV
 app.post('/signup', async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, slika } = req.body;
 
   await createUserWithEmailAndPassword(auth, email, password)
     .then(cred => {
       dbFire.collection('users').doc(cred.user.uid).set({
-        username: username
+        username: username,
+        slika: slika
       });
     }).then(() => {
 
@@ -102,10 +103,10 @@ app.post('/izbirajezika', (req, res) => {
 
 // UREJANJE PROFILA 
 app.post('/uredi', (req, res) => {
-  const { uid, username, ime, priimek, slika } = req.body;
+  const { uid, username, ime, priimek, slika, opis} = req.body;
 
   dbFire.collection('users').doc(uid)
-    .set({ username: username, ime: ime, priimek: priimek, slika: slika }, { merge: true })
+    .set({ username: username, ime: ime, priimek: priimek, slika: slika, opis: opis}, { merge: true })
     .then(() => {
       res.sendStatus(200);
     })
@@ -114,7 +115,6 @@ app.post('/uredi', (req, res) => {
       res.status(500).send('Napaka');
     });
 });
-
 
 //PRIDOBITEV PODATKOV DOLOČENEGA UPORABNIKA
 app.get('/uporabnik', (req, res) => {

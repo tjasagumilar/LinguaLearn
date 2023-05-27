@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
 
@@ -25,7 +25,8 @@ const Signup = () => {
         const formData = {
             email: email,
             password: password,
-            username: username
+            username: username,
+            slika: 'avatar1.png'
         };
 
         fetch('http://localhost:4000/signup', {
@@ -38,7 +39,7 @@ const Signup = () => {
             .then(response => {
                 if (response.status === 200) {
                     navigate('/prijava');
-                } 
+                }
             })
             .catch(err => {
                 console.log(err);

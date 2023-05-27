@@ -12,11 +12,12 @@ import avatar6 from "../../../Assets/avatar6.png";
 
 
 const Uredi = () => {
-    const [username, setUsername] = useState('');
-    const [ime, setIme] = useState('');
-    const [priimek, setPriimek] = useState('');
-    const [uid, setUid] = useState('');
-    const [slika, setSlika] = useState('');
+    const [username, setUsername] = useState(' ');
+    const [ime, setIme] = useState(' ');
+    const [priimek, setPriimek] = useState(' ');
+    const [uid, setUid] = useState(' ');
+    const [slika, setSlika] = useState(' ');
+    const [opis, setOpis] = useState(' ');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,8 +31,7 @@ const Uredi = () => {
                         setPriimek(data.priimek);
                         setUsername(data.username);
                         setSlika(data.slika);
-
-
+                        setOpis(data.opis);
                     })
                     .catch(error => {
                         console.log(error);
@@ -48,7 +48,8 @@ const Uredi = () => {
             username: username,
             ime: ime,
             priimek: priimek,
-            slika: slika
+            slika: slika,
+            opis: opis
         }
 
         fetch('http://localhost:4000/uredi', {
@@ -71,11 +72,11 @@ const Uredi = () => {
     }
 
     return (
-        <div>
-            <Container>
+        <div className="zunanji-container">
+            <div className="uredi-container col-xs-12 col-sm-8 col-md-6 col-lg-4">
                 <h2>Uredi profil</h2>
                 <Form>
-                    <Form.Group className="mb-4">
+                    <Form.Group className="mb-4" id="avatar">
                         <label>
                             <img src={avatar1}></img>
                             <Form.Check
@@ -101,7 +102,7 @@ const Uredi = () => {
                         <label>
                             <img src={avatar3}></img>
                             <Form.Check
-                                inline                            
+                                inline
                                 name="group1"
                                 type="radio"
                                 id="3"
@@ -112,7 +113,7 @@ const Uredi = () => {
                         <label>
                             <img src={avatar4}></img>
                             <Form.Check
-                                inline                             
+                                inline
                                 name="group1"
                                 type="radio"
                                 id="4"
@@ -123,7 +124,7 @@ const Uredi = () => {
                         <label>
                             <img src={avatar5}></img>
                             <Form.Check
-                                inline               
+                                inline
                                 name="group1"
                                 type="radio"
                                 id="5"
@@ -134,7 +135,7 @@ const Uredi = () => {
                         <label>
                             <img src={avatar6}></img>
                             <Form.Check
-                                inline        
+                                inline
                                 name="group1"
                                 type="radio"
                                 id="6"
@@ -143,19 +144,21 @@ const Uredi = () => {
                             />
                         </label>
                     </Form.Group>
-
                     <Form.Group className="mb-4">
-                        <Form.Control type="text" placeholder="Vnesite uporabniško ime" onChange={event => setUsername(event.target.value)} value={username} />
+                        <label>Uporabniško ime</label> <Form.Control type="text" placeholder="Vnesite uporabniško ime" onChange={event => setUsername(event.target.value)} value={username} />
                     </Form.Group>
                     <Form.Group className="mb-4">
-                        <Form.Control type="text" placeholder="Vnesite ime" onChange={event => setIme(event.target.value)} value={ime} />
+                        <label>Ime</label> <Form.Control type="text" placeholder="Vnesite ime" onChange={event => setIme(event.target.value)} value={ime} />
                     </Form.Group>
                     <Form.Group className="mb-4">
-                        <Form.Control type="text" placeholder="Vnesite priimek" onChange={event => setPriimek(event.target.value)} value={priimek} />
+                        <label>Priimek</label> <Form.Control type="text" placeholder="Vnesite priimek" onChange={event => setPriimek(event.target.value)} value={priimek} />
                     </Form.Group>
-                    <Button type="submit" onClick={handleSubmit}>Potrdi</Button>
+                    <Form.Group className="mb-4">
+                        <label>Opis</label> <Form.Control type="text" placeholder="Vnesite opis" onChange={event => setOpis(event.target.value)} value={opis} />
+                    </Form.Group>
+                    <div className="gumb-potrdi"><Button type="submit" onClick={handleSubmit}>Potrdi</Button></div>
                 </Form>
-            </Container>
+            </div>
         </div>
     );
 }

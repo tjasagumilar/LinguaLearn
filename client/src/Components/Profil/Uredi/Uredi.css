@@ -1,3 +1,51 @@
-[type=radio] {
-   margin: 5px;
+.zunanji-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 3%;
+}
+
+.uredi-container {
+
+   font-family: 'Outfit', sans-serif;
+   background-color: #86A4FD;
+   padding: 3%;
+   border-radius: 25px;
+   color: white;
+}
+
+.uredi-container img {
+   width: 80px;
+   border-radius: 50px;
+}
+
+.uredi-container h2 {
+   font-weight: 600;
+   text-align: center;
+
+}
+
+#avatar {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin: 15px;
+}
+
+.uredi-container Button {
+   border-radius: 30px;
+   width: 115px;
+   background: #2F5AED;
+   border: none;
+   margin-bottom: 10px;
+}
+
+.uredi-container Button:hover {
+   background: rgba(47, 90, 237, 0.8);
+}
+
+.gumb-potrdi {
+   display: flex;
+   justify-content: center;
 }
