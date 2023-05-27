@@ -1,3 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
+
+.profil-container {
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+    margin: 5% 15%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.541);
+}
+
+.profil-container img {
+    width: 130px;
+}
+
+
+.col-md div, .col-md div a {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    text-decoration: none;
+}
+
+
+.profil-podatki {
+    text-align: center;
+}
+
+.uredi-profil {
+    border-radius: 30px;
+    width: 115px;
+    background: #2F5AED;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.uredi-profil:hover {
+    background: rgba(47, 90, 237, 0.8);
+}
+
+/*
+
 .profil-box {
     margin: 0;
     display: flex;
@@ -60,3 +104,4 @@
   cursor: pointer;
 }
 
+*/

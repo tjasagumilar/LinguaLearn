@@ -70,6 +70,54 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.App .chat-selection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.App .chat-selection label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.App select {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    text-align: center; /* Add this line to center the text */
+}
+
+.App select::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #6389fa transparent transparent transparent;
+    pointer-events: none;
+}
+
+.App select option {
+    font-size: 16px;
+}
+
+#chat-select{
+    background-color: #6389fa; /* Set the background color of the bubble */
+}
+
+
 /* Rest of the CSS remains the same */
 
 .App main {
@@ -100,6 +148,19 @@
     align-items: center;
     font-size: 1.5rem;
     border-radius: 25px;
+
+    /* Dynamic input island */
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    /* Dynamic input island */
 }
 
 .App form button {
