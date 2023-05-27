@@ -71,6 +71,7 @@
 }
 
 .App .chat-selection {
+    margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
 }
@@ -91,6 +92,7 @@
     background-color: transparent;
     position: relative;
     z-index: 1;
+    text-align: center; /* Add this line to center the text */
 }
 
 .App select::after {
@@ -146,6 +148,19 @@
     align-items: center;
     font-size: 1.5rem;
     border-radius: 25px;
+
+    /* Dynamic input island */
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    /* Dynamic input island */
 }
 
 .App form button {
