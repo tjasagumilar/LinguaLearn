@@ -6,13 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./custom.scss";
 
 
-/*
-interface DataItem {
-  id: number;
-  ime: number
-}
-*/
-
 const PageBody = () => {
   return (
     <div>
@@ -20,11 +13,6 @@ const PageBody = () => {
     </div>
   );
 };
- /*
-interface Slika {
-  url: string
-}
-*/
 
 function App() {
 

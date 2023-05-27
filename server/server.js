@@ -193,7 +193,7 @@ app.get('/generate', (req, res) => {
       const difficulty = req.query.difficulty;
 
 
-      translatte(statement, { to: 'de' })
+      translatte(statement, { to: 'zh' })
         .then(translationResult => {
           const translation = translationResult.text;
           res.json({ translation, statement });
@@ -220,7 +220,7 @@ app.get('/generate', (req, res) => {
 app.get('/prevedi/:statement', (req, res) => {
   const { statement } = req.params;
 
-  translatte(statement, { to: 'de' })
+  translatte(statement, { to: 'zh' })
     .then(translationResult => {
       const translation = translationResult.text;
       console.log(translation)

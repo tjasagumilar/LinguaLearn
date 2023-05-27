@@ -16,6 +16,7 @@ import Forgot from "./Components/Prijava/Forgot/Forgot";
 import Reset from "./Components/Prijava/Reset/Reset";
 import SeznamNalog from './Components/Naloge/SeznamNalog/SeznamNalog';
 import { render } from '@testing-library/react';
+import ExercisesHome from './Components/Naloge/ExercisesHome';
 
 
 const router = createBrowserRouter([
@@ -56,10 +57,6 @@ const router = createBrowserRouter([
         element: <SeznamNalog  />
       },
       {
-        path: "/generirajNaloge/:tipNaloge",
-        element: <Exercises />
-      },
-      {
         path: '/uredi',
         element: <Uredi/>
       },
@@ -70,8 +67,12 @@ const router = createBrowserRouter([
       {
         path: '/reset',
         element: <Reset/>
-      }
+      },
     ],
+  },
+  {
+    path: 'generirajNaloge/:tipNaloge',
+    element: <Exercises />,
   },
 ]);
 

@@ -3,8 +3,12 @@ import TipNaloge1 from '../Tip1/TipNaloge1';
 import TipNaloge2 from '../Tip2/TipNaloge2';
 import TipNaloge3 from '../Tip3/TipNaloge3';
 import { useParams } from 'react-router';
-import { Container, Row, Col, Button, ProgressBar ,  Badge } from 'react-bootstrap';
+import { Container, Row, Col, Button, ProgressBar ,  Badge, Modal } from 'react-bootstrap';
 import './Exercises.css'
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 
@@ -24,6 +28,19 @@ const Exercises = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isFirstRender = useRef(true);
   const { tipNaloge } = useParams();
+  const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const redirectToPage = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmation = (confirmed: boolean) => {
+    setShowConfirmation(false);
+    if(confirmed) {
+      navigate('/naloge');
+    }
+  };
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -242,45 +259,77 @@ const Exercises = () => {
     );
 }
 
-
-  return (
-    <Container>
-      <br></br>
-    <div className="d-flex justify-content-between align-items-center">
-      <div>
-      </div>
-
-      <div className="main-component mx-auto">
-      <ProgressBar
-  striped
-  variant="sucess"
-  now={(currentIndex + 1) * (100 / exercises.length)}
-  label={`${Math.round((currentIndex + 1) * (100 / exercises.length))}%`}
-  className="custom-progress-bar"
-/>
-  
  
 
-      {currentExercise.type === "stavek" ? (
-        <TipNaloge1
-          exercise={currentExercise}
-          onRemoveAvailable1={onRemoveAvailable1}
-          onRemoveSelected1={onRemoveSelected1}
-          onAddExercise={onAddExercise}
-          onCheck={handleNextExercise}
-        />
-      ) : currentExercise.type === "beseda" ? (
-        <TipNaloge2 exercise={currentExercise} />
-      ) : currentExercise.type === "slika" ? (
-        <TipNaloge3 exercise={currentExercise} />
-      ) : null}
-         </div>
-    </div>
-    
-    
-     </Container>
-  );
 
+return (
+  <div>
+  <Container>
+    <br />
+    <div className="d-flex justify-content-between align-items-center">
+
+      <div className="main-componentMain mx-auto">
+        <div className="d-flex align-items-center">
+          <Button
+            variant="light"
+            className="custom-button"
+            style={{ background: 'transparent' }}
+            onClick={redirectToPage}
+          >
+            <span className="text-gray">X</span>
+          </Button>
+
+          <ProgressBar
+            striped
+            variant="success"
+            now={(currentIndex + 1) * (100 / exercises.length)}
+            className="custom-progress-bar ml-3"
+          />
+        </div>
+<br></br><br></br><br></br>
+ 
+        
+
+      </div>
+    </div>
+  </Container>
+
+
+  {currentExercise.type === 'stavek' ? (
+          <TipNaloge1
+            exercise={currentExercise}
+            onRemoveAvailable1={onRemoveAvailable1}
+            onRemoveSelected1={onRemoveSelected1}
+            onAddExercise={onAddExercise}
+            onCheck={handleNextExercise}
+          />
+        ) : currentExercise.type === 'beseda' ? (
+          <TipNaloge2 exercise={currentExercise} />
+        ) : currentExercise.type === 'slika' ? (
+          <TipNaloge3 exercise={currentExercise} />
+        ) : null}
+
+    <Modal
+    show={showConfirmation}
+    onHide={() => handleConfirmation(false)}
+    dialogClassName="modal-footer-sticky"
+  >
+    <Modal.Header closeButton>
+      <Modal.Title>Ali ste prepričani, da želite zapustiti stran?</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>Ves napredek v tej seji bo izgubljen.</Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() => handleConfirmation(false)}>
+        Ne
+      </Button>
+      <Button variant="primary" onClick={() => handleConfirmation(true)}>
+        Da
+      </Button>
+    </Modal.Footer>
+  </Modal>
+  </div>
+  
+);
 }
 export default Exercises;
 
