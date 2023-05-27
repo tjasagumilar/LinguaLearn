@@ -1,0 +1,65 @@
+.jeziki-container {
+    padding: 0;
+    margin: 3% 15%;
+    font-family: 'Outfit', sans-serif;
+}
+
+.dodaj-jezik {
+    border-radius: 20px;
+    width: 115px;
+    background: #2F5AED;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.dodaj-jezik:hover, .gumbi Button:hover {
+    background: rgba(47, 90, 237, 0.8);
+ }
+
+ .gumbi Button {
+    border-radius: 20px;
+    width: 80px;
+    background: #2F5AED;
+    border: none;
+    margin: 5px;
+ }
+
+ .kartica {
+    background-color: #86A4FD;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+ }
+
+ .kartica img  {
+    width: 100%;
+    border-radius: 10px;
+ }
+
+ .zastava {
+    display: flex;
+    justify-content: center;
+ }
+
+ .podrobnosti {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+ }
+
+ .podrobnosti div {
+    font-weight: 600;
+ }
+
+ .kartice-jezikov {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+ }
