@@ -34,8 +34,8 @@ Check out the live demo of LinguaLearn [here](https://your-lingualearn-demo-url.
 
 2. Install dependencies:
 
-   cd LinguaLearn
-   npm install
+- cd LinguaLearn
+- npm install
 
 ## Usage
 
