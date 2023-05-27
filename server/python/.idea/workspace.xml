@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5912bfdf-d535-44de-a5f7-a77260da13b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/src/Components/Navigation/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/Components/Navigation/Navigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../client/src/Components/Naloge/Exercises/Exercises.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/src/Components/Naloge/Exercises/Exercises.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stavki.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../stavki.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

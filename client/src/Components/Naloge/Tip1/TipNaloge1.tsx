@@ -24,7 +24,7 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
     setSelectedWords((prevSelected) => [...prevSelected, word]);
   };
 
- 
+
   const handleWordClickSelected = (word: string) => {
     onRemoveSelected1(word);
     setSelectedWords((prevWords) => prevWords.filter((w) => w !== word));
@@ -56,64 +56,95 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
 
 
   return (
-<Container className="my-component mx-auto">
-      <Row>
-        <Col></Col>
-      </Row>
-      <form onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={(e) => e.preventDefault()}>
+      <Container className="my-component1">
+        <Row>
+          <Col></Col>
+        </Row>
+
         <Row>
           <Col>
             <h1 className="my-heading">Prevedite ta stavek</h1>
-           <h2> <div className="bubble">{exercise.sentence}</div></h2>
+            <h2> <div className="bubble1">{exercise.sentence}</div></h2>
           </Col>
         </Row>
         <hr />
         <Row>
           <Col>
             {selectedWords.map((word, index) => (
-              <Badge pill  key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1">
+              <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1">
                 {word}
               </Badge>
             ))}
           </Col>
-          <br></br>  <br></br>
+          <br></br>
         </Row>
         <hr />
         <Row>
           <Col>
-       
-          <div className="bubble">
-            <h3 className="my-subheading">Razpoložljive besede: </h3>
-            {exercise.availableWords.map((word, index) => (
-              <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1">
-                {word}
-              </Badge>
-            ))}
+
+            <div className="bubble1_1">
+
+              {exercise.availableWords.map((word, index) => (
+                <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1">
+                  {word}
+                </Badge>
+              ))}
             </div>
-         
+
           </Col>
         </Row>
         <br />
         <Row>
-        <Col className="d-flex justify-content-end">
-            <Button onClick={handleCheck}>Check Answer</Button>
-            <Modal show={showModal} onHide={handleCloseModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${translation}"`}
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
-                  Zapri
-                </Button>
-              </Modal.Footer>
-            </Modal>
+          <Col className="d-flex justify-content-end">
+
           </Col>
         </Row>
-      </form>
-    </Container>
+      </Container>
+
+
+
+      <div className="fixed-bottom">
+      <div className="container-fluid">
+        <div className="upper-line"></div>
+        <Row className="align-items-center">
+          <Col xs={4} md={4} className="text-end">
+           
+            <Button  className="custom-button1 btn-sm">
+              Preskoči
+            </Button>
+          </Col>
+          <Col xs={4} md={4}></Col>
+          <Col xs={4} md={4} className="text-start">
+          <Button  onClick={handleCheck} className="custom-button1 btn-sm flex-grow-0">
+              Preveri rešitev
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    </div>
+
+
+
+
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${translation}"`}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Zapri
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </form>
+
+
+
   );
 };
 

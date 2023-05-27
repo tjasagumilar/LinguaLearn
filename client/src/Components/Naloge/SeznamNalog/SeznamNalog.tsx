@@ -48,7 +48,7 @@ const SeznamNalog = () => {
                 <Col md={3} key={index}>
                   <Card className="mb-4 h-100">
                     <Card.Body className="d-flex flex-column align-items-center justify-content-center">
-                      <a href={`${updatedNalog.link}?tezavnost=${selectedDifficulty}`} className="text-decoration-none text-reset">
+                      <a href={`${updatedNalog.link}`} className="text-decoration-none text-reset">
                         <div className="mb-2">
                           <div>{updatedNalog.icon}</div>
                         </div>     

@@ -1,10 +1,10 @@
-.my-component {
+.my-component1 {
   font-family: 'Roboto', sans-serif;
-  background-color: #f8f9fa;
-  color: #343a40;
+  background-color: #ffffff;
+  color: #000000;
   padding: 20px;
   border-radius: 5px;
-  width: 100%; 
+  width: 50%; 
 }
 
 .my-row {
@@ -26,14 +26,45 @@
   transition: transform 0.2s;
 }
 
-.my-badge-tip-naloge1:hover {
-  transform: scale(0.9);
-}
-
-.bubble {
+.bubble1 {
   padding: 15px;
-  background-color: #e9ecef;
+  background-color: #ffffff;
   border-radius: 15px;
   margin-bottom: 10px;
 }
 
+
+.my-badge-tip-naloge1_1 {
+  cursor: pointer;
+  margin: 3px;
+  font-size: 0.9em; /* Increase the font size to make the badges bigger */
+  padding: 8px 12px; /* Adjust the padding as needed */
+  transition: transform 0.2s;
+  border: 1px solid gray;
+  background-color: white !important;
+  color: black;
+  border-radius: 15px; /* Adjust the border-radius to achieve a softer shape */
+}
+.bubble1_1 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* To handle the overflow of badges if there are many */
+}
+
+.fixed-bottom-container {
+  position: relative;
+}
+
+.upper-line {
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 20px;
+}
+
+.fixed-bottom {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}.custom-button1 {
+  font-size: 14px;
+  padding: 8px 20px;
+}
