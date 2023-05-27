@@ -98,6 +98,19 @@ a {
   width: 100%;
 }
 
+.pozabljeno-button a {
+  text-decoration: none;
+  color: black !important;
+}
+
+.pozabljeno-button a:hover {
+  text-decoration: underline;
+}
+
+.pozabljeno-button {
+  margin: 5px;
+}
+
 .login-button button:hover,
 .ustvari-button button:hover {
   background: rgba(47, 90, 237, 0.8);

@@ -6,7 +6,8 @@ const Profil = () => {
     const [username, setUsername] = useState('');
     const [ime, setIme] = useState('');
     const [priimek, setPriimek] = useState('');
-    // const [uid, setUid] = useState('');
+    const [slika, setSlika] = useState('');
+    const [path, setPath] = useState('');
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -18,11 +19,14 @@ const Profil = () => {
                         setIme(data.ime);
                         setPriimek(data.priimek);
                         setUsername(data.username);
+                        setSlika(data.slika);
+                        setPath(require(`../../Assets/${data.slika}`));
                     })
                     .catch(error => {
                         console.log(error);
                     });
             }
+
         });
     }, []);
 
@@ -32,7 +36,7 @@ const Profil = () => {
                 <div className="uporabnik-box">
                     <div className="uporabnik">
                         <div className="uporabnik-slika">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png"></img>
+                        <img src={path}/>
                         </div>
                         <div className="uporabnik-podatki">
                             <span>{username}</span>
@@ -43,10 +47,7 @@ const Profil = () => {
                         <a href="/uredi"><button>Uredi profil</button></a>
                     </div>
                 </div>
-
                 <div className="ostalo">
-
-
                 </div>
             </div>
         </div>

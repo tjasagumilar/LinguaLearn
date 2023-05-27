@@ -102,10 +102,10 @@ app.post('/izbirajezika', (req, res) => {
 
 // UREJANJE PROFILA 
 app.post('/uredi', (req, res) => {
-  const { uid, username, ime, priimek } = req.body;
+  const { uid, username, ime, priimek, slika } = req.body;
 
   dbFire.collection('users').doc(uid)
-    .set({ username: username, ime: ime, priimek: priimek }, { merge: true })
+    .set({ username: username, ime: ime, priimek: priimek, slika: slika }, { merge: true })
     .then(() => {
       res.sendStatus(200);
     })
@@ -190,19 +190,19 @@ app.get('/generate', (req, res) => {
     try {
       const jsonData = JSON.parse(outputData);
       const statement = jsonData.statement;
-      const difficulty = req.query.difficulty; 
+      const difficulty = req.query.difficulty;
 
-     
-        translatte(statement, { to: 'de' })
-          .then(translationResult => {
-            const translation = translationResult.text;
-            res.json({ translation, statement });
-          })
-          .catch(err => {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
-          });
-      
+
+      translatte(statement, { to: 'de' })
+        .then(translationResult => {
+          const translation = translationResult.text;
+          res.json({ translation, statement });
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+        });
+
     } catch (err) {
       console.error(err);
       res.status(500).send('Invalid JSON data');
@@ -247,9 +247,9 @@ app.get('/generateWord', (req, res) => {
       const randomIndex3 = Math.floor(Math.random() * words.length);
       const randomWord = words[randomIndex];
       const randomWord2 = words[randomIndex2];
-      const randomWord3= words[randomIndex3];
+      const randomWord3 = words[randomIndex3];
 
-      res.json({randomWord, randomWord2, randomWord3});
+      res.json({ randomWord, randomWord2, randomWord3 });
     });
 });
 
@@ -267,7 +267,7 @@ app.get('/generateWordOne', (req, res) => {
 
       const randomWord = words[randomIndex];
 
-      res.json({randomWord});
+      res.json({ randomWord });
     });
 });
 
@@ -294,9 +294,9 @@ app.get('/slika', (req, res) => {
 
   axios.get('http://localhost:4000/generirajSliko')
     .then(response => {
-      const query = response.data; 
+      const query = response.data;
       const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
- 
+
 
       axios.get(URL)
         .then(response => {
@@ -327,7 +327,7 @@ app.get('/tts', (req, res) => {
     slow: false,
     host: 'https://translate.google.com',
   });
-  res.json({url: url})
+  res.json({ url: url })
 });
 
 

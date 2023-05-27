@@ -7,7 +7,6 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import 'firebase/compat/analytics';
-import Nav from "react-bootstrap/Nav";
 
 
 
@@ -17,34 +16,34 @@ const Signin = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
-/*
-    const navigate = useNavigate();
-
-    const handleSubmit = () => {
-
-        const formData = {
-            email: email,
-            password: password,
-        };
-
-        fetch('http://localhost:5000/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    navigate('/');
-                }
+    /*
+        const navigate = useNavigate();
+    
+        const handleSubmit = () => {
+    
+            const formData = {
+                email: email,
+                password: password,
+            };
+    
+            fetch('http://localhost:5000/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             })
-            .catch(error => {
-                console.log(error);
-            });
-
-    };
-*/
+                .then(response => {
+                    if (response.status === 200) {
+                        navigate('/');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+    
+        };
+    */
 
     const history = useNavigate();
 
@@ -95,10 +94,8 @@ const Signin = () => {
                 <div className="login-button">
                     <button onClick={signInWithGoogle}>Google Prijava</button>
                 </div>
-                <div className="login-button">
-                    <Nav.Link href="/forgot">
-                        <button>Pozabljeno geslo</button>
-                    </Nav.Link>
+                <div className="pozabljeno-button">
+                    <a href="/forgot">Pozabljeno geslo</a>
                 </div>
                 <ErrorText error={error} />
             </div>

@@ -2,12 +2,21 @@ import { Button, Container, Form } from "react-bootstrap";
 import { auth } from "../../../Config/firebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Uredi.css"
+import avatar1 from "../../../Assets/avatar1.png";
+import avatar2 from "../../../Assets/avatar2.png";
+import avatar3 from "../../../Assets/avatar3.png";
+import avatar4 from "../../../Assets/avatar4.png";
+import avatar5 from "../../../Assets/avatar5.png";
+import avatar6 from "../../../Assets/avatar6.png";
+
 
 const Uredi = () => {
     const [username, setUsername] = useState('');
     const [ime, setIme] = useState('');
     const [priimek, setPriimek] = useState('');
     const [uid, setUid] = useState('');
+    const [slika, setSlika] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,6 +29,9 @@ const Uredi = () => {
                         setIme(data.ime);
                         setPriimek(data.priimek);
                         setUsername(data.username);
+                        setSlika(data.slika);
+
+
                     })
                     .catch(error => {
                         console.log(error);
@@ -35,7 +47,8 @@ const Uredi = () => {
             uid: uid,
             username: username,
             ime: ime,
-            priimek: priimek
+            priimek: priimek,
+            slika: slika
         }
 
         fetch('http://localhost:4000/uredi', {
@@ -62,6 +75,75 @@ const Uredi = () => {
             <Container>
                 <h2>Uredi profil</h2>
                 <Form>
+                    <Form.Group className="mb-4">
+                        <label>
+                            <img src={avatar1}></img>
+                            <Form.Check
+                                inline
+                                name="group1"
+                                type="radio"
+                                id="1"
+                                checked={slika === 'avatar1.png'}
+                                onChange={() => setSlika('avatar1.png')}
+                            />
+                        </label>
+                        <label>
+                            <img src={avatar2} ></img>
+                            <Form.Check
+                                inline
+                                name="group1"
+                                type="radio"
+                                id="2"
+                                checked={slika === 'avatar2.png'}
+                                onChange={() => setSlika('avatar2.png')}
+                            />
+                        </label>
+                        <label>
+                            <img src={avatar3}></img>
+                            <Form.Check
+                                inline                            
+                                name="group1"
+                                type="radio"
+                                id="3"
+                                checked={slika === 'avatar3.png'}
+                                onChange={() => setSlika('avatar3.png')}
+                            />
+                        </label>
+                        <label>
+                            <img src={avatar4}></img>
+                            <Form.Check
+                                inline                             
+                                name="group1"
+                                type="radio"
+                                id="4"
+                                checked={slika === 'avatar4.png'}
+                                onChange={() => setSlika('avatar4.png')}
+                            />
+                        </label>
+                        <label>
+                            <img src={avatar5}></img>
+                            <Form.Check
+                                inline               
+                                name="group1"
+                                type="radio"
+                                id="5"
+                                checked={slika === 'avatar5.png'}
+                                onChange={() => setSlika('avatar5.png')}
+                            />
+                        </label>
+                        <label>
+                            <img src={avatar6}></img>
+                            <Form.Check
+                                inline        
+                                name="group1"
+                                type="radio"
+                                id="6"
+                                checked={slika === 'avatar6.png'}
+                                onChange={() => setSlika('avatar6.png')}
+                            />
+                        </label>
+                    </Form.Group>
+
                     <Form.Group className="mb-4">
                         <Form.Control type="text" placeholder="Vnesite uporabniško ime" onChange={event => setUsername(event.target.value)} value={username} />
                     </Form.Group>
