@@ -10,11 +10,13 @@ import Profil from './Components/Profil/Profil';
 import MojiJeziki from './Components/MojiJeziki/MojiJeziki';
 import Chat from "./Components/Chat/Chat";
 import IzberiJezik from './Components/MojiJeziki/IzberiJezik/IzberiJezik';
-import Exercises from './Components/Naloge/Tip1/Exercises';
+import Exercises from './Components/Naloge/Exercises/Exercises';
 import Uredi from './Components/Profil/Uredi/Uredi';
 import Forgot from "./Components/Prijava/Forgot/Forgot";
 import Reset from "./Components/Prijava/Reset/Reset";
-import SeznamNalog from './Components/Naloge/Tip1/SeznamNalog';
+import SeznamNalog from './Components/Naloge/SeznamNalog/SeznamNalog';
+import { render } from '@testing-library/react';
+
 
 const router = createBrowserRouter([
   {
@@ -51,7 +53,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/naloge',
-        element: <SeznamNalog />
+        element: <SeznamNalog  />
+      },
+      {
+        path: "/generirajNaloge/:tipNaloge",
+        element: <Exercises />
       },
       {
         path: '/uredi',

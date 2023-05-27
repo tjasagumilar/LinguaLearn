@@ -19,16 +19,27 @@
   font-size: 1.25em;
 }
 
-.my-badge-tip-naloge1 {
+.my-badge-tip-naloge2 {
   cursor: pointer;
   margin: 3px;
   font-size: 1.2em;
   transition: transform 0.2s;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
 }
 
-.my-badge-tip-naloge1:hover {
+.my-badge-tip-naloge2.isSelected {
+  background-color: #180680;
+  box-shadow: none;
+}
+
+.my-badge-tip-naloge2:hover {
   transform: scale(0.9);
 }
+
 
 .bubble {
   padding: 15px;

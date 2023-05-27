@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TipNaloge2.css'
-import { Exercise } from './Exercises';
+import { Exercise } from '../Exercises/Exercises';
 
 interface TipNaloge2Props {
   exercise: Exercise

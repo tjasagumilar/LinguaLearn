@@ -1,0 +1,19 @@
+.card {
+    transition: box-shadow .3s;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    color: #000;
+  }
+  
+  .card-text {
+    color: #000;
+  }.custom-card {
+    background-color: #f1f1f1;
+  }
+  

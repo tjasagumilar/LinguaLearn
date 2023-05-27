@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-import TipNaloge1 from './TipNaloge1';
-import TipNaloge2 from './TipNaloge2';
-import TipNaloge3 from './TipNaloge3';
+import TipNaloge1 from '../Tip1/TipNaloge1';
+import TipNaloge2 from '../Tip2/TipNaloge2';
+import TipNaloge3 from '../Tip3/TipNaloge3';
+import { useParams } from 'react-router';
+import { Container, Row, Col, Button, ProgressBar ,  Badge } from 'react-bootstrap';
+import './Exercises.css'
+
 
 
 
 export interface Exercise {
-    type: string,
-    sentence: string;
-    availableWords: string[];
-    pageURL?: string
+  type: string,
+  sentence: string;
+  availableWords: string[];
+  pageURL?: string
 }
+
+
 
 const Exercises = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const isFirstRender = useRef(true);
+  const { tipNaloge } = useParams();
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -28,23 +35,34 @@ const Exercises = () => {
       try {
         const exercisePromises = [];
         const numExercises = 10;
-    
+
         for (let i = 0; i < numExercises; i++) {
           let exercisePromise;
-    
-          const random = Math.random();
-    
-          if (random < 0.33) {
+
+          if (tipNaloge == "random") {
+            const random = Math.random();
+            if (random < 0.33) {
+              exercisePromise = fetchStavekExercise();
+            } else if (random < 0.66) {
+              exercisePromise = fetchStavek2Exercise();
+            } else {
+              exercisePromise = fetchStavek3Exercise();
+            }
+
+            exercisePromises.push(exercisePromise);
+
+          } else if (tipNaloge == "poved") {
             exercisePromise = fetchStavekExercise();
-          } else if (random < 0.66) {
+            exercisePromises.push(exercisePromise);
+          } else if (tipNaloge == "beseda") {
             exercisePromise = fetchStavek2Exercise();
-          } else {
+            exercisePromises.push(exercisePromise);
+          } else if (tipNaloge == "slika") {
             exercisePromise = fetchStavek3Exercise();
+            exercisePromises.push(exercisePromise);
           }
-    
-          exercisePromises.push(exercisePromise);
         }
-    
+
         const generatedExercises = await Promise.all(exercisePromises);
         setExercises(generatedExercises);
         setIsLoading(false);
@@ -69,16 +87,16 @@ const Exercises = () => {
     }
 
     const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord; 
+    const generatedWord1 = wordsData.randomWord;
     const generatedWord2 = wordsData.randomWord2;
     const generatedWord3 = wordsData.randomWord3;
-      
+
     const words = data.statement.split(' ');
     const mix = [...words].sort(() => Math.random() - 0.5);
     const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
     const dataNew = [...mix];
-    dataNew.splice(random[0], 0, generatedWord1); 
-    dataNew.splice(random[1], 0, generatedWord2); 
+    dataNew.splice(random[0], 0, generatedWord1);
+    dataNew.splice(random[1], 0, generatedWord2);
     dataNew.splice(random[1], 0, generatedWord3);
 
     const exerciseData = {
@@ -109,12 +127,12 @@ const Exercises = () => {
 
     const prevod = await prevodResponse.json();
     const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord; 
+    const generatedWord1 = wordsData.randomWord;
     const generatedWord2 = wordsData.randomWord2;
     const generatedWord3 = wordsData.randomWord3;
     const dataNew = [generatedWord1, generatedWord2, generatedWord3, data.randomWord];
     console.log(dataNew)
-    
+
     for (let i = dataNew.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
@@ -149,12 +167,12 @@ const Exercises = () => {
 
     const prevod = await prevodResponse.json();
     const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord; 
+    const generatedWord1 = wordsData.randomWord;
     const generatedWord2 = wordsData.randomWord2;
     const generatedWord3 = wordsData.randomWord3;
     const dataNew = [generatedWord1, generatedWord2, generatedWord3, data.beseda];
     console.log(dataNew)
-    
+
     for (let i = dataNew.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
@@ -174,78 +192,94 @@ const Exercises = () => {
 
 
 
-const handleNextExercise = () => {
+  const handleNextExercise = () => {
     setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
   };
 
 
   const onRemoveAvailable1 = (word: string) => {
     setExercises((prevExercises) =>
-    prevExercises.map((exercise, index) =>
-      index === currentExerciseIndex
-        ? {
+      prevExercises.map((exercise, index) =>
+        index === currentExerciseIndex
+          ? {
             ...exercise,
             availableWords: exercise.availableWords.filter((w) => w !== word),
           }
-        : exercise
+          : exercise
+      )
+    );
+  };
+
+  const onRemoveSelected1 = (word: string) => {
+    setExercises((prevExercises) =>
+      prevExercises.map((exercise, index) =>
+        index === currentExerciseIndex
+          ? {
+            ...exercise,
+            availableWords: [...exercise.availableWords, word]
+          }
+          : exercise
+      )
     )
-  );
-};
-
- const onRemoveSelected1 = (word: string) => {
-  setExercises((prevExercises) =>
-  prevExercises.map((exercise, index) =>
-    index === currentExerciseIndex
-    ? {
-      ...exercise,
-      availableWords: [...exercise.availableWords, word]
-    }
-    :exercise
-  )
-  )
- }
+  }
 
 
- const onAddExercise = (exerciseData: Exercise) => {
-  console.log("2x")
-  setExercises(prevExercises => [...prevExercises, exerciseData]);
- }
+  const onAddExercise = (exerciseData: Exercise) => {
+    console.log("2x")
+    setExercises(prevExercises => [...prevExercises, exerciseData]);
+  }
 
 
   const currentExercise = exercises[currentExerciseIndex];
-const currentIndex = exercises.indexOf(currentExercise);
+  const currentIndex = exercises.indexOf(currentExercise);
 
-const isLastExercise = currentExerciseIndex === exercises.length - 1;
 
-if (isLoading) {
-  return <p>Loading exercises...</p>;
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner"></div>
+      </div>
+    );
 }
 
-return (
-  <div>
-    <h2>Naloga {currentIndex + 1}/{exercises.length}</h2>
-    {currentExercise.type === "stavek" ? (
-      <TipNaloge1
-        exercise={currentExercise}
-        onRemoveAvailable1={onRemoveAvailable1}
-        onRemoveSelected1={onRemoveSelected1}
-        onAddExercise={onAddExercise}
-      />
-    ) : currentExercise.type === "beseda" ? (
-      <TipNaloge2 exercise={currentExercise} />
-    ) : currentExercise.type === "slika" ? (
-      <TipNaloge3 exercise={currentExercise} />
-    ) : null}
-    {isLastExercise ? (
-      <p>Zadnja naloga.</p>
-    ) : (
-      <button type="button" onClick={handleNextExercise}>
-        Naslednja naloga
-      </button>
-      
-    )}
-  </div>
-);
+
+  return (
+    <Container>
+      <br></br>
+    <div className="d-flex justify-content-between align-items-center">
+      <div>
+      </div>
+
+      <div className="main-component mx-auto">
+      <ProgressBar
+  striped
+  variant="sucess"
+  now={(currentIndex + 1) * (100 / exercises.length)}
+  label={`${Math.round((currentIndex + 1) * (100 / exercises.length))}%`}
+  className="custom-progress-bar"
+/>
+  
+ 
+
+      {currentExercise.type === "stavek" ? (
+        <TipNaloge1
+          exercise={currentExercise}
+          onRemoveAvailable1={onRemoveAvailable1}
+          onRemoveSelected1={onRemoveSelected1}
+          onAddExercise={onAddExercise}
+          onCheck={handleNextExercise}
+        />
+      ) : currentExercise.type === "beseda" ? (
+        <TipNaloge2 exercise={currentExercise} />
+      ) : currentExercise.type === "slika" ? (
+        <TipNaloge3 exercise={currentExercise} />
+      ) : null}
+         </div>
+    </div>
+    
+    
+     </Container>
+  );
 
 }
 export default Exercises;
