@@ -7,67 +7,72 @@ Pridruži se skupnosti ljudi, ki so enako zagnani do učenja jezikov kot ti!
 
 ## Features
 
-- Interactive language exercises
-- Vocabulary building
-- Grammar lessons
-- Progress tracking
-- Community forums
+- Interaktivne jezikovne vaje
+- Gradnja besedišča
+- Učne ure za slovnico
+- Sledenje napredku
+- Skupnostni forumi
 
 ## Demo
 
-Check out the live demo of LinguaLearn [here](https://your-lingualearn-demo-url.com).
+Preveri živi demo LinguaLearn [tukaj](https://your-lingualearn-demo-url.com).
 
-## Table of Contents
+## Kazalo vsebine
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+- [Namestitev](#installation)
+- [Uporaba](#usage)
+- [Sodelovanje](#contributing)
+- [Licenca](#license)
+- [Zahvale](#acknowledgements)
 
-## Installation
+## Namestitev
 
-1. Clone the repository:
+1. Kloniraj repozitorij:
 
    ```sh
    https://github.com/tjasagumilar/LinguaLearn.git
 
-2. Install dependencies:
+2. Namesti odvisnosti:
 
 - cd LinguaLearn
+
+- cd client
 - npm install
 
-## Usage
+- cd server
+- npm install
 
-1. Start the development server:
+## Uporaba
+
+1. Zaženi razvojni strežnik:
 
    npm start
 
-2. Open your web browser and visit http://localhost:3000 to access LinguaLearn.
+2. Odpri spletni brskalnik in obišči http://localhost:3000, da dostopaš do LinguaLearn.
 
-## Contributing
+## Sodelovanje
 
-Contributions are welcome! If you'd like to contribute to LinguaLearn, please follow these steps:
+Prispevanja so dobrodošla! Če želiš prispevati k LinguaLearn, sledi tem korakom:
 
-1. Fork the project repository.
-2. Create a new branch for your feature or bug fix.
-3. Implement your feature or make necessary bug fixes.
-4. Commit and push your changes.
-5. Submit a pull request.
+1. Forkaj projektov repozitorij.
+2. Ustvari nov branch za svojo funkcionalnost ali popravilo napake.
+3. Implementiraj svojo funkcionalnost ali naredi potrebne popravke napak.
+4. Commitaj in potisni spremembe.
+5. Predloži zahtevek za poteg v glavno vejo (pull request).
 
-Please make sure to follow the Code of Conduct when contributing.
+Prosimo, upoštevaj Pravila obnašanja pri sodelovanju.
 
-## License
-    
-This project is licensed under the MIT License.
+## Licenca
 
-## Acknowledgements
+Ta projekt je licenciran pod MIT licenco.
 
-- Library/Framework used
-- Inspiration or resources
+## Zahvale
+
+- Uporabljena knjižnica/okvir
+- Navdih ali viri
 
 
-In this template, you'll find the following sections:
+V tej predlogi najdeš naslednje sekcije:
 
 - **Title**: Provide the name of your project at the top of the README.
 - **Description**: Briefly describe your LinguaLearn project.
@@ -80,6 +85,6 @@ In this template, you'll find the following sections:
 - **License**: Specify the license under which the project is distributed.
 - **Acknowledgements**: Give credit to any libraries, frameworks, or resources used in the development of the project.
 
-Remember to replace the placeholders with actual information relevant to your project, such as the project's repository URL, live demo URL, and any acknowledgements for libraries or frameworks used.
+Prosimo, da zamenjaš označevalce z dejanskimi informacijami, ki so relevantne za tvoj projekt, kot so URL repozitorija projekta, URL živega demoja in zahvale za uporabljene knjižnice ali okvirje.
 
-Additionally, you can add other sections to your README.md file if needed, such as a section for deployment instructions, troubleshooting, or frequently asked questions (FAQs) related to your project.
+Poleg tega lahko dodajaš tudi druge sekcije v svojo README.md datoteko, če je to potrebno, kot na primer sekcijo za navodila o namestitvi, odpravljanje težav ali pogosta vprašanja (FAQ) glede projekta.
