@@ -88,10 +88,10 @@ app.post('/signin', async (req, res) => {
 
 //IZBIRA JEZIKA 
 app.post('/izbirajezika', (req, res) => {
-  const { jezik, nivo, uid } = req.body;
+  const { jezik, naziv, nivo, uid, path } = req.body;
 
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, nivo: nivo })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, path: path })
     .then(() => {
       res.sendStatus(200);
     })
@@ -103,10 +103,10 @@ app.post('/izbirajezika', (req, res) => {
 
 // UREJANJE PROFILA 
 app.post('/uredi', (req, res) => {
-  const { uid, username, ime, priimek, slika, opis} = req.body;
+  const { uid, username, ime, priimek, slika, opis } = req.body;
 
   dbFire.collection('users').doc(uid)
-    .set({ username: username, ime: ime, priimek: priimek, slika: slika, opis: opis}, { merge: true })
+    .set({ username: username, ime: ime, priimek: priimek, slika: slika, opis: opis }, { merge: true })
     .then(() => {
       res.sendStatus(200);
     })
@@ -136,6 +136,21 @@ app.get('/uporabnik', (req, res) => {
       res.status(500).send('Internal server error');
     });
 
+});
+
+//PRIDOBITEV IZBRANIH JEZIKOV DOLOČENEGA UPORABNIKA
+app.get('/mojijeziki', async (req, res) => {
+  const uid = req.query.uid;
+
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const querySnapshot = await jezikiRef.get();
+  const jezikiData = [];
+
+  querySnapshot.forEach((doc) => {
+    jezikiData.push(doc.data());
+  });
+
+  res.send(jezikiData);
 });
 
 //-------------------------------------------------
