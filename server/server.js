@@ -176,43 +176,27 @@ app.get('/g', (req, res) => {
 });
 
 // generiraj poved glede na težavnost - RANDOM NALOGE
+const { spawn } = require('child_process');
 
 app.get('/generate', (req, res) => {
-  const { spawn } = require('child_process');
-  const pyProg = spawn('python', ['python/main.py']);
+  const difficulty = 0;
+  const pyProg = spawn('python', ['python/main.py', difficulty]);
   let outputData = '';
 
-  pyProg.stdout.on('data', function (data) {
-    outputData += data.toString();
+  pyProg.stdout.on('data', data => outputData += data.toString());
+
+  pyProg.stdout.on('end', () => {
+    const { statement, prediction, difficulty } = JSON.parse(outputData);
+    translatte(statement, { to: 'zh' }).then(translationResult => 
+      res.json({ 
+        translation: translationResult.text, 
+        statement, 
+        prediction, 
+        difficulty 
+      }));
   });
 
-  pyProg.stdout.on('end', function () {
-    try {
-      const jsonData = JSON.parse(outputData);
-      const statement = jsonData.statement;
-      const difficulty = req.query.difficulty;
-
-
-      translatte(statement, { to: 'zh' })
-        .then(translationResult => {
-          const translation = translationResult.text;
-          res.json({ translation, statement });
-        })
-        .catch(err => {
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-        });
-
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Invalid JSON data');
-    }
-  });
-
-  pyProg.stderr.on('data', function (data) {
-    console.error(data.toString());
-    res.status(500).send('Python Process Error');
-  });
+  pyProg.stderr.on('data', data => console.error(data.toString()));
 });
 
 // prevedi poved ali besedo

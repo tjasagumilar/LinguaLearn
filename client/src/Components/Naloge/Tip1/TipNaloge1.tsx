@@ -57,72 +57,64 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <Container className="my-component1">
-        <Row>
-          <Col></Col>
-        </Row>
-
-        <Row>
-          <Col>
-            <h1 className="my-heading">Prevedite ta stavek</h1>
-            <h2> <div className="bubble1">{exercise.sentence}</div></h2>
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
+   <Container className="p-3 rounded bg-white text-dark w-50">   
+    <Row className="mt-2">
+        <Col>
+            <h1 className="fw-bold">Prevedite ta stavek</h1>
+            <h2> <div className="p-1 rounded">{exercise.sentence}</div></h2>
+        </Col>
+    </Row>
+    <hr />
+    <Row className="bubble1_1 mt-2">
+        <Col>
             {selectedWords.map((word, index) => (
-              <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1">
+              <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
                 {word}
               </Badge>
             ))}
-          </Col>
-          <br></br>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
-
-            <div className="bubble1_1">
-
+        </Col>
+        <br></br>
+    </Row>
+    <hr />
+    <Row className="bubble1_1 mt-2">
+        <Col>
+            <div className="p-1 rounded">
               {exercise.availableWords.map((word, index) => (
-                <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1">
+                <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
                   {word}
                 </Badge>
               ))}
             </div>
-
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col className="d-flex justify-content-end">
-
-          </Col>
-        </Row>
-      </Container>
+        </Col>
+    </Row>
+    <br />
+    <Row>
+        <Col className="d-flex justify-content-end">
+        </Col>
+    </Row>
+</Container>
 
 
 
       <div className="fixed-bottom">
-      <div className="container-fluid">
-        <div className="upper-line"></div>
-        <Row className="align-items-center">
-          <Col xs={4} md={4} className="text-end">
-           
-            <Button  className="custom-button1 btn-sm">
-              Preskoči
-            </Button>
-          </Col>
-          <Col xs={4} md={4}></Col>
-          <Col xs={4} md={4} className="text-start">
-          <Button  onClick={handleCheck} className="custom-button1 btn-sm flex-grow-0">
-              Preveri rešitev
-            </Button>
-          </Col>
-        </Row>
+        <div className="container-fluid">
+          <div className="upper-line"></div>
+          <Row className="align-items-center">
+            <Col xs={4} md={4} className="text-end">
+
+              <Button className="custom-button1 btn-sm">
+                Preskoči
+              </Button>
+            </Col>
+            <Col xs={4} md={4}></Col>
+            <Col xs={4} md={4} className="text-start">
+              <Button onClick={handleCheck} className="custom-button1 btn-sm flex-grow-0">
+                Preveri rešitev
+              </Button>
+            </Col>
+          </Row>
+        </div>
       </div>
-    </div>
 
 
 
