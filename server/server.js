@@ -150,7 +150,6 @@ app.get('/mojijeziki', async (req, res) => {
     jezikiData.push(doc.data());
   });
 
-  console.log(jezikiData);
   res.send(jezikiData);
 });
 
