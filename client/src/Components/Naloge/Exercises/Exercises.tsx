@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { Container, Row, Col, Button, ProgressBar ,  Badge, Modal } from 'react-bootstrap';
 import './Exercises.css'
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../../../Config/firebase';
 
 
 
@@ -30,6 +31,7 @@ const Exercises = () => {
   const { tipNaloge } = useParams();
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [uid, setUid] = useState('');
 
   const redirectToPage = () => {
     setShowConfirmation(true);
@@ -48,7 +50,16 @@ const Exercises = () => {
       return;
     }
 
-    const generateExercises = async () => {
+    const checkAuthState = () => {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          setUid(user.uid);
+          generateExercises(user.uid); 
+        }
+      });
+    }
+
+    const generateExercises = async (uid: string) => {
       try {
         const exercisePromises = [];
         const numExercises = 10;
@@ -59,7 +70,7 @@ const Exercises = () => {
           if (tipNaloge == "random") {
             const random = Math.random();
             if (random < 0.33) {
-              exercisePromise = fetchStavekExercise();
+              exercisePromise = fetchStavekExercise(uid);
             } else if (random < 0.66) {
               exercisePromise = fetchStavek2Exercise();
             } else {
@@ -69,7 +80,7 @@ const Exercises = () => {
             exercisePromises.push(exercisePromise);
 
           } else if (tipNaloge == "poved") {
-            exercisePromise = fetchStavekExercise();
+            exercisePromise = fetchStavekExercise(uid);
             exercisePromises.push(exercisePromise);
           } else if (tipNaloge == "beseda") {
             exercisePromise = fetchStavek2Exercise();
@@ -88,11 +99,12 @@ const Exercises = () => {
       }
     };
 
-    generateExercises();
+    checkAuthState()
   }, []);
 
-  const fetchStavekExercise = async () => {
-    const response = await fetch('http://localhost:4000/generate');
+  const fetchStavekExercise = async (uid:string) => {
+    const response = await fetch(`http://localhost:4000/generate?uid=${uid}`)
+    console.log(uid)
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }

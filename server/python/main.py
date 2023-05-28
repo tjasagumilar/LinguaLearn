@@ -164,34 +164,27 @@ def klasificiraj_poved():
     # print("The Gunning Fog Index is:", gunning_fog)
 
     data = [[word_count, lexical_density, lexical_diversity, reading_ease, grade_level, gunning_fog]]
-
     model_path = os.path.join(os.path.dirname(__file__), '..', 'modelX.pkl')
     model = joblib.load(model_path)
+    column_names = ["word_count", "lexical_density", "lexical_diversity", "reading_ease", "grade_level", "gunning_fog"]
+    data = pd.DataFrame(data, columns=column_names)
+    prediction = model.predict(data).tolist()[0]
 
-    csv_path = os.path.join(os.path.dirname(__file__), '..', 'csv.csv')
-    training_data = pd.read_csv(csv_path)
 
-    feature_names = training_data.drop(['statement', 'difficulty'], axis=1).columns
+    difficulty = sys.argv[1];
 
-    data_df = pd.DataFrame(data, columns=feature_names)
-
-    if len(sys.argv) > 1:
-        difficulty = sys.argv[1]
-
-    else:
-        return
-
-    prediction = model.predict(data_df)[0]
-
-    # print("Prediction:", prediction)
-
-    data = {
+    dataToString = {
         'statement': statement2,
         'prediction': prediction,
-        'difficuly': difficulty
+        'difficulty': difficulty
     }
 
-    print(json.dumps(data))
+    max = int(difficulty) + 8
+    min = int(difficulty) - 5
+    if min <= prediction <= max:
+        print(json.dumps(dataToString))
+    else:
+        klasificiraj_poved()
 
 
 if __name__ == "__main__":

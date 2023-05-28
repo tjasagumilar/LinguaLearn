@@ -89,9 +89,9 @@ app.post('/signin', async (req, res) => {
 //IZBIRA JEZIKA 
 app.post('/izbirajezika', (req, res) => {
   const { jezik, naziv, nivo, uid, path } = req.body;
-
+  const tezavnost = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, path: path })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path })
     .then(() => {
       res.sendStatus(200);
     })
@@ -175,26 +175,27 @@ app.get('/fire', async (req, res) => {
 });
 
 
-app.get('/g', (req, res) => {
-  const exercises = [];
-
-  fs.createReadStream('exercises/statements.csv')
-    .pipe(csv())
-    .on('data', (row) => {
-      if (row.Difficulty === 'Easy') {
-        exercises.push(row.Statement);
-      }
-    })
-    .on('end', () => {
-      res.json(exercises);
-    });
-});
-
-// generiraj poved glede na težavnost - RANDOM NALOGE
+// generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
 
-app.get('/generate', (req, res) => {
-  const difficulty = 0;
+app.get('/generate', async (req, res) => {
+  const uid = req.query.uid;
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const querySnapshot = await jezikiRef.get();
+  let jezikiData;
+
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    if (data.tezavnost !== undefined) {
+      jezikiData = data.tezavnost;
+    }
+  });
+
+  console.log(jezikiData)
+
+  const difficulty = jezikiData
+  console.log(difficulty)
   const pyProg = spawn('python', ['python/main.py', difficulty]);
   let outputData = '';
 
@@ -202,12 +203,12 @@ app.get('/generate', (req, res) => {
 
   pyProg.stdout.on('end', () => {
     const { statement, prediction, difficulty } = JSON.parse(outputData);
-    translatte(statement, { to: 'zh' }).then(translationResult => 
-      res.json({ 
-        translation: translationResult.text, 
-        statement, 
-        prediction, 
-        difficulty 
+    translatte(statement, { to: 'de' }).then(translationResult =>
+      res.json({
+        translation: translationResult.text,
+        statement,
+        prediction,
+        difficulty
       }));
   });
 
@@ -219,7 +220,7 @@ app.get('/generate', (req, res) => {
 app.get('/prevedi/:statement', (req, res) => {
   const { statement } = req.params;
 
-  translatte(statement, { to: 'zh' })
+  translatte(statement, { to: 'de' })
     .then(translationResult => {
       const translation = translationResult.text;
       console.log(translation)
