@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Exercise } from '../Exercises/Exercises';
 
-interface TipNaloge2Props {
+interface TipNaloge3Props {
   exercise: Exercise
+  onCheck: () => void;
 }
 
 
-const TipNaloge2 = ({exercise}: TipNaloge2Props) => {
+const TipNaloge2 = ({exercise, onCheck}: TipNaloge3Props) => {
 
   const [selectedWord, setSelectedWord] = useState<string>();
 
@@ -26,6 +27,7 @@ const handleSubmit = (e: React.FormEvent) => {
       const translation = data.translation;
       if (exercise.sentence === translation) {
         alert('Pravilno!');
+        onCheck()
       } else {
         alert('Napačno!');
       }

@@ -18,16 +18,23 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
 
+  
   useEffect(() => {
-    setAudioSource(`http://localhost:4000/tts/${exercise.sentence}`);
-  }, [exercise.sentence]);
+    setAudioSource(prevAudioSource => {
+        const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+        if (prevAudioSource !== newAudioSource) {
+            if (audioRef.current) {
+                audioRef.current.load();
+            }
+            return newAudioSource;
+        }
+        return prevAudioSource;
+    });
+}, [exercise.sentence]);
 
-
-
-
- 
 
   const handleWordClickAvailable = (word: string) => {
     onRemoveAvailable1(word);
@@ -63,6 +70,21 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
     setShowModal(false);
   };
 
+  const handleHalfSpeed = () => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = 0.5;
+      audioRef.current.play();
+
+      audioRef.current.onended = () => {
+        if(audioRef.current){
+        audioRef.current.playbackRate = 1.0;
+        }
+      };
+    }
+  };
+
+
+
 
 
   return (
@@ -86,10 +108,21 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
         </Col>
         <br></br>
     </Row>
-    <audio controls>
-      <source src={audioSource} type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+    <button onClick={() => {
+  if (audioRef.current) {
+    audioRef.current.play();
+  }
+}}>
+  Play
+</button>
+<audio ref={audioRef} style={{ display: 'none' }}>
+  <source src={audioSource} type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+<button onClick={handleHalfSpeed}>
+  Play at speed 0.5x
+</button>
+
     <hr />
     <Row className="bubble1_1 mt-2">
         <Col>

@@ -5,9 +5,10 @@ import { Exercise } from '../Exercises/Exercises';
 
 interface TipNaloge2Props {
   exercise: Exercise;
+  onCheck: () => void;
 }
 
-const TipNaloge2 = ({ exercise }: TipNaloge2Props) => {
+const TipNaloge2 = ({ exercise , onCheck}: TipNaloge2Props) => {
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -33,6 +34,7 @@ const TipNaloge2 = ({ exercise }: TipNaloge2Props) => {
         const isAnswerCorrect = exercise.sentence === translation;
         setIsCorrect(isAnswerCorrect);
         setShowModal(true);
+        onCheck()
       })
       .catch(error => {
         console.error(error);

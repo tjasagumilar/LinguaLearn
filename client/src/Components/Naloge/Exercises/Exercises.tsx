@@ -28,7 +28,6 @@ const Exercises = () => {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const isFirstRender = useRef(true);
-  const { tipNaloge } = useParams();
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [uid, setUid] = useState('');
@@ -59,52 +58,61 @@ const Exercises = () => {
       });
     }
 
+    const saveExercises = async (exercises: Exercise[], uid: string) => {
+      try {
+        const response = await fetch('http://localhost:4000/saveExercises', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ exercises, uid }),
+        });
+    
+        if (response.ok) {
+          console.log('Exercises saved successfully');
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
     const generateExercises = async (uid: string) => {
       try {
         const exercisePromises = [];
         const numExercises = 10;
-
+      
         for (let i = 0; i < numExercises; i++) {
           let exercisePromise;
-
-          if (tipNaloge == "random") {
-            const random = Math.random();
-            if (random < 0.33) {
-              exercisePromise = fetchStavekExercise(uid);
-            } else if (random < 0.66) {
-              exercisePromise = fetchStavek2Exercise();
-            } else {
-              exercisePromise = fetchStavek3Exercise();
-            }
-
-            exercisePromises.push(exercisePromise);
-
-          } else if (tipNaloge == "poved") {
+      
+          const random = Math.random();
+          if (random < 0.33) {
             exercisePromise = fetchStavekExercise(uid);
-            exercisePromises.push(exercisePromise);
-          } else if (tipNaloge == "beseda") {
-            exercisePromise = fetchStavek2Exercise();
-            exercisePromises.push(exercisePromise);
-          } else if (tipNaloge == "slika") {
-            exercisePromise = fetchStavek3Exercise();
-            exercisePromises.push(exercisePromise);
+          } else if (random < 0.66) {
+            exercisePromise = fetchStavek2Exercise(uid);
+          } else {
+            exercisePromise = fetchStavek3Exercise(uid);
           }
+      
+          exercisePromises.push(exercisePromise);
         }
-
+      
         const generatedExercises = await Promise.all(exercisePromises);
+        saveExercises(generatedExercises, uid)
         setExercises(generatedExercises);
         setIsLoading(false);
       } catch (error) {
-        console.error(error);
+        console.error('An error occurred:', error);
       }
-    };
-
+    }
     checkAuthState()
   }, []);
 
   const fetchStavekExercise = async (uid:string) => {
-    const response = await fetch(`http://localhost:4000/generate?uid=${uid}`)
     console.log(uid)
+    const response = await fetch(`http://localhost:4000/generate?uid=${uid}`)
+  
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
@@ -137,14 +145,14 @@ const Exercises = () => {
     return exerciseData;
   };
 
-  const fetchStavek2Exercise = async () => {
+  const fetchStavek2Exercise = async (uid: string) => {
     const response = await fetch('http://localhost:4000/generateWordOne');
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch('http://localhost:4000/generateWord');
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -177,14 +185,14 @@ const Exercises = () => {
     return exerciseData;
   };
 
-  const fetchStavek3Exercise = async () => {
+  const fetchStavek3Exercise = async (uid:string) => {
     const response = await fetch('http://localhost:4000/slika');
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch('http://localhost:4000/generateWord');
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -316,9 +324,9 @@ return (
             onCheck={handleNextExercise}
           />
         ) : currentExercise.type === 'beseda' ? (
-          <TipNaloge2 exercise={currentExercise} />
+          <TipNaloge2 exercise={currentExercise} onCheck={handleNextExercise} />
         ) : currentExercise.type === 'slika' ? (
-          <TipNaloge3 exercise={currentExercise} />
+          <TipNaloge3 exercise={currentExercise} onCheck={handleNextExercise} />
         ) : null}
 
     <Modal

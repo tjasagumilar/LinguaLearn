@@ -174,6 +174,24 @@ app.get('/fire', async (req, res) => {
   }
 });
 
+// shrani naloge v bazo
+
+app.post('/saveExercises', async (req, res) => {
+  const { exercises, uid } = req.body;
+  console.log(uid)
+  console.log(exercises)
+
+  dbFire.collection('users').doc(uid).collection('naloge')
+    .add({ exercises })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Napaka:', error);
+      res.status(500).send('Napaka pri shranjevanju nalog.');
+    });
+});
+
 
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
@@ -219,7 +237,6 @@ app.get('/prevedi/:statement', (req, res) => {
   translatte(statement, { to: 'de' })
     .then(translationResult => {
       const translation = translationResult.text;
-      console.log(translation)
       res.json({ translation });
     })
     .catch(err => {
@@ -232,6 +249,7 @@ app.get('/prevedi/:statement', (req, res) => {
 
 app.get('/generateWord', async (req, res) => {
   const uid = req.query.uid;
+
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
   const querySnapshot = await jezikiRef.get();
   let jezikiData;
@@ -332,7 +350,6 @@ app.get('/slika', (req, res) => {
 // text to speech 
 app.get('/tts', async (req, res) => {
   const text = req.query.tts;
-  console.log(text)
   const url = googleTTS.getAudioUrl(text, {
     lang: 'en',
     slow: false,

@@ -71,7 +71,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: 'generirajNaloge/:tipNaloge',
+    path: 'generirajNaloge',
     element: <Exercises />,
   },
 ]);
