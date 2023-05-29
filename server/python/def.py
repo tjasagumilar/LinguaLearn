@@ -4,8 +4,8 @@ import pickle
 from sklearn.linear_model import LinearRegression
 
 
-input_file = os.path.join(os.path.dirname(__file__), '..', 'dataset_level.csv')
-output_file = os.path.join(os.path.dirname(__file__), '..', 'csvBesede.csv')
+input_file = os.path.join(os.path.dirname(__file__), '..', 'csvBesede.csv')
+output_file = os.path.join(os.path.dirname(__file__), '..', 'words.csv')
 model_file = os.path.join(os.path.dirname(__file__), '..', 'regression_model.pkl')
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Container, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import './SeznamNalog.css';
@@ -6,6 +6,7 @@ import { FaLanguage, FaImages, FaRandom } from 'react-icons/fa';
 
 const SeznamNalog = () => {
   const [selectedDifficulty, setSelectedDifficulty] = React.useState('Začetnik');
+
 
   const handleDifficultyChange = (eventKey: any) => {
     setSelectedDifficulty(eventKey || 'Začetnik');
@@ -22,6 +23,7 @@ const SeznamNalog = () => {
 
   return (
     <div>
+
       <DropdownButton
         id="difficulty-dropdown"
         title={selectedDifficulty}

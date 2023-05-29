@@ -110,7 +110,7 @@ const Exercises = () => {
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch('http://localhost:4000/generateWord');
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }

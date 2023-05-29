@@ -184,18 +184,14 @@ app.get('/generate', async (req, res) => {
   const querySnapshot = await jezikiRef.get();
   let jezikiData;
 
-
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     if (data.tezavnost !== undefined) {
       jezikiData = data.tezavnost;
     }
   });
-
-  console.log(jezikiData)
-
   const difficulty = jezikiData
-  console.log(difficulty)
+
   const pyProg = spawn('python', ['python/main.py', difficulty]);
   let outputData = '';
 
@@ -234,30 +230,42 @@ app.get('/prevedi/:statement', (req, res) => {
 
 // generiraj 3 besede random
 
-app.get('/generateWord', (req, res) => {
+app.get('/generateWord', async (req, res) => {
+  const uid = req.query.uid;
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const querySnapshot = await jezikiRef.get();
+  let jezikiData;
+
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    if (data.tezavnost !== undefined) {
+      jezikiData = data.tezavnost;
+    }
+  });
+  const difficulty = jezikiData
+
   const words = [];
-  fs.createReadStream('csvBesede.csv')
+  fs.createReadStream('words.csv')
     .pipe(csv())
     .on('data', (data) => {
-      words.push(data.word);
+      if (0 <= difficulty <= 10 && Number(data.difficulty) <= 20) {
+        words.push(data.word);
+    }
     })
     .on('end', () => {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      const randomIndex2 = Math.floor(Math.random() * words.length);
-      const randomIndex3 = Math.floor(Math.random() * words.length);
-      const randomWord = words[randomIndex];
-      const randomWord2 = words[randomIndex2];
-      const randomWord3 = words[randomIndex3];
+      const randomWord = words[Math.floor(Math.random() * words.length)];
+      const randomWord2 = words[Math.floor(Math.random() * words.length)];
+      const randomWord3 = words[Math.floor(Math.random() * words.length)];
 
       res.json({ randomWord, randomWord2, randomWord3 });
     });
 });
 
 // generiraj 1 besedo 
-
 app.get('/generateWordOne', (req, res) => {
   const words = [];
-  fs.createReadStream('csvBesede.csv')
+  fs.createReadStream('words.csv')
     .pipe(csv())
     .on('data', (data) => {
       words.push(data.word);
@@ -321,14 +329,27 @@ app.get('/slika', (req, res) => {
 
 
 
-app.get('/tts', (req, res) => {
-  const url = googleTTS.getAudioUrl('Hello World', {
+// text to speech 
+app.get('/tts', async (req, res) => {
+  const text = req.query.tts;
+  console.log(text)
+  const url = googleTTS.getAudioUrl(text, {
     lang: 'en',
     slow: false,
     host: 'https://translate.google.com',
   });
-  res.json({ url: url })
+
+  res.setHeader('Content-Type', 'audio/mpeg');
+  
+  const response = await axios({
+    method: 'get',
+    url: url,
+    responseType: 'stream'
+  });
+
+  response.data.pipe(res);
 });
+
 
 
 

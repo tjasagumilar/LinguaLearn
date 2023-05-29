@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './TipNaloge1.css';
 import { Exercise } from '../Exercises/Exercises';
 import { Container, Row, Col, Button, Modal, Badge } from 'react-bootstrap';
@@ -17,7 +17,17 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
+  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
 
+
+  useEffect(() => {
+    setAudioSource(`http://localhost:4000/tts/${exercise.sentence}`);
+  }, [exercise.sentence]);
+
+
+
+
+ 
 
   const handleWordClickAvailable = (word: string) => {
     onRemoveAvailable1(word);
@@ -64,6 +74,7 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
             <h2> <div className="p-1 rounded">{exercise.sentence}</div></h2>
         </Col>
     </Row>
+ 
     <hr />
     <Row className="bubble1_1 mt-2">
         <Col>
@@ -75,6 +86,10 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
         </Col>
         <br></br>
     </Row>
+    <audio controls>
+      <source src={audioSource} type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
     <hr />
     <Row className="bubble1_1 mt-2">
         <Col>
