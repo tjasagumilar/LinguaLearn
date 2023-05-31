@@ -273,12 +273,12 @@ app.post('/trueExercise', (req, res) => {
         })
           .catch((error) => {
             console.error("Error pri updejtanju dokumenta: ", error);
-            res.status(500).send('Napaka');
+            res.status(500).send('Error');
           });
       }
     })
     .catch((error) => {
-      console.log('Error getting document:', error);
+      console.log('Error :', error);
     });
 });
 
@@ -308,6 +308,7 @@ app.post('/trueExercises', (req, res) => {
 
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
+const csvParser = require('csv-parser');
 
 app.get('/generate', async (req, res) => {
   const uid = req.query.uid;
@@ -321,25 +322,36 @@ app.get('/generate', async (req, res) => {
       jezikiData = data.tezavnost;
     }
   });
+
   const difficulty = jezikiData
+  let selectedStatement = null;
+  let count = 0;
 
-  const pyProg = spawn('python', ['python/main.py', difficulty]);
-  let outputData = '';
+  const stream = fs.createReadStream('output.csv')
+    .pipe(csvParser())
+    .on('data', (row) => {
+      const prediction = parseFloat(row['Prediction'])
+      if(prediction >= difficulty-5 && prediction <= difficulty+8 ){
+        count++;
+        if(Math.random() < 1 / count){
+          selectedStatement = row['Statement'];
+        }
+      }
+    })
 
-  pyProg.stdout.on('data', data => outputData += data.toString());
-
-  pyProg.stdout.on('end', () => {
-    const { statement, prediction, difficulty } = JSON.parse(outputData);
-    translatte(statement, { to: 'de' }).then(translationResult =>
-      res.json({
-        translation: translationResult.text,
-        statement,
-        prediction,
-        difficulty
-      }));
+  stream.on('end', async () => {
+    if(selectedStatement != null){
+      try {
+        const result = await translatte(selectedStatement, { to: 'de' });
+        res.json({statement: selectedStatement, translation: result.text});
+      } catch(err) {
+        console.error(err);
+        res.status(500).send('Napaka pri prevodu');
+      }
+    } else {
+      res.status(404).json({ error: 'Primerna poved ni najdena' });
+    }
   });
-
-  pyProg.stderr.on('data', data => console.error(data.toString()));
 });
 
 // prevedi poved ali besedo
@@ -354,7 +366,7 @@ app.get('/prevedi/:statement', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send('Translation Error');
+      res.status(500).send('Napaka v prevodu');
     });
 });
 
@@ -378,12 +390,46 @@ app.get('/generateWord', async (req, res) => {
 
   const words = [];
   fs.createReadStream('words.csv')
-    .pipe(csv())
-    .on('data', (data) => {
-      if (0 <= difficulty <= 10 && Number(data.difficulty) <= 20) {
-        words.push(data.word);
-      }
-    })
+  .pipe(csvParser())
+  .on('data', (data) => {
+    const dataDifficulty = Number(data.difficulty);
+
+    if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
+      words.push(data.word);
+    } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
+      words.push(data.word);
+    } else if ((11 <= difficulty && difficulty <= 16) && dataDifficulty <= 60) {
+      words.push(data.word);
+    } else if ((17 <= difficulty && difficulty <= 22) && dataDifficulty <= 70) {
+      words.push(data.word);
+    } else if ((23 <= difficulty && difficulty <= 28) && dataDifficulty <= 80) {
+      words.push(data.word);
+    } else if ((29 <= difficulty && difficulty <= 34) && dataDifficulty <= 90) {
+      words.push(data.word);
+    } else if ((35 <= difficulty && difficulty <= 40) && dataDifficulty <= 100) {
+      words.push(data.word);
+    } else if ((41 <= difficulty && difficulty <= 51) && dataDifficulty <= 120) {
+      words.push(data.word);
+    } else if ((52 <= difficulty && difficulty <= 57) && dataDifficulty <= 130) {
+      words.push(data.word);
+    } else if ((58 <= difficulty && difficulty <= 63) && dataDifficulty <= 150) {
+      words.push(data.word);
+    } else if ((64 <= difficulty && difficulty <= 69) && dataDifficulty <= 160) {
+      words.push(data.word);
+    } else if ((71 <= difficulty && difficulty <= 76) && dataDifficulty <= 180) {
+      words.push(data.word);
+    } else if ((77 <= difficulty && difficulty <= 82) && dataDifficulty <= 190) {
+      words.push(data.word);
+    } else if ((83 <= difficulty && difficulty <= 88) && dataDifficulty <= 210) {
+      words.push(data.word);
+    } else if ((89 <= difficulty && difficulty <= 94) && dataDifficulty <= 220) {
+      words.push(data.word);
+    } else if ((90 <= difficulty && difficulty <= 100) && dataDifficulty <= 250) {
+      words.push(data.word);
+    } else if (difficulty > 100) {
+      words.push(data.word)
+    }
+  })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
       const randomWord2 = words[Math.floor(Math.random() * words.length)];
@@ -394,30 +440,88 @@ app.get('/generateWord', async (req, res) => {
 });
 
 // generiraj 1 besedo 
-app.get('/generateWordOne', (req, res) => {
+app.get('/generateWordOne', async (req, res) => {
+  const uid = req.query.uid;
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const querySnapshot = await jezikiRef.get();
+  let jezikiData;
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    if (data.tezavnost !== undefined) {
+      jezikiData = data.tezavnost;
+    }
+  });
+  const difficulty = jezikiData
   const words = [];
+
   fs.createReadStream('words.csv')
-    .pipe(csv())
+    .pipe(csvParser())
     .on('data', (data) => {
-      words.push(data.word);
+      const dataDifficulty = Number(data.difficulty);
+
+      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
+        words.push(data.word);
+      } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
+        words.push(data.word);
+      } else if ((11 <= difficulty && difficulty <= 16) && dataDifficulty <= 60) {
+        words.push(data.word);
+      } else if ((17 <= difficulty && difficulty <= 22) && dataDifficulty <= 70) {
+        words.push(data.word);
+      } else if ((23 <= difficulty && difficulty <= 28) && dataDifficulty <= 80) {
+        words.push(data.word);
+      } else if ((29 <= difficulty && difficulty <= 34) && dataDifficulty <= 90) {
+        words.push(data.word);
+      } else if ((35 <= difficulty && difficulty <= 40) && dataDifficulty <= 100) {
+        words.push(data.word);
+      } else if ((41 <= difficulty && difficulty <= 51) && dataDifficulty <= 120) {
+        words.push(data.word);
+      } else if ((52 <= difficulty && difficulty <= 57) && dataDifficulty <= 130) {
+        words.push(data.word);
+      } else if ((58 <= difficulty && difficulty <= 63) && dataDifficulty <= 150) {
+        words.push(data.word);
+      } else if ((64 <= difficulty && difficulty <= 69) && dataDifficulty <= 160) {
+        words.push(data.word);
+      } else if ((71 <= difficulty && difficulty <= 76) && dataDifficulty <= 180) {
+        words.push(data.word);
+      } else if ((77 <= difficulty && difficulty <= 82) && dataDifficulty <= 190) {
+        words.push(data.word);
+      } else if ((83 <= difficulty && difficulty <= 88) && dataDifficulty <= 210) {
+        words.push(data.word);
+      } else if ((89 <= difficulty && difficulty <= 94) && dataDifficulty <= 220) {
+        words.push(data.word);
+      } else if ((90 <= difficulty && difficulty <= 100) && dataDifficulty <= 250) {
+        words.push(data.word);
+      } else if (difficulty > 100) {
+        words.push(data.word)
+      }
     })
     .on('end', () => {
-      const randomIndex = Math.floor(Math.random() * words.length);
-
-      const randomWord = words[randomIndex];
-
-      res.json({ randomWord });
+      if (words.length > 0) {
+        const randomWord = words[Math.floor(Math.random() * words.length)];
+        res.json({ randomWord });
+      } else {
+        res.status(404).json({ error: 'Primerna beseda ni najdena' });
+      }
     });
 });
 
-app.get('/generirajSliko', (req, res) => {
+// generira besedo za sliko
+
+app.get('/generirajSliko', async (req, res) => {
+
+  const difficulty = req.query.difficulty;
   const exercises = [];
 
   fs.createReadStream('slike.csv')
     .pipe(csv())
     .on('data', (row) => {
-      if (row.difficulty === 'easy') {
+      if ((0 <= difficulty && difficulty <= 50 ) && row.difficulty === 'easy') {
         exercises.push(row.label);
+      }else if ((51 <= difficulty && difficulty <= 101 ) && row.difficulty === 'medium'){
+        exercises.push(row.label)
+      }else if (( difficulty > 102 ) && row.difficulty === 'hard'){
+        exercises.push(row.label)
       }
     })
     .on('end', () => {
@@ -427,14 +531,36 @@ app.get('/generirajSliko', (req, res) => {
     });
 });
 
+// generira URL za sliko
 
-app.get('/slika', (req, res) => {
+app.get('/slika', async (req, res) => {
+
+  const uid = req.query.uid;
+
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const querySnapshot = await jezikiRef.get();
+  let jezikiData;
+
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    if (data.tezavnost !== undefined) {
+      jezikiData = data.tezavnost;
+    }
+  });
+
+  
   const API_KEY = '36374853-199e3fdaa90425e05a17a1fa2';
 
-  axios.get('http://localhost:4000/generirajSliko')
-    .then(response => {
-      const query = response.data;
-      const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
+  axios
+  .get('http://localhost:4000/generirajSliko', {
+    params: {
+      difficulty: jezikiData, 
+    },
+  })
+  .then((response) => {
+    const query = response.data;
+    const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
 
 
       axios.get(URL)
@@ -444,7 +570,7 @@ app.get('/slika', (req, res) => {
             const firstHit = data.hits[1];
             res.json({ pageURL: firstHit.webformatURL, beseda: query });
           } else {
-            res.json({ message: 'No hits' });
+            res.json({ message: 'Ni zadetkov' });
           }
         })
         .catch(error => {
@@ -457,10 +583,8 @@ app.get('/slika', (req, res) => {
 });
 
 
-
-
-
 // text to speech 
+
 app.get('/tts', async (req, res) => {
   const text = req.query.tts;
   const url = googleTTS.getAudioUrl(text, {

@@ -41,10 +41,11 @@ const Exercises = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirmation = (confirmed: boolean) => {
+  const handleConfirmation = async (confirmed: boolean) => {
     setShowConfirmation(false);
     if(confirmed) {
       navigate('/naloge');
+      await updateExercisesSolved(uid, document)
     }
   };
 
@@ -186,7 +187,7 @@ const Exercises = () => {
   };
 
   const fetchStavek2Exercise = async (uid: string) => {
-    const response = await fetch('http://localhost:4000/generateWordOne');
+    const response = await fetch(`http://localhost:4000/generateWordOne?uid=${uid}`)
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
@@ -226,7 +227,7 @@ const Exercises = () => {
   };
 
   const fetchStavek3Exercise = async (uid:string) => {
-    const response = await fetch('http://localhost:4000/slika');
+    const response = await fetch(`http://localhost:4000/slika?uid=${uid}`)
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }

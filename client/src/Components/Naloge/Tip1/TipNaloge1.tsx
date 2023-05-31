@@ -59,7 +59,6 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
         const isAnswerCorrect = exercise.sentence === translation;
         setIsCorrect(isAnswerCorrect);
         setShowModal(true);
-        onCheck();
       })
       .catch((error) => {
         console.error(error);
@@ -68,6 +67,7 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onCheck();
   };
 
   const handleHalfSpeed = () => {

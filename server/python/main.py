@@ -112,19 +112,13 @@ def count_syllables(word):
     return count
 
 
-def izberi_poved():
+def process_all_statements():
     csv_path = os.path.join(os.path.dirname(__file__), '..', 'statements.csv')
-    with open(csv_path, 'r') as csvfile:
-        lines = csvfile.readlines()
-        random_line = random.choice(lines)
-        return random_line
+    output_path = os.path.join(os.path.dirname(__file__), '..', 'output.csv')
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'modelX.pkl')
 
+    model = joblib.load(model_path)
 
-def klasificiraj_poved():
-    # statement
-    statement = izberi_poved()
-    statement2 = statement
-    # print(statementOriginal)
     name_to_pronoun = {
         "Ethan": "he",
         "John": "he",
@@ -132,63 +126,42 @@ def klasificiraj_poved():
         "Ava": "she"
     }
 
-    for name, pronoun in name_to_pronoun.items():
-        statement = statement.replace(name, pronoun)
+    with open(csv_path, 'r') as csvfile, open(output_path, 'w', newline='') as outfile:
+        lines = csvfile.readlines()
+        writer = csv.writer(outfile)
+        writer.writerow(["Statement", "Prediction"])
 
-    # word_count
-    words = nltk.word_tokenize(statement)
-    word_count = len(words)
-    # print("Word count:", word_count)
+        for statement in lines:
+            original_statement = statement.strip()
+            for name, pronoun in name_to_pronoun.items():
+                statement = statement.replace(name, pronoun)
 
-    # lexical_density
-    stop_words = set(nltk.corpus.stopwords.words('english'))
-    non_stop_words = [word for word in words if word.lower() not in stop_words]
-    lexical_density = len(non_stop_words) / len(words) * 100
-    # print("Lexical Density: {:.2f}%".format(lexical_density))
+            words = nltk.word_tokenize(statement)
+            word_count = len(words)
 
-    # lexical_diversity
-    unique_words = len(set(words))
-    lexical_diversity = unique_words / word_count * 100
-    # print("Lexical Diversity: {:.2f}%".format(lexical_diversity))
+            stop_words = set(nltk.corpus.stopwords.words('english'))
+            non_stop_words = [word for word in words if word.lower() not in stop_words]
+            lexical_density = len(non_stop_words) / len(words) * 100
 
-    # reading_ease
-    reading_ease = calculate_flesch_reading_ease(statement)
-    # print("The Flesch Reading Ease score is:", reading_ease)
+            unique_words = len(set(words))
+            lexical_diversity = unique_words / word_count * 100
 
-    # grade_level
-    grade_level = calculate_flesch_kincaid(statement)
-    # print("Flesch-Kincaid Grade Level:", grade_level)
+            reading_ease = calculate_flesch_reading_ease(statement)
 
-    # gunning_fog
-    gunning_fog = calculate_gunning_fog(statement)
-    # print("The Gunning Fog Index is:", gunning_fog)
+            grade_level = calculate_flesch_kincaid(statement)
 
-    data = [[word_count, lexical_density, lexical_diversity, reading_ease, grade_level, gunning_fog]]
-    model_path = os.path.join(os.path.dirname(__file__), '..', 'modelX.pkl')
-    model = joblib.load(model_path)
-    column_names = ["word_count", "lexical_density", "lexical_diversity", "reading_ease", "grade_level", "gunning_fog"]
-    data = pd.DataFrame(data, columns=column_names)
-    prediction = model.predict(data).tolist()[0]
+            gunning_fog = calculate_gunning_fog(statement)
 
+            data = [[word_count, lexical_density, lexical_diversity, reading_ease, grade_level, gunning_fog]]
+            column_names = ["word_count", "lexical_density", "lexical_diversity", "reading_ease", "grade_level", "gunning_fog"]
+            data = pd.DataFrame(data, columns=column_names)
 
-    difficulty = sys.argv[1];
+            prediction = model.predict(data).tolist()[0]
 
-    dataToString = {
-        'statement': statement2,
-        'prediction': prediction,
-        'difficulty': difficulty
-    }
-
-    max = int(difficulty) + 8
-    min = int(difficulty) - 5
-    if min <= prediction <= max:
-        print(json.dumps(dataToString))
-    else:
-        klasificiraj_poved()
-
+            writer.writerow([original_statement, prediction])
 
 if __name__ == "__main__":
-    klasificiraj_poved()
+    process_all_statements()
 
 
 def trenirajModel():
