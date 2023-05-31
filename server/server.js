@@ -153,7 +153,36 @@ app.get('/mojijeziki', async (req, res) => {
   res.send(jezikiData);
 });
 
-//-------------------------------------------------
+//ODSTRANI IZBRANI JEZIK 
+app.delete('/odstranijezik', (req, res) => {
+  const { jezik, uid } = req.body;
+
+  const userRef = dbFire.collection('users').doc(uid);
+  const query = userRef.collection('jeziki').where('jezik', '==', jezik);
+ 
+  query.get()
+  .then((querySnapshot) => {
+    if (querySnapshot.empty) {
+      console.log('No matching documents found');
+      return;
+    }
+
+    querySnapshot.forEach((doc) => {
+      doc.ref.delete()
+        .then(() => {
+         // console.log('Document successfully deleted!');
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          console.error('Error deleting document: ', error);
+        });
+    });
+  })
+  .catch((error) => {
+    console.error('Error getting documents: ', error);
+  });
+
+});
 
 async function getCities(dbFire) {
   const citiesCol = collection(dbFire, 'test');
@@ -183,12 +212,12 @@ app.post('/saveExercises', async (req, res) => {
   const currentTime = new Date();
   const solved = false;
 
-  try{
-    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime});
+  try {
+    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime });
     const docId = docRef.id;
-  console.log(docId)
-  res.status(200).send(docId)
-  }catch (error) {
+    console.log(docId)
+    res.status(200).send(docId)
+  } catch (error) {
     console.error('Napaka:', error);
     res.status(500).send('Napaka pri shranjevanju nalog.');
   }
@@ -208,11 +237,11 @@ app.get('/loadExercises', async (req, res) => {
   querySnapshot.forEach((doc) => {
     const docData = doc.data();
     console.log(docData && currentTime > tenMins)
-    if(docData.solved === false){
-      nalogeData = {id: doc.id, ...docData};
+    if (docData.solved === false) {
+      nalogeData = { id: doc.id, ...docData };
     }
   });
-  
+
   console.log(nalogeData)
   res.send(nalogeData);
 })
@@ -220,7 +249,7 @@ app.get('/loadExercises', async (req, res) => {
 // spremeni nalogo reseno na true
 
 app.post('/trueExercise', (req, res) => {
-  const {uid, exerciseId, document } = req.body;
+  const { uid, exerciseId, document } = req.body;
   console.log(uid)
   console.log(exerciseId)
 
@@ -229,51 +258,51 @@ app.post('/trueExercise', (req, res) => {
   const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
 
   docRef.get()
-  .then((doc) => {
-    const data = doc.data();
-    let exercises = data.exercises;
-    let toUpdate = exercises.find(exercise => exercise.index === exerciseId);
+    .then((doc) => {
+      const data = doc.data();
+      let exercises = data.exercises;
+      let toUpdate = exercises.find(exercise => exercise.index === exerciseId);
 
-    if(toUpdate){
-      toUpdate.solved = true;
-      docRef.update({
-        exercises: exercises
-      }).then(() => {
-        console.log("Dokument uspešno posodobljen!");
-        res.sendStatus(200);
-      })
-      .catch((error) => {
-        console.error("Error pri updejtanju dokumenta: ", error);
-        res.status(500).send('Napaka');
-      });
-    }
-  })
-  .catch((error) => {
-    console.log('Error getting document:', error);
-  });
+      if (toUpdate) {
+        toUpdate.solved = true;
+        docRef.update({
+          exercises: exercises
+        }).then(() => {
+          console.log("Dokument uspešno posodobljen!");
+          res.sendStatus(200);
+        })
+          .catch((error) => {
+            console.error("Error pri updejtanju dokumenta: ", error);
+            res.status(500).send('Napaka');
+          });
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting document:', error);
+    });
 });
 
 // spremeni session nalog solved na true
 
 app.post('/trueExercises', (req, res) => {
-  const {uid, document } = req.body;
+  const { uid, document } = req.body;
   console.log(uid)
 
   console.log(document)
 
   const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
 
-      docRef.update({
-        solved: true
-      }).then(() => {
-        console.log("Dokument uspešno posodobljen!");
-        res.sendStatus(200);
-      })
-      .catch((error) => {
-        console.error("Error pri updejtanju dokumenta: ", error);
-        res.status(500).send('Napaka');
-      });
-    
+  docRef.update({
+    solved: true
+  }).then(() => {
+    console.log("Dokument uspešno posodobljen!");
+    res.sendStatus(200);
+  })
+    .catch((error) => {
+      console.error("Error pri updejtanju dokumenta: ", error);
+      res.status(500).send('Napaka');
+    });
+
 
 });
 
@@ -353,7 +382,7 @@ app.get('/generateWord', async (req, res) => {
     .on('data', (data) => {
       if (0 <= difficulty <= 10 && Number(data.difficulty) <= 20) {
         words.push(data.word);
-    }
+      }
     })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
@@ -441,7 +470,7 @@ app.get('/tts', async (req, res) => {
   });
 
   res.setHeader('Content-Type', 'audio/mpeg');
-  
+
   const response = await axios({
     method: 'get',
     url: url,

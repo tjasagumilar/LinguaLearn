@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
+
+.podatki-container {
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+    margin: 5% 15%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.541);
+}
+
+.napredek-container {
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+    margin: 5% 15%;
+}
+
+.podatki-container img {
+    width: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.col-md div {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+}
+
+
+.podatki-jezik {
+    text-align: center;
+}
+
+.odstrani-jezik {
+    border-radius: 30px;
+    background:#fa9746;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.odstrani-jezik:hover {
+    background: #fa9746d2;
+}
+
+.modal-zapri {
+    border-radius: 20px;
+    background-color: gray;
+    border: none;
+}
+
+.modal-odstrani {
+    border-radius: 20px;
+    background:#2F5AED;
+    border: none;
+}
+
+.modal-odstrani:hover {
+    background-color: rgba(47, 90, 237, 0.8);
+}

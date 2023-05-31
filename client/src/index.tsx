@@ -17,6 +17,7 @@ import Reset from "./Components/Prijava/Reset/Reset";
 import SeznamNalog from './Components/Naloge/SeznamNalog/SeznamNalog';
 import { render } from '@testing-library/react';
 import ExercisesHome from './Components/Naloge/ExercisesHome';
+import Vec from './Components/MojiJeziki/Vec/Vec';
 
 
 const router = createBrowserRouter([
@@ -54,26 +55,33 @@ const router = createBrowserRouter([
       },
       {
         path: '/naloge',
-        element: <SeznamNalog  />
+        element: <SeznamNalog />
       },
       {
         path: '/uredi',
-        element: <Uredi/>
+        element: <Uredi />
       },
       {
         path: '/forgot',
-        element: <Forgot/>
+        element: <Forgot />
       },
       {
         path: '/reset',
-        element: <Reset/>
+        element: <Reset />
       },
+      {
+        path: '/vec',
+        element: <Vec />
+      },
+
     ],
+
   },
   {
     path: 'generirajNaloge',
     element: <Exercises />,
   },
+
 ]);
 
 const root = ReactDOM.createRoot(
