@@ -15,10 +15,12 @@ import { auth } from '../../../Config/firebase';
 
 
 export interface Exercise {
+  index?: number,
   type: string,
   sentence: string;
   availableWords: string[];
-  pageURL?: string
+  pageURL?: string;
+  solved: boolean;
 }
 
 
@@ -26,11 +28,14 @@ export interface Exercise {
 const Exercises = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [currentExercise, setCurrentExercise] = useState<Exercise>();
   const [isLoading, setIsLoading] = useState(true);
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [uid, setUid] = useState('');
+  const [document, setDocument] = useState('');
+
 
   const redirectToPage = () => {
     setShowConfirmation(true);
@@ -43,68 +48,103 @@ const Exercises = () => {
     }
   };
 
+  const generateExercises = async (uid: string) => {
+    try {
+      const exercisePromises = [];
+      const numExercises = 10;
+    
+      for (let i = 0; i < numExercises; i++) {
+        let exercisePromise;
+    
+        const random = Math.random();
+        if (random < 0.33) {
+          exercisePromise = fetchStavekExercise(uid);
+        } else if (random < 0.66) {
+          exercisePromise = fetchStavek2Exercise(uid);
+        } else {
+          exercisePromise = fetchStavek3Exercise(uid);
+        }
+    
+        exercisePromises.push(exercisePromise.then(exercise => {
+          return { ...exercise, index: i, solved:false};
+        }));
+      }
+    
+      const generatedExercises = await Promise.all(exercisePromises);
+      await saveExercises(generatedExercises, uid)
+      setExercises(generatedExercises);
+      setCurrentExerciseIndex(0)
+      setCurrentExercise(generatedExercises[0])
+     
+      setIsLoading(false);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+  
+  const saveExercises = async (exercises: Exercise[], uid: string) => {
+    try {
+      const response = await fetch('http://localhost:4000/saveExercises', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ exercises, uid }),
+      });
+  
+      if (response.ok) {
+        const docId = await response.text()
+        console.log(docId)
+        setDocument(docId)
+        console.log('Exercises saved successfully');
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const loadExercises = async (uid: string) => {
+    try {
+      const response = await fetch(`http://localhost:4000/loadExercises?uid=${uid}`);
+      if (response.ok) {
+        console.log(response)
+        const text = await response.text();
+        if(text.trim().length === 0){
+          generateExercises(uid)
+        }else {
+          const exercises = JSON.parse(text);
+          console.log(exercises)
+          const exerciseFalse = exercises.exercises.find((exercise: Exercise) => exercise.solved === false);
+          setDocument(exercises.id)
+          setExercises(exercises.exercises);
+          setCurrentExerciseIndex(exerciseFalse.index)
+          setCurrentExercise(exerciseFalse)
+          console.log(exercises.exercises[0])
+          setIsLoading(false);
+        }
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const checkAuthState = () => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUid(user.uid);
+        loadExercises(user.uid)
+      }
+    });
+  }
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
-    }
-
-    const checkAuthState = () => {
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          setUid(user.uid);
-          generateExercises(user.uid); 
-        }
-      });
-    }
-
-    const saveExercises = async (exercises: Exercise[], uid: string) => {
-      try {
-        const response = await fetch('http://localhost:4000/saveExercises', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ exercises, uid }),
-        });
-    
-        if (response.ok) {
-          console.log('Exercises saved successfully');
-        } else {
-          throw new Error('Error: ' + response.status);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    const generateExercises = async (uid: string) => {
-      try {
-        const exercisePromises = [];
-        const numExercises = 10;
-      
-        for (let i = 0; i < numExercises; i++) {
-          let exercisePromise;
-      
-          const random = Math.random();
-          if (random < 0.33) {
-            exercisePromise = fetchStavekExercise(uid);
-          } else if (random < 0.66) {
-            exercisePromise = fetchStavek2Exercise(uid);
-          } else {
-            exercisePromise = fetchStavek3Exercise(uid);
-          }
-      
-          exercisePromises.push(exercisePromise);
-        }
-      
-        const generatedExercises = await Promise.all(exercisePromises);
-        saveExercises(generatedExercises, uid)
-        setExercises(generatedExercises);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
     }
     checkAuthState()
   }, []);
@@ -227,14 +267,78 @@ const Exercises = () => {
     return exerciseData;
   };
 
+  const updateExerciseSolved = async ( uid: string,exerciseId: number, document: string) => {
+    try{
+      const response = await fetch('http://localhost:4000/trueExercise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document }),
+      });
+  
+
+      if (!response.ok) {
+      throw new Error('Error: ' + response.status);
+    }
+    }catch(error){
+      console.error('Error' + error)
+    }
+  }
+
+  const updateExercisesSolved = async ( uid: string, document: string) => {
+    try{
+      const response = await fetch('http://localhost:4000/trueExercises', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid: uid, document: document }),
+      });
+  
+
+      if (!response.ok) {
+      throw new Error('Error: ' + response.status);
+    }
+    }catch(error){
+      console.error('Error' + error)
+    }
+  }
+
+  if(currentExercise == null){
+    return null;
+  }
+
+  
 
 
-  const handleNextExercise = () => {
-    setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
-  };
+
+  const handleNextExercise = async () => {
+    if (currentExerciseIndex < exercises.length ) {
+      const currentExercise = exercises[currentExerciseIndex]
+      if(!currentExercise.solved){
+        await updateExerciseSolved(uid, currentExerciseIndex, document)
+
+        const updatedExercises = [...exercises];
+        updatedExercises[currentExerciseIndex] = {
+          ...updatedExercises[currentExerciseIndex],
+          solved: true,
+        };
+        setExercises(updatedExercises);
+      }
+
+      }
+      if(currentExerciseIndex == exercises.length -1){
+        await updateExercisesSolved(uid, document)
+        // napiši še kodo da redirecta 
+      }
+      setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
+      setCurrentExercise(exercises[currentExerciseIndex + 1])
+    }
 
 
   const onRemoveAvailable1 = (word: string) => {
+    console.log(exercises)
     setExercises((prevExercises) =>
       prevExercises.map((exercise, index) =>
         index === currentExerciseIndex
@@ -267,9 +371,7 @@ const Exercises = () => {
   }
 
 
-  const currentExercise = exercises[currentExerciseIndex];
-  const currentIndex = exercises.indexOf(currentExercise);
-
+ 
 
   if (isLoading) {
     return (
@@ -302,7 +404,7 @@ return (
           <ProgressBar
             striped
             variant="success"
-            now={(currentIndex + 1) * (100 / exercises.length)}
+            now={(currentExerciseIndex + 1) * (100 / exercises.length)}
             className="custom-progress-bar ml-3"
           />
         </div>

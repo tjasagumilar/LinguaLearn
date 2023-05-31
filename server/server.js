@@ -180,18 +180,102 @@ app.post('/saveExercises', async (req, res) => {
   const { exercises, uid } = req.body;
   console.log(uid)
   console.log(exercises)
+  const currentTime = new Date();
+  const solved = false;
 
-  dbFire.collection('users').doc(uid).collection('naloge')
-    .add({ exercises })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.error('Napaka:', error);
-      res.status(500).send('Napaka pri shranjevanju nalog.');
-    });
+  try{
+    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime});
+    const docId = docRef.id;
+  console.log(docId)
+  res.status(200).send(docId)
+  }catch (error) {
+    console.error('Napaka:', error);
+    res.status(500).send('Napaka pri shranjevanju nalog.');
+  }
 });
 
+// nalozi naloge iz baze
+
+app.get('/loadExercises', async (req, res) => {
+  const uid = req.query.uid;
+
+  const nalogeRef = dbFire.collection('users').doc(uid).collection('naloge');
+  const querySnapshot = await nalogeRef.orderBy('currentTime', 'desc').limit(1).get()
+  let nalogeData = null;
+  const currentTime = new Date();
+  const tenMins = new Date(currentTime.getTime() - 10 * 60 * 1000)
+
+  querySnapshot.forEach((doc) => {
+    const docData = doc.data();
+    console.log(docData && currentTime > tenMins)
+    if(docData.solved === false){
+      nalogeData = {id: doc.id, ...docData};
+    }
+  });
+  
+  console.log(nalogeData)
+  res.send(nalogeData);
+})
+
+// spremeni nalogo reseno na true
+
+app.post('/trueExercise', (req, res) => {
+  const {uid, exerciseId, document } = req.body;
+  console.log(uid)
+  console.log(exerciseId)
+
+  console.log(document)
+
+  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+
+  docRef.get()
+  .then((doc) => {
+    const data = doc.data();
+    let exercises = data.exercises;
+    let toUpdate = exercises.find(exercise => exercise.index === exerciseId);
+
+    if(toUpdate){
+      toUpdate.solved = true;
+      docRef.update({
+        exercises: exercises
+      }).then(() => {
+        console.log("Dokument uspešno posodobljen!");
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error("Error pri updejtanju dokumenta: ", error);
+        res.status(500).send('Napaka');
+      });
+    }
+  })
+  .catch((error) => {
+    console.log('Error getting document:', error);
+  });
+});
+
+// spremeni session nalog solved na true
+
+app.post('/trueExercises', (req, res) => {
+  const {uid, document } = req.body;
+  console.log(uid)
+
+  console.log(document)
+
+  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+
+      docRef.update({
+        solved: true
+      }).then(() => {
+        console.log("Dokument uspešno posodobljen!");
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error("Error pri updejtanju dokumenta: ", error);
+        res.status(500).send('Napaka');
+      });
+    
+
+});
 
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
