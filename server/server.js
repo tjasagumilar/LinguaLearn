@@ -311,9 +311,6 @@ app.post('/trueExercises', (req, res) => {
 
 app.post('/solvedCorrect', (req, res) => {
   const { uid, document } = req.body;
-  console.log(uid);
-  console.log("x");
-  console.log(document);
 
   const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
 

@@ -1,19 +1,23 @@
-.card {
-    transition: box-shadow .3s;
+.CardS {
+    color: #6389fa;
+    background-color: #6389fa;
+    text-align: left;
+    padding: 0.90rem;
+  }
+
+
+  .ConS{
+    color:#ffffff;
+    color: #FFFFFF; 
+  }
+
+  .btn.first {
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+    border: 2px solid #6389fa;
+    padding: 0.5em 4em; 
+    border-radius: 2em; 
   }
   
-  .card:hover {
-    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  .btn.first:hover {
+    box-shadow: 0 0 40px 40px #6389fa inset;
   }
-  
-  .card-title {
-    font-size: 1.5rem;
-    color: #000;
-  }
-  
-  .card-text {
-    color: #000;
-  }.custom-card {
-    background-color: #f1f1f1;
-  }
-  
