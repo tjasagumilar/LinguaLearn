@@ -36,6 +36,10 @@ const Exercises = () => {
   const [uid, setUid] = useState('');
   const [document, setDocument] = useState('');
 
+  useEffect(() => {
+    console.log('exercise:', exercises[currentExerciseIndex]);
+  }, [exercises, currentExerciseIndex]);
+
 
   const redirectToPage = () => {
     setShowConfirmation(true);
@@ -338,38 +342,8 @@ const Exercises = () => {
     }
 
 
-  const onRemoveAvailable1 = (word: string) => {
-    console.log(exercises)
-    setExercises((prevExercises) =>
-      prevExercises.map((exercise, index) =>
-        index === currentExerciseIndex
-          ? {
-            ...exercise,
-            availableWords: exercise.availableWords.filter((w) => w !== word),
-          }
-          : exercise
-      )
-    );
-  };
+  
 
-  const onRemoveSelected1 = (word: string) => {
-    setExercises((prevExercises) =>
-      prevExercises.map((exercise, index) =>
-        index === currentExerciseIndex
-          ? {
-            ...exercise,
-            availableWords: [...exercise.availableWords, word]
-          }
-          : exercise
-      )
-    )
-  }
-
-
-  const onAddExercise = (exerciseData: Exercise) => {
-    console.log("2x")
-    setExercises(prevExercises => [...prevExercises, exerciseData]);
-  }
 
 
  
@@ -387,12 +361,11 @@ const Exercises = () => {
 
 return (
   <div>
-  <Container>
+    <Container>
     <br />
-    <div className="d-flex justify-content-between align-items-center">
-
-      <div className="main-componentMain mx-auto">
-        <div className="d-flex align-items-center">
+    <Row className="align-items-center justify-content-center">
+      <Col xs={12} sm={12} md={12} lg={12} className="text-center">
+        <div className="d-flex align-items-center justify-content-center">
           <Button
             variant="light"
             className="custom-button"
@@ -405,25 +378,19 @@ return (
           <ProgressBar
             striped
             variant="success"
-            now={(currentExerciseIndex + 1) * (100 / exercises.length)}
-            className="custom-progress-bar ml-3"
+            now={(currentExerciseIndex) * (100 / exercises.length)}
+            className="custom-progress-bar ml-3 w-100"
           />
         </div>
-<br></br><br></br><br></br>
- 
-        
-
-      </div>
-    </div>
+      </Col>
+    </Row>
   </Container>
 
 
   {currentExercise.type === 'stavek' ? (
           <TipNaloge1
             exercise={currentExercise}
-            onRemoveAvailable1={onRemoveAvailable1}
-            onRemoveSelected1={onRemoveSelected1}
-            onAddExercise={onAddExercise}
+
             onCheck={handleNextExercise}
           />
         ) : currentExercise.type === 'beseda' ? (

@@ -1,26 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './TipNaloge1.css';
 import { Exercise } from '../Exercises/Exercises';
-import { Container, Row, Col, Button, Modal, Badge } from 'react-bootstrap';
-
+import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap';
+import jsonIcon from './female-avatar.json';
+import Lottie from 'lottie-react';
+import { BsFillVolumeUpFill } from 'react-icons/bs';
 
 interface TipNaloge1Props {
   exercise: Exercise;
-  onRemoveAvailable1: (newState: string) => void;
-  onRemoveSelected1: (newState: string) => void;
-  onAddExercise: (newState: Exercise) => void;
   onCheck: () => void;
 }
 
-const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exercise, onCheck }: TipNaloge1Props) => {
+const TipNaloge1 = ({ exercise, onCheck }: TipNaloge1Props) => {
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
+  const [initial, setInitial] = useState(exercise.availableWords);
+  const [divs, setDivs] = useState(initial.map((_, index) => index));
 
 
+
+  
   
   useEffect(() => {
     setAudioSource(prevAudioSource => {
@@ -37,13 +41,13 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
 
 
   const handleWordClickAvailable = (word: string) => {
-    onRemoveAvailable1(word);
+    setAvailableWords((prevWords) => prevWords.filter((w) => w !== word));
     setSelectedWords((prevSelected) => [...prevSelected, word]);
   };
 
 
   const handleWordClickSelected = (word: string) => {
-    onRemoveSelected1(word);
+    setAvailableWords((prevSelected) => [...prevSelected, word]);
     setSelectedWords((prevWords) => prevWords.filter((w) => w !== word));
   };
 
@@ -86,61 +90,85 @@ const TipNaloge1 = ({ onRemoveAvailable1, onRemoveSelected1, onAddExercise, exer
 
 
 
-
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-   <Container className="p-3 rounded bg-white text-dark w-50">   
-    <Row className="mt-2">
-        <Col>
-            <h1 className="fw-bold">Prevedite ta stavek</h1>
-            <h2> <div className="p-1 rounded">{exercise.sentence}</div></h2>
-        </Col>
-    </Row>
- 
-    <hr />
-    <Row className="bubble1_1 mt-2">
-        <Col>
-            {selectedWords.map((word, index) => (
-              <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-                {word}
-              </Badge>
-            ))}
-        </Col>
-        <br></br>
-    </Row>
-    <button onClick={() => {
-  if (audioRef.current) {
-    audioRef.current.play();
-  }
-}}>
-  Play
-</button>
-<audio ref={audioRef} style={{ display: 'none' }}>
-  <source src={audioSource} type="audio/mpeg" />
-  Your browser does not support the audio element.
-</audio>
-<button onClick={handleHalfSpeed}>
-  Play at speed 0.5x
-</button>
+    <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '600px' }}>
+    <Row className="align-items-center">
+  <Col md={6}>
+    <h5 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h5>
+  </Col>
+</Row>
+<Row className="mt-3 align-items-center">
+  <Col xs={6} md={3} lg={3} xl={3}>
+    <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
+  </Col>
+  <Col xs={6} md={9} lg={9} xl={9}>
+    <div className="bubble">
+      <Button
+        onClick={() => audioRef.current && audioRef.current.play()}
+        className="mb-3 custom-button" 
+      >
+        <BsFillVolumeUpFill style={{ fontSize: '36px', color: 'blue' }} />
+      </Button>
+      <div className="text-container">
+        <span>{exercise.sentence}</span>
+      </div>
+    </div>
+  </Col>
+</Row>
 
-    <hr />
-    <Row className="bubble1_1 mt-2">
-        <Col>
-            <div className="p-1 rounded">
-              {exercise.availableWords.map((word, index) => (
-                <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-                  {word}
-                </Badge>
-              ))}
-            </div>
-        </Col>
+
+
+
+<audio ref={audioRef} style={{ display: 'none' }}>
+      <source src={audioSource} type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <div className="border-bottom my-3"></div>
+
+    <Row className="mt-2 justify-content-center">
+      <Col md={8}>
+        {selectedWords.map((word, index) => (
+          <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="m-1 p-1 rounded">
+            {word}
+          </Badge>
+        ))}
+      </Col>
     </Row>
-    <br />
-    <Row>
-        <Col className="d-flex justify-content-end">
-        </Col>
+
+
+    <div className="border-bottom my-3"></div>
+
+    <Row className="mt-2 justify-content-center">
+      <Col md={8}>
+        <div className="p-1 rounded">
+          {divs.map((div, index) => (
+           <div 
+           style={{
+             display: 'inline-flex', 
+             justifyContent: 'center',
+             alignItems: 'center',
+             border: '1px solid #ccc', 
+             borderRadius: '15px', 
+             margin: '5px', 
+             padding: '8px', 
+             boxSizing: 'border-box',
+             minWidth: '60px'
+           }} 
+           key={index}
+         >
+           {availableWords.includes(initial[div]) && (
+             <Badge pill onClick={() => handleWordClickAvailable(initial[div])} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
+               {initial[div]}
+             </Badge>
+           )}
+         </div>
+          ))}
+        </div>
+      </Col>
     </Row>
-</Container>
+
+  </Container>
 
 
 

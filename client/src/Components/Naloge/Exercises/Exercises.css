@@ -1,28 +1,13 @@
-.progress-bar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+.custom-progress-bar {
+  height: 12px;  
+  background-color: #92989e3d;
+  border-radius: 5px;
+}
   
-  .custom-progress-bar {
-   width: 100%;
-  }
-  
-  .custom-progress-bar .progress-bar {
+.custom-progress-bar .progress-bar {
     border-radius: 10px;
-  }
+}
   
-
-  .main-componentMain {
-    width: 200%;
-  }
-  
-  .custom-progress-bar {
-    height: 20px;
-    background-color: #dde5ec3d;
-    border-radius: 5px;
-  }
 
   .loading-screen {
     position: fixed;
@@ -54,7 +39,7 @@
   .custom-button {
     background-color: transparent;
     border: none;
-    font-size: 24px; 
+    font-size: 20px; 
     padding: 12px 24px; 
   }
   
