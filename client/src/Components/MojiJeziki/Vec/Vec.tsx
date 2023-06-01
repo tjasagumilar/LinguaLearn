@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
 import { auth } from "../../../Config/firebase";
 import { useState } from "react";
+import Progress from "./Progress/Progress";
 
 const Vec = () => {
     const [show, setShow] = useState(false);
@@ -108,10 +109,10 @@ const Vec = () => {
                     </Col>
                 </Row>
             </div>
-            <div>
-                <Row className="napredek-container">
-                    <Col md> (prikaz napredka) </Col>
-                </Row>
+            <div className="napredek-container">
+
+                <Progress />
+
             </div>
 
             <Modal show={show} onHide={handleClose} animation={false} >
@@ -120,7 +121,7 @@ const Vec = () => {
                 </Modal.Header>
                 <Modal.Body>Ves dosedanji napredek bo izgubljen.</Modal.Body>
                 <Modal.Footer>
-                    <Button  onClick={handleClose} className="modal-zapri">
+                    <Button onClick={handleClose} className="modal-zapri">
                         Zapri
                     </Button>
                     <Button onClick={handleOdstrani} className="modal-odstrani">
