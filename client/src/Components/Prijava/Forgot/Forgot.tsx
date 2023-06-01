@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, Input } from 'reactstrap';
 import ErrorText from "../../ErrorText/ErrorText";
-import { auth, firestore } from "../../../Config/firebase";
+import { auth } from "../../../Config/firebase";
 import logging from "../../../Config/logging";
+import './Forgot.css';
 
 const Forgot: React.FunctionComponent = () => {
     const [sending, setSending] = useState<boolean>(false);
@@ -17,49 +17,49 @@ const Forgot: React.FunctionComponent = () => {
 
         auth.sendPasswordResetEmail(email)
             .then(() => {
-                logging.info('Email sent.');
+                logging.info('Poslana e-pošta.');
                 setSent(true);
                 setSending(false);
             })
-            .catch((error: { message: React.SetStateAction<string>; }) => {
+            .catch((error: { message: React.SetStateAction<string> }) => {
                 logging.error(error);
-                setError(error.message);
+                setError('Prosim, vnesite vaš elektronski naslov.');
                 setSending(false);
             });
-    }
+    };
 
     return (
-        <div className="login-form">
-            <div className="prijavise">
-                {sent ?
-                    <p>A link has been sent to your email with instructions.</p>
-                    :
+        <div className="forgot-container">
+            <div className="forgot-content">
+                {sent ? (
+                    <p>V vaše e-poštno sporočilo je bila poslana povezava z navodili.</p>
+                ) : (
                     <>
-                        <p>Please enter your email.</p>
-                        <FormGroup>
-                            <Input
+                        <p>Vnesite svoj e-poštni naslov.</p>
+                        <div className="form-group">
+                            <input
                                 type="email"
                                 name="email"
                                 id="email"
-                                placeholder="Email Address"
-                                onChange={event => setEmail(event.target.value)}
+                                placeholder="Elektronski naslov"
+                                className="form-control"
+                                onChange={(event) => setEmail(event.target.value)}
                                 value={email}
                             />
-                        </FormGroup>
-                        <Button
+                        </div>
+                        <button
                             disabled={sending}
-                            color="success"
-                            block
-                            onClick={() => resetPasswordRequest()}
+                            className="btn btn-primary"
+                            onClick={resetPasswordRequest}
                         >
                             Send Reset Link
-                        </Button>
+                        </button>
                         <ErrorText error={error} />
                     </>
-                }
+                )}
             </div>
         </div>
     );
-}
+};
 
 export default Forgot;
