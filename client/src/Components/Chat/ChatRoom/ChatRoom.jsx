@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -15,11 +15,22 @@ function ChatRoom({ languageCode }) {
     const [messages] = useCollectionData(query, { idField: 'id' });
 
     const [formValue, setFormValue] = useState('');
+    const [currentUser, setCurrentUser] = useState(null); // Added state variable
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                setCurrentUser(user); // Set the current user
+            }
+        });
+
+        return () => unsubscribe(); // Cleanup the event listener
+    }, []);
 
     const sendMessage = async (e) => {
         e.preventDefault();
 
-        const { uid, photoURL } = auth.currentUser;
+        const { uid, photoURL } = currentUser; // Use the current user
 
         await messagesRef.add({
             text: formValue,
@@ -35,7 +46,13 @@ function ChatRoom({ languageCode }) {
     return (
         <>
             <main>
-                {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+                {messages && messages.map(msg => (
+                    <ChatMessage
+                        key={msg.id}
+                        message={msg}
+                        currentUser={currentUser} // Pass the current user to ChatMessage
+                    />
+                ))}
                 <span ref={dummy}></span>
             </main>
             <form onSubmit={sendMessage}>
@@ -52,14 +69,15 @@ function ChatRoom({ languageCode }) {
 
 function ChatMessage(props) {
     const { text, uid, photoURL } = props.message;
-    const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+    const { currentUser } = props; // Get the current user from props
+    const messageClass = uid === currentUser.uid ? 'sent' : 'received';
 
     return (
         <>
             <div className={`message ${messageClass}`}>
                 <img
                     className={'chatimg'}
-                    src={photoURL || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'}
+                    src={photoURL || currentUser.photoURL || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'}
                     alt="👤"
                 />
                 <p>{text}</p>
