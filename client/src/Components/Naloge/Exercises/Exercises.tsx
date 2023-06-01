@@ -7,6 +7,7 @@ import { Container, Row, Col, Button, ProgressBar ,  Badge, Modal } from 'react-
 import './Exercises.css'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../Config/firebase';
+import { doc } from 'firebase/firestore';
 
 
 
@@ -35,6 +36,7 @@ const Exercises = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [uid, setUid] = useState('');
   const [document, setDocument] = useState('');
+  const [correct, setCorrect] = useState(0);
 
   useEffect(() => {
     console.log('exercise:', exercises[currentExerciseIndex]);
@@ -271,9 +273,9 @@ const Exercises = () => {
 
     return exerciseData;
   };
-
-  const updateExerciseSolved = async ( uid: string,exerciseId: number, document: string) => {
-    try{
+  
+  const updateExerciseSolved = async (uid: string, exerciseId: number, document: string) => {
+    try {
       const response = await fetch('http://localhost:4000/trueExercise', {
         method: 'POST',
         headers: {
@@ -282,14 +284,15 @@ const Exercises = () => {
         body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document }),
       });
   
-
-      if (!response.ok) {
-      throw new Error('Error: ' + response.status);
+      if (response.ok) {
+        setCorrect((prevCorrect) => prevCorrect + 1);
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error: ' + error);
     }
-    }catch(error){
-      console.error('Error' + error)
-    }
-  }
+  };
 
   const updateExercisesSolved = async ( uid: string, document: string) => {
     try{
@@ -390,7 +393,8 @@ return (
   {currentExercise.type === 'stavek' ? (
           <TipNaloge1
             exercise={currentExercise}
-
+            uid={uid}
+            document={document}
             onCheck={handleNextExercise}
           />
         ) : currentExercise.type === 'beseda' ? (

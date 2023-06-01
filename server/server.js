@@ -211,9 +211,10 @@ app.post('/saveExercises', async (req, res) => {
   console.log(exercises)
   const currentTime = new Date();
   const solved = false;
+  const solvedRight = 0;
 
   try {
-    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime });
+    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime, solvedRight });
     const docId = docRef.id;
     console.log(docId)
     res.status(200).send(docId)
@@ -304,6 +305,39 @@ app.post('/trueExercises', (req, res) => {
     });
 
 
+});
+
+// spremeni št pravilno rešenih 
+
+app.post('/solvedCorrect', (req, res) => {
+  const { uid, document } = req.body;
+  console.log(uid);
+  console.log("x");
+  console.log(document);
+
+  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+
+  docRef.get().then((doc) => {
+    if (doc.exists) {
+      let solvedRight = doc.data().solvedRight;
+      solvedRight = solvedRight + 1;
+
+      docRef.update({
+        solvedRight: solvedRight
+      }).then(() => {
+        console.log("Dokument uspešno posodobljen!");
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error("Error pri updejtanju dokumenta: ", error);
+        res.status(500).send('Napaka');
+      });
+    } else {
+      console.log("No such document!");
+    }
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
 });
 
 // generiraj poved glede na težavnost 

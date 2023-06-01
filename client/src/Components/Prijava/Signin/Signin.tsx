@@ -60,7 +60,7 @@ const Signin = () => {
             .catch(error => {
                 logging.error(error);
                 setAuthenticating(false);
-                setError(error.message);
+                setError('Nepravilno e-poštni naslov ali geslo. Prosimo, poskusite znova.');
             });
     }
 
