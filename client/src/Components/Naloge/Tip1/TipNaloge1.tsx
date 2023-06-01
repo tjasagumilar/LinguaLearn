@@ -8,10 +8,12 @@ import { BsFillVolumeUpFill } from 'react-icons/bs';
 
 interface TipNaloge1Props {
   exercise: Exercise;
+  uid: string;
+  document: string;
   onCheck: () => void;
 }
 
-const TipNaloge1 = ({ exercise, onCheck }: TipNaloge1Props) => {
+const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -56,17 +58,39 @@ const TipNaloge1 = ({ exercise, onCheck }: TipNaloge1Props) => {
 
     fetch(`http://localhost:4000/prevedi/${selectedSentence}`)
       .then((response) => response.json())
-      .then((data) => {
+      .then(async (data) => {
         const translation = data.translation;
         setTranslation(translation)
         setSelectedWords([]);
         const isAnswerCorrect = exercise.sentence === translation;
+        if(isAnswerCorrect){
+          await updateCorrectSolved(uid, document)
+        }
         setIsCorrect(isAnswerCorrect);
         setShowModal(true);
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const updateCorrectSolved = async (uid: string, document: string) => {
+    try {
+      const response = await fetch('http://localhost:4000/solvedCorrect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid: uid, document: document }),
+      });
+  
+      if (response.ok) {
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error: ' + error);
+    }
   };
 
   const handleCloseModal = () => {
