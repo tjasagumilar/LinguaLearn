@@ -6,14 +6,14 @@
 
 .dodaj-jezik {
     border-radius: 20px;
-    width: 115px;
-    background: #2F5AED;
+    width: 115px !important;	
+    background: #2F5AED !important;
     border: none;
     margin-bottom: 10px;
 }
 
 .dodaj-jezik:hover, .gumbi Button:hover {
-    background: rgba(47, 90, 237, 0.8);
+    background: rgba(47, 90, 237, 0.8) !important;
  }
 
  .gumbi Button {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Exercise } from '../Exercises/Exercises';
+import { useLocation } from 'react-router-dom';
 
 interface TipNaloge3Props {
   exercise: Exercise
@@ -11,6 +12,10 @@ const TipNaloge2 = ({exercise, onCheck}: TipNaloge3Props) => {
 
   const [selectedWord, setSelectedWord] = useState<string>();
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const language = queryParams.get('language');
+
   const handleToggleButton = (word: string) => {
     setSelectedWord(word);
   };
@@ -21,7 +26,7 @@ const TipNaloge2 = ({exercise, onCheck}: TipNaloge3Props) => {
 const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
-  fetch(`http://localhost:4000/prevedi/${selectedWord}`)
+  fetch(`http://localhost:4000/prevedi/${language}/${selectedWord}`)
     .then(response => response.json())
     .then(data => {
       const translation = data.translation;

@@ -346,6 +346,7 @@ const csvParser = require('csv-parser');
 
 app.get('/generate', async (req, res) => {
   const uid = req.query.uid;
+  const language = req.query.language;
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
   const querySnapshot = await jezikiRef.get();
   let jezikiData;
@@ -376,7 +377,7 @@ app.get('/generate', async (req, res) => {
   stream.on('end', async () => {
     if(selectedStatement != null){
       try {
-        const result = await translatte(selectedStatement, { to: 'de' });
+        const result = await translatte(selectedStatement, { to: language });
         res.json({statement: selectedStatement, translation: result.text});
       } catch(err) {
         console.error(err);
@@ -390,10 +391,11 @@ app.get('/generate', async (req, res) => {
 
 // prevedi poved ali besedo
 
-app.get('/prevedi/:statement', (req, res) => {
-  const { statement } = req.params;
+app.get('/prevedi/:language/:statement', (req, res) => {
+  const statement  = req.params.statement;
+  const language = req.params.language;
 
-  translatte(statement, { to: 'de' })
+  translatte(statement, { to: language })
     .then(translationResult => {
       const translation = translationResult.text;
       res.json({ translation });

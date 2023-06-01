@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './TipNaloge2.css';
 import { Container, Row, Col, Button, Modal, Badge } from 'react-bootstrap';
 import { Exercise } from '../Exercises/Exercises';
+import { useLocation } from 'react-router-dom';
 
 interface TipNaloge2Props {
   exercise: Exercise;
@@ -13,6 +14,10 @@ const TipNaloge2 = ({ exercise , onCheck}: TipNaloge2Props) => {
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const language = queryParams.get('language');
 
   const handleWordClickAvailable = (word: string) => {
     setSelectedWord(word);
@@ -26,7 +31,7 @@ const TipNaloge2 = ({ exercise , onCheck}: TipNaloge2Props) => {
       return;
     }
 
-    fetch(`http://localhost:4000/prevedi/${selectedWord}`)
+    fetch(`http://localhost:4000/prevedi/${language}/${selectedWord}`)
       .then(response => response.json())
       .then(data => {
         const translation = data.translation;

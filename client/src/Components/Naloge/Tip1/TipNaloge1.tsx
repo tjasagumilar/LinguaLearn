@@ -5,6 +5,7 @@ import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap
 import jsonIcon from './female-avatar.json';
 import Lottie from 'lottie-react';
 import { BsFillVolumeUpFill } from 'react-icons/bs';
+import { useLocation } from 'react-router-dom';
 
 interface TipNaloge1Props {
   exercise: Exercise;
@@ -25,7 +26,9 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const [divs, setDivs] = useState(initial.map((_, index) => index));
 
 
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const language = queryParams.get('language');
   
   
   useEffect(() => {
@@ -56,7 +59,7 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const handleCheck = () => {
     const selectedSentence = selectedWords.join(' ');
 
-    fetch(`http://localhost:4000/prevedi/${selectedSentence}`)
+    fetch(`http://localhost:4000/prevedi/${language}/${selectedSentence}`)
       .then((response) => response.json())
       .then(async (data) => {
         const translation = data.translation;
