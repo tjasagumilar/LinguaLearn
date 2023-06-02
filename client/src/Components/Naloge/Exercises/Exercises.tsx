@@ -282,7 +282,7 @@ const Exercises = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document }),
+        body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document, language: language}),
       });
 
       if (response.ok) {
@@ -302,7 +302,7 @@ const Exercises = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, document: document }),
+        body: JSON.stringify({ uid: uid, document: document, language: language}),
       });
 
 

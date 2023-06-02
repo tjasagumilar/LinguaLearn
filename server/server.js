@@ -249,43 +249,20 @@ app.get('/loadExercises', async (req, res) => {
   res.send(nalogeData);
 });
 
-
-/*
-app.get('/loadExercises', async (req, res) => {
-  const uid = req.query.uid;
-  const language = req.query.language;
-
-  const nalogeRef = dbFire.collection('users').doc(uid).collection('naloge');
-  const querySnapshot = await nalogeRef.orderBy('currentTime', 'desc').limit(1).get()
-  let nalogeData = null;
-  const currentTime = new Date();
-  const tenMins = new Date(currentTime.getTime() - 10 * 60 * 1000)
-
-  querySnapshot.forEach((doc) => {
-    const docData = doc.data();
-    console.log(docData && currentTime > tenMins)
-    if (docData.solved === false) {
-      nalogeData = { id: doc.id, ...docData };
-    }
-  });
-
-  console.log(nalogeData)
-  res.send(nalogeData);
-})
-*/
-
-// spremeni nalogo reseno na true
-
-app.post('/trueExercise', (req, res) => {
-  const { uid, exerciseId, document } = req.body;
+//SPREMENI RESENO NALOGO NA TRUE
+app.post('/trueExercise', async (req, res) => {
+  const { uid, exerciseId, document, language } = req.body;
   console.log(uid)
   console.log(exerciseId)
-
   console.log(document)
 
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const nalogeRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
-  docRef.get()
+  nalogeRef.get()
     .then((doc) => {
       const data = doc.data();
       let exercises = data.exercises;
@@ -293,7 +270,7 @@ app.post('/trueExercise', (req, res) => {
 
       if (toUpdate) {
         toUpdate.solved = true;
-        docRef.update({
+        nalogeRef.update({
           exercises: exercises
         }).then(() => {
           console.log("Dokument uspešno posodobljen!");
@@ -310,15 +287,18 @@ app.post('/trueExercise', (req, res) => {
     });
 });
 
-// spremeni session nalog solved na true
-
-app.post('/trueExercises', (req, res) => {
-  const { uid, document } = req.body;
+//SPREMENI SESSION NALOG SOLVED NA TRUE
+app.post('/trueExercises', async (req, res) => {
+  const { uid, document, language } = req.body;
   console.log(uid)
 
   console.log(document)
 
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
   docRef.update({
     solved: true
