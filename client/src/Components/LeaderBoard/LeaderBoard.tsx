@@ -17,18 +17,17 @@ const LeaderBoard = () => {
 */
 
     return (
-        <div className="board">
-            <h1 className="leaderboard">Leaderboard</h1>
-
+        <div className="leaderboard-container">
+            <h1 className="leaderboard">Vodilna Lestvica</h1>
             <div className="duration">
                 <button onClick={handleClick} data-id="7">
-                    7 Days
+                    7 Dni
                 </button>
                 <button onClick={handleClick} data-id="30">
-                    30 Days
+                    30 Dni
                 </button>
                 <button onClick={handleClick} data-id="0">
-                    All-Time
+                    Vseh časov
                 </button>
             </div>
 {/*

@@ -1,0 +1,34 @@
+.leaderboard-container {
+    background-color: #6389fa;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard {
+    font-size: 28px;
+    color: white;
+    text-align: center;
+}
+
+.duration {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: white;
+    color: #6389fa;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #fa9746;
+    color: white;
+}
