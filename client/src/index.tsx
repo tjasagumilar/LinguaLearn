@@ -18,6 +18,7 @@ import SeznamNalog from './Components/Naloge/SeznamNalog/SeznamNalog';
 import { render } from '@testing-library/react';
 import ExercisesHome from './Components/Naloge/ExercisesHome';
 import Vec from './Components/MojiJeziki/Vec/Vec';
+import LeaderBoard from "./Components/LeaderBoard/LeaderBoard";
 
 
 const router = createBrowserRouter([
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: '/vec',
         element: <Vec />
+      },
+      {
+        path: '/leaderboard',
+        element: <LeaderBoard />
       },
 
     ],

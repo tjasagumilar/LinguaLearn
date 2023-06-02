@@ -7,6 +7,7 @@ import { auth } from '../../Config/firebase';
 import logging from '../../Config/logging';
 import { useNavigate } from 'react-router';
 import "./Navigation.css";
+import LeaderBoard from "../LeaderBoard/LeaderBoard";
 
 
 const Navigation = () => {
@@ -58,6 +59,7 @@ const Navigation = () => {
                 <NavDropdown.Item href="/naloge">Naloge</NavDropdown.Item>
                 <NavDropdown.Item href="/jeziki">Moji jeziki</NavDropdown.Item>
                 <NavDropdown.Item href="/chat">Chat</NavDropdown.Item>
+                <NavDropdown.Item href="/leaderboard">Vodilna Lestvica</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}> Odjava</NavDropdown.Item>
               </NavDropdown>
