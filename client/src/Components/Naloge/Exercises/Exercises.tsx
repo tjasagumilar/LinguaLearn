@@ -96,7 +96,7 @@ const Exercises = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ exercises, uid }),
+        body: JSON.stringify({ exercises, uid, language }),
       });
 
       if (response.ok) {
@@ -114,7 +114,7 @@ const Exercises = () => {
 
   const loadExercises = async (uid: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/loadExercises?uid=${uid}`);
+      const response = await fetch(`http://localhost:4000/loadExercises?uid=${uid}&language=${language}`);
       if (response.ok) {
         console.log(response)
         const text = await response.text();
