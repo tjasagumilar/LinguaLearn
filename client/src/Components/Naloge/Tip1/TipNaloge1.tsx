@@ -88,7 +88,7 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, document: document }),
+        body: JSON.stringify({ uid: uid, document: document, language: language}),
       });
   
       if (response.ok) {

@@ -314,12 +314,15 @@ app.post('/trueExercises', async (req, res) => {
 
 });
 
-// spremeni št pravilno rešenih 
+//SPREMENI ŠTEVILO PRAVILNO REŠENIH
+app.post('/solvedCorrect', async (req, res) => {
+  const { uid, document, language } = req.body;
 
-app.post('/solvedCorrect', (req, res) => {
-  const { uid, document } = req.body;
-
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
   docRef.get().then((doc) => {
     if (doc.exists) {
