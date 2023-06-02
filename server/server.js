@@ -159,54 +159,34 @@ app.delete('/odstranijezik', (req, res) => {
 
   const userRef = dbFire.collection('users').doc(uid);
   const query = userRef.collection('jeziki').where('jezik', '==', jezik);
- 
+
   query.get()
-  .then((querySnapshot) => {
-    if (querySnapshot.empty) {
-      console.log('No matching documents found');
-      return;
-    }
+    .then((querySnapshot) => {
+      if (querySnapshot.empty) {
+        console.log('No matching documents found');
+        return;
+      }
 
-    querySnapshot.forEach((doc) => {
-      doc.ref.delete()
-        .then(() => {
-         // console.log('Document successfully deleted!');
-          res.sendStatus(200);
-        })
-        .catch((error) => {
-          console.error('Error deleting document: ', error);
-        });
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete()
+          .then(() => {
+            // console.log('Document successfully deleted!');
+            res.sendStatus(200);
+          })
+          .catch((error) => {
+            console.error('Error deleting document: ', error);
+          });
+      });
+    })
+    .catch((error) => {
+      console.error('Error getting documents: ', error);
     });
-  })
-  .catch((error) => {
-    console.error('Error getting documents: ', error);
-  });
 
 });
 
-async function getCities(dbFire) {
-  const citiesCol = collection(dbFire, 'test');
-  const citySnapshot = await getDocs(citiesCol);
-  const cityList = citySnapshot.docs.map(doc => doc.data());
-  return cityList;
-}
-
-
-
-app.get('/fire', async (req, res) => {
-  try {
-    const cities = await getCities(dbFire);
-    res.json(cities);
-  } catch (error) {
-    console.error('Error :', error);
-    res.status(500).json({ error: 'Failed' });
-  }
-});
-
-// shrani naloge v bazo
-
+//SHRANI NALOGE V BAZO
 app.post('/saveExercises', async (req, res) => {
-  const { exercises, uid } = req.body;
+  const { exercises, uid, language } = req.body;
   console.log(uid)
   console.log(exercises)
   const currentTime = new Date();
@@ -214,51 +194,75 @@ app.post('/saveExercises', async (req, res) => {
   const solvedRight = 0;
 
   try {
-    const docRef = await dbFire.collection('users').doc(uid).collection('naloge').add({ exercises, solved, currentTime, solvedRight });
-    const docId = docRef.id;
-    console.log(docId)
-    res.status(200).send(docId)
+    const userRef = dbFire.collection('users').doc(uid);
+    const jezikiRef = userRef.collection('jeziki');
+    const jezikQuery = await jezikiRef.where('jezik', '==', language).get();
+
+    if (!jezikQuery.empty) {
+      const jezikDocSnapshot = jezikQuery.docs[0];
+      const nalogeRef = jezikDocSnapshot.ref.collection('naloge');
+      const nalogeDocRef = await nalogeRef.add({ exercises, solved, currentTime, solvedRight });
+      const docId = nalogeDocRef.id;
+      res.status(200).send(docId);
+
+    } else {
+      console.log('Jezik ne obstaja');
+      res.status(500).send('Napaka pri shranjevanju nalog.');
+
+    }
   } catch (error) {
     console.error('Napaka:', error);
     res.status(500).send('Napaka pri shranjevanju nalog.');
   }
 });
 
-// nalozi naloge iz baze
-
+//NALOŽI NALOGE IZ BAZE
 app.get('/loadExercises', async (req, res) => {
   const uid = req.query.uid;
+  const language = req.query.language;
 
-  const nalogeRef = dbFire.collection('users').doc(uid).collection('naloge');
-  const querySnapshot = await nalogeRef.orderBy('currentTime', 'desc').limit(1).get()
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+
+  if (jezikQuerySnapshot.empty) {
+    res.send(null);
+    return;
+  }
+
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const nalogeRef = jezikDocSnapshot.ref.collection('naloge');
+  const querySnapshot = await nalogeRef.orderBy('currentTime', 'desc').limit(1).get();
+
   let nalogeData = null;
   const currentTime = new Date();
-  const tenMins = new Date(currentTime.getTime() - 10 * 60 * 1000)
+  const tenMins = new Date(currentTime.getTime() - 10 * 60 * 1000);
 
   querySnapshot.forEach((doc) => {
     const docData = doc.data();
     console.log(docData && currentTime > tenMins)
-    if (docData.solved === false) {
+    if (docData.solved === false && currentTime > tenMins) {
       nalogeData = { id: doc.id, ...docData };
     }
   });
 
-  console.log(nalogeData)
+  console.log(nalogeData);
   res.send(nalogeData);
-})
+});
 
-// spremeni nalogo reseno na true
-
-app.post('/trueExercise', (req, res) => {
-  const { uid, exerciseId, document } = req.body;
+//SPREMENI RESENO NALOGO NA TRUE
+app.post('/trueExercise', async (req, res) => {
+  const { uid, exerciseId, document, language } = req.body;
   console.log(uid)
   console.log(exerciseId)
-
   console.log(document)
 
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const nalogeRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
-  docRef.get()
+  nalogeRef.get()
     .then((doc) => {
       const data = doc.data();
       let exercises = data.exercises;
@@ -266,7 +270,7 @@ app.post('/trueExercise', (req, res) => {
 
       if (toUpdate) {
         toUpdate.solved = true;
-        docRef.update({
+        nalogeRef.update({
           exercises: exercises
         }).then(() => {
           console.log("Dokument uspešno posodobljen!");
@@ -283,15 +287,18 @@ app.post('/trueExercise', (req, res) => {
     });
 });
 
-// spremeni session nalog solved na true
-
-app.post('/trueExercises', (req, res) => {
-  const { uid, document } = req.body;
+//SPREMENI SESSION NALOG SOLVED NA TRUE
+app.post('/trueExercises', async (req, res) => {
+  const { uid, document, language } = req.body;
   console.log(uid)
 
   console.log(document)
 
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
   docRef.update({
     solved: true
@@ -307,12 +314,15 @@ app.post('/trueExercises', (req, res) => {
 
 });
 
-// spremeni št pravilno rešenih 
+//SPREMENI ŠTEVILO PRAVILNO REŠENIH
+app.post('/solvedCorrect', async (req, res) => {
+  const { uid, document, language } = req.body;
 
-app.post('/solvedCorrect', (req, res) => {
-  const { uid, document } = req.body;
-
-  const docRef = dbFire.collection('users').doc(uid).collection('naloge').doc(document);
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
 
   docRef.get().then((doc) => {
     if (doc.exists) {
@@ -325,10 +335,10 @@ app.post('/solvedCorrect', (req, res) => {
         console.log("Dokument uspešno posodobljen!");
         res.sendStatus(200);
       })
-      .catch((error) => {
-        console.error("Error pri updejtanju dokumenta: ", error);
-        res.status(500).send('Napaka');
-      });
+        .catch((error) => {
+          console.error("Error pri updejtanju dokumenta: ", error);
+          res.status(500).send('Napaka');
+        });
     } else {
       console.log("No such document!");
     }
@@ -364,21 +374,21 @@ app.get('/generate', async (req, res) => {
     .pipe(csvParser())
     .on('data', (row) => {
       const prediction = parseFloat(row['Prediction'])
-      if(prediction >= difficulty-5 && prediction <= difficulty+8 ){
+      if (prediction >= difficulty - 5 && prediction <= difficulty + 8) {
         count++;
-        if(Math.random() < 1 / count){
+        if (Math.random() < 1 / count) {
           selectedStatement = row['Statement'];
         }
       }
     })
 
   stream.on('end', async () => {
-    if(selectedStatement != null){
+    if (selectedStatement != null) {
       try {
         const translationResult = await translatte(selectedStatement, { to: 'sl' });
         const result = await translatte(selectedStatement, { to: language });
-        res.json({statement: selectedStatement, translation: result.text, slovenianTranslation: translationResult.text});
-      } catch(err) {
+        res.json({ statement: selectedStatement, translation: result.text, slovenianTranslation: translationResult.text });
+      } catch (err) {
         console.error(err);
         res.status(500).send('Napaka pri prevodu');
       }
@@ -391,11 +401,11 @@ app.get('/generate', async (req, res) => {
 // prevedi poved ali besedo
 
 app.get('/prevedi/:language/:statement', (req, res) => {
-  const statement  = req.params.statement;
+  const statement = req.params.statement;
   const language = req.params.language;
   console.log(language)
   console.log(statement)
-  
+
 
   translatte(statement, { to: language })
     .then(translationResult => {
@@ -430,46 +440,46 @@ app.get('/generateWord', async (req, res) => {
 
   const words = [];
   fs.createReadStream('words.csv')
-  .pipe(csvParser())
-  .on('data', (data) => {
-    const dataDifficulty = Number(data.difficulty);
+    .pipe(csvParser())
+    .on('data', (data) => {
+      const dataDifficulty = Number(data.difficulty);
 
-    if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
-      words.push(data.word);
-    } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
-      words.push(data.word);
-    } else if ((11 <= difficulty && difficulty <= 16) && dataDifficulty <= 60) {
-      words.push(data.word);
-    } else if ((17 <= difficulty && difficulty <= 22) && dataDifficulty <= 70) {
-      words.push(data.word);
-    } else if ((23 <= difficulty && difficulty <= 28) && dataDifficulty <= 80) {
-      words.push(data.word);
-    } else if ((29 <= difficulty && difficulty <= 34) && dataDifficulty <= 90) {
-      words.push(data.word);
-    } else if ((35 <= difficulty && difficulty <= 40) && dataDifficulty <= 100) {
-      words.push(data.word);
-    } else if ((41 <= difficulty && difficulty <= 51) && dataDifficulty <= 120) {
-      words.push(data.word);
-    } else if ((52 <= difficulty && difficulty <= 57) && dataDifficulty <= 130) {
-      words.push(data.word);
-    } else if ((58 <= difficulty && difficulty <= 63) && dataDifficulty <= 150) {
-      words.push(data.word);
-    } else if ((64 <= difficulty && difficulty <= 69) && dataDifficulty <= 160) {
-      words.push(data.word);
-    } else if ((71 <= difficulty && difficulty <= 76) && dataDifficulty <= 180) {
-      words.push(data.word);
-    } else if ((77 <= difficulty && difficulty <= 82) && dataDifficulty <= 190) {
-      words.push(data.word);
-    } else if ((83 <= difficulty && difficulty <= 88) && dataDifficulty <= 210) {
-      words.push(data.word);
-    } else if ((89 <= difficulty && difficulty <= 94) && dataDifficulty <= 220) {
-      words.push(data.word);
-    } else if ((90 <= difficulty && difficulty <= 100) && dataDifficulty <= 250) {
-      words.push(data.word);
-    } else if (difficulty > 100) {
-      words.push(data.word)
-    }
-  })
+      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
+        words.push(data.word);
+      } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
+        words.push(data.word);
+      } else if ((11 <= difficulty && difficulty <= 16) && dataDifficulty <= 60) {
+        words.push(data.word);
+      } else if ((17 <= difficulty && difficulty <= 22) && dataDifficulty <= 70) {
+        words.push(data.word);
+      } else if ((23 <= difficulty && difficulty <= 28) && dataDifficulty <= 80) {
+        words.push(data.word);
+      } else if ((29 <= difficulty && difficulty <= 34) && dataDifficulty <= 90) {
+        words.push(data.word);
+      } else if ((35 <= difficulty && difficulty <= 40) && dataDifficulty <= 100) {
+        words.push(data.word);
+      } else if ((41 <= difficulty && difficulty <= 51) && dataDifficulty <= 120) {
+        words.push(data.word);
+      } else if ((52 <= difficulty && difficulty <= 57) && dataDifficulty <= 130) {
+        words.push(data.word);
+      } else if ((58 <= difficulty && difficulty <= 63) && dataDifficulty <= 150) {
+        words.push(data.word);
+      } else if ((64 <= difficulty && difficulty <= 69) && dataDifficulty <= 160) {
+        words.push(data.word);
+      } else if ((71 <= difficulty && difficulty <= 76) && dataDifficulty <= 180) {
+        words.push(data.word);
+      } else if ((77 <= difficulty && difficulty <= 82) && dataDifficulty <= 190) {
+        words.push(data.word);
+      } else if ((83 <= difficulty && difficulty <= 88) && dataDifficulty <= 210) {
+        words.push(data.word);
+      } else if ((89 <= difficulty && difficulty <= 94) && dataDifficulty <= 220) {
+        words.push(data.word);
+      } else if ((90 <= difficulty && difficulty <= 100) && dataDifficulty <= 250) {
+        words.push(data.word);
+      } else if (difficulty > 100) {
+        words.push(data.word)
+      }
+    })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
     const randomWord2 = words[Math.floor(Math.random() * words.length)];
@@ -574,11 +584,11 @@ app.get('/generirajSliko', async (req, res) => {
   fs.createReadStream('slike.csv')
     .pipe(csv())
     .on('data', (row) => {
-      if ((0 <= difficulty && difficulty <= 50 ) && row.difficulty === 'easy') {
+      if ((0 <= difficulty && difficulty <= 50) && row.difficulty === 'easy') {
         exercises.push(row.label);
-      }else if ((51 <= difficulty && difficulty <= 101 ) && row.difficulty === 'medium'){
+      } else if ((51 <= difficulty && difficulty <= 101) && row.difficulty === 'medium') {
         exercises.push(row.label)
-      }else if (( difficulty > 102 ) && row.difficulty === 'hard'){
+      } else if ((difficulty > 102) && row.difficulty === 'hard') {
         exercises.push(row.label)
       }
     })
@@ -607,18 +617,18 @@ app.get('/slika', async (req, res) => {
     }
   });
 
-  
+
   const API_KEY = '36374853-199e3fdaa90425e05a17a1fa2';
 
   axios
-  .get('http://localhost:4000/generirajSliko', {
-    params: {
-      difficulty: jezikiData, 
-    },
-  })
-  .then((response) => {
-    const query = response.data;
-    const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
+    .get('http://localhost:4000/generirajSliko', {
+      params: {
+        difficulty: jezikiData,
+      },
+    })
+    .then((response) => {
+      const query = response.data;
+      const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}`;
 
 
       axios.get(URL)

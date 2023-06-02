@@ -16,7 +16,7 @@ function Chat() {
     };
 
     const chatComponents = {
-        general: { languageCode: 'General', name: "General Chat 💬" },
+        general: { languageCode: 'General', name: "Splošni Chat 💬" },
         af: { languageCode: 'Af', name: "Afrikaans Chat 🇿🇦" },
         sq: { languageCode: 'Alb', name: "Albanian Chat 🇦🇱" },
         am: { languageCode: 'Amh', name: "Amharic Chat 🇪🇹" },
@@ -140,9 +140,9 @@ function Chat() {
             </header>
 
             <div className="chat-selection">
-                <label htmlFor="chat-select">Select Chat Room: </label>
+                <label htmlFor="chat-select">Izberite klepetalnico: </label>
                 <select id="chat-select" value={selectedChat} onChange={handleChatChange}>
-                        <option value="general">General</option>
+                        <option value="general">Splošni</option>
                         <option value="af">Afrikaans</option>
                         <option value="sq">Albanian</option>
                         <option value="am">Amharic</option>
