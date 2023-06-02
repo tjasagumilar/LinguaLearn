@@ -1,0 +1,135 @@
+.bubble {
+    position: relative;
+    background: linear-gradient(8deg, #ffffff 50%, #ffffff 52%);
+    color: #000000;
+    font-family: Arial;
+    font-size: 15px;
+    text-align: center;
+    max-width: 90%;
+    border-radius: 16px;
+    padding: 10px;
+    border: #d6d1d1 solid 2px;
+    word-wrap: break-word;
+  }
+  
+  .bubble::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-color: transparent #ffffff;
+    border-width: 6px 10px 6px 0;
+    top: calc(50% - 6px);
+    left: -10px;
+  }
+  
+  .bubble::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    z-index: 0;
+    border-style: solid;
+    border-color: transparent #d6d1d1;
+    border-width: 8px 12px 8px 0;
+    top: calc(50% - 8px);
+    left: -12px;
+  }
+  
+  .mask {
+    position: absolute;
+    width: 2px;
+    height: 16px; 
+    background-color: #ffffff;
+    left: -2px;
+    top: calc(50% - 8px);
+    z-index: 2;
+  }
+  
+  .buttonZvok {
+    background-color: white !important;
+    transition: background-color 300ms ease-in-out;
+  }
+  
+  .buttonZvok:hover {
+    background-color: white !important;
+  }
+  
+  
+  button.btn.first {
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
+    border: 2px solid #6389fa !important;
+    padding: 0.5em 4em !important; 
+    border-radius: 2em !important; 
+    background-color: white;
+    color:#6389fa
+  }
+  
+  button.btn.first:hover {
+    box-shadow: 0 0 40px 40px #6389fa inset !important;
+    color:white
+  }
+  
+  
+  
+  .my-badge-tip-naloge1_1 {
+    cursor: pointer;
+    margin: 3px;
+    font-size: 1.1em; 
+    padding: 8px 12px; 
+    transition: transform 0.2s;
+    border: 2px solid gray;
+    background-color: white !important;
+    color: black;
+    border-radius: 15px; 
+  }
+  
+  
+  .fixed-bottom-container {
+    position: relative;
+  }
+  
+  .upper-line {
+    height: 1px;
+    background-color: #ccc;
+    margin-bottom: 20px;
+  }
+  
+  .fixed-bottom {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }.custom-button1 {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+  
+  
+  /* Add this to your TipNaloge1.css */
+  .bottom-modal-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+  }
+  
+  .custom-modal-dialog {
+    width: 100%;
+    max-width: none !important;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  
+  .custom-modal-content-correct {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(0, 38, 255);
+  }
+  
+  .custom-modal-content-wrong {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 3, 3);
+  
+  }
+  

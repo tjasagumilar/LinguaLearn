@@ -413,6 +413,7 @@ app.get('/prevedi/:language/:statement', (req, res) => {
 
 app.get('/generateWord', async (req, res) => {
   const uid = req.query.uid;
+  const language = req.query.language;
 
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
   const querySnapshot = await jezikiRef.get();
@@ -471,11 +472,29 @@ app.get('/generateWord', async (req, res) => {
   })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
-      const randomWord2 = words[Math.floor(Math.random() * words.length)];
-      const randomWord3 = words[Math.floor(Math.random() * words.length)];
+    const randomWord2 = words[Math.floor(Math.random() * words.length)];
+    const randomWord3 = words[Math.floor(Math.random() * words.length)];
 
-      res.json({ randomWord, randomWord2, randomWord3 });
+    Promise.all([
+      translatte(randomWord, { to: language }),
+      translatte(randomWord2, { to: language }),
+      translatte(randomWord3, { to: language })
+    ])
+    .then(([translationResult1, translationResult2, translationResult3]) => {
+      res.json({ 
+        randomWord: randomWord, 
+        randomWord2: randomWord2, 
+        randomWord3: randomWord3, 
+        translation1: translationResult1.text, 
+        translation2: translationResult2.text, 
+        translation3: translationResult3.text 
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Napaka v prevodu');
     });
+  })
 });
 
 // generiraj 1 besedo 

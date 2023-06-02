@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import TipNaloge1 from '../Tip1/TipNaloge1';
 import TipNaloge2 from '../Tip2/TipNaloge2';
 import TipNaloge3 from '../Tip3/TipNaloge3';
+import TipNaloge4 from '../Tip4/TipNaloge4';
 import { Container, Row, Col, Button, ProgressBar, Badge, Modal } from 'react-bootstrap';
 import './Exercises.css'
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -64,13 +65,15 @@ const Exercises = () => {
         let exercisePromise;
 
         const random = Math.random();
-        if (random < 0.33) {
-          exercisePromise = fetchStavekExercise(uid);
-        } else if (random < 0.66) {
-          exercisePromise = fetchStavek2Exercise(uid);
-        } else {
-          exercisePromise = fetchStavek3Exercise(uid);
-        }
+    if (random < 0.25) {
+      exercisePromise = fetchStavekExercise(uid);
+    } else if (random < 0.5) {
+      exercisePromise = fetchStavek2Exercise(uid);
+    } else if (random < 0.75) {
+      exercisePromise = fetchStavek3Exercise(uid);
+    } else {
+      exercisePromise = fetchStavek4Exercise(uid);
+    }
 
         exercisePromises.push(exercisePromise.then(exercise => {
           return { ...exercise, index: i, solved: false };
@@ -275,6 +278,43 @@ const Exercises = () => {
     return exerciseData;
   };
 
+  const fetchStavek4Exercise = async (uid: string) => {
+    console.log(uid)
+    const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch exercises');
+    }
+
+    const data = await response.json();
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
+    if (!wordsResponse.ok) {
+      throw new Error('Failed to fetch words');
+    }
+
+    const wordsData = await wordsResponse.json();
+    const translation1 = wordsData.translation1;
+    const translation2 = wordsData.translation2;
+    const translation3 = wordsData.translation3;
+
+    const words = data.translation.split(' ');
+    const mix = [...words].sort(() => Math.random() - 0.5);
+    const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
+    const dataNew = [...mix];
+    dataNew.splice(random[0], 0, translation1);
+    dataNew.splice(random[1], 0, translation2);
+    dataNew.splice(random[1], 0, translation3);
+
+    const exerciseData = {
+      type: 'zvok',
+      sentence: data.translation,
+      availableWords: dataNew,
+      resitev: data.statement
+    };
+
+    return exerciseData;
+  };
+
   const updateExerciseSolved = async (uid: string, exerciseId: number, document: string) => {
     try {
       const response = await fetch('http://localhost:4000/trueExercise', {
@@ -391,18 +431,25 @@ const Exercises = () => {
       </Container>
 
 
-      {currentExercise.type === 'stavek' ? (
-        <TipNaloge1
-          exercise={currentExercise}
-          uid={uid}
-          document={document}
-          onCheck={handleNextExercise}
-        />
-      ) : currentExercise.type === 'beseda' ? (
-        <TipNaloge2 exercise={currentExercise} onCheck={handleNextExercise} />
-      ) : currentExercise.type === 'slika' ? (
-        <TipNaloge3 exercise={currentExercise} onCheck={handleNextExercise} />
-      ) : null}
+      {
+  currentExercise.type === 'stavek' ? (
+    <TipNaloge1
+      exercise={currentExercise}
+      uid={uid}
+      document={document}
+      onCheck={handleNextExercise}
+    />
+  ) : currentExercise.type === 'beseda' ? (
+    <TipNaloge2 exercise={currentExercise} onCheck={handleNextExercise} />
+  ) : currentExercise.type === 'slika' ? (
+    <TipNaloge3 exercise={currentExercise} onCheck={handleNextExercise} />
+  ) : currentExercise.type === 'zvok' ? (
+    <TipNaloge4  exercise={currentExercise}
+    uid={uid}
+    document={document}
+    onCheck={handleNextExercise}/>
+  ) : null
+}
 
       <Modal
         show={showConfirmation}
