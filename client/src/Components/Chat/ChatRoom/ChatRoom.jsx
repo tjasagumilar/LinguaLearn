@@ -15,22 +15,41 @@ function ChatRoom({ languageCode }) {
     const [messages] = useCollectionData(query, { idField: 'id' });
 
     const [formValue, setFormValue] = useState('');
-    const [currentUser, setCurrentUser] = useState(null); // Added state variable
+    const [currentUser, setCurrentUser] = useState(null);
+    const [photoURL, setPhotoURL] = useState('');
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                setCurrentUser(user); // Set the current user
+                setCurrentUser(user);
+                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setPhotoURL(require(`../../../Assets/${data.slika}`));
+                        /*console.log('photoURL:', data.slika);*/
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         });
 
-        return () => unsubscribe(); // Cleanup the event listener
+        return () => unsubscribe();
     }, []);
+
+    useEffect(() => {
+        if (currentUser) {
+            const { photoURL: avatar } = currentUser;
+            if (avatar) {
+                setPhotoURL(avatar);
+            }
+        }
+    }, [currentUser]);
 
     const sendMessage = async (e) => {
         e.preventDefault();
 
-        const { uid, photoURL } = currentUser; // Use the current user
+        const { uid } = currentUser;
 
         await messagesRef.add({
             text: formValue,
@@ -50,7 +69,7 @@ function ChatRoom({ languageCode }) {
                     <ChatMessage
                         key={msg.id}
                         message={msg}
-                        currentUser={currentUser} // Pass the current user to ChatMessage
+                        currentUser={currentUser}
                     />
                 ))}
                 <span ref={dummy}></span>
@@ -59,7 +78,7 @@ function ChatRoom({ languageCode }) {
                 <input
                     value={formValue}
                     onChange={(e) => setFormValue(e.target.value)}
-                    placeholder="say something nice..."
+                    placeholder="povej nekaj lepega..."
                 />
                 <button type="submit" disabled={!formValue}>✉️</button>
             </form>
@@ -69,20 +88,22 @@ function ChatRoom({ languageCode }) {
 
 function ChatMessage(props) {
     const { text, uid, photoURL } = props.message;
-    const { currentUser } = props; // Get the current user from props
-    const messageClass = uid === currentUser.uid ? 'sent' : 'received';
+    const { currentUser } = props;
+    const messageClass = uid === currentUser?.uid ? 'sent' : 'received';
+
+    const imageSource = photoURL || (currentUser?.photoURL) || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png';
+
+    /*console.log('photoURL in ChatMessage:', photoURL); // Add this console log to check the value*/
 
     return (
-        <>
-            <div className={`message ${messageClass}`}>
-                <img
-                    className={'chatimg'}
-                    src={photoURL || currentUser.photoURL || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'}
-                    alt="👤"
-                />
-                <p>{text}</p>
-            </div>
-        </>
+        <div className={`message ${messageClass}`}>
+            <img
+                className="chatimg"
+                src={imageSource}
+                alt={imageSource} // Modify the alt attribute to use the image source
+            />
+            <p>{text}</p>
+        </div>
     );
 }
 
