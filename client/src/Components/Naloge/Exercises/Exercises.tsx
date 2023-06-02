@@ -16,6 +16,7 @@ export interface Exercise {
   availableWords: string[];
   pageURL?: string;
   solved: boolean;
+  resitev?:string;
 }
 
 
@@ -174,7 +175,7 @@ const Exercises = () => {
     const generatedWord2 = wordsData.randomWord2;
     const generatedWord3 = wordsData.randomWord3;
 
-    const words = data.statement.split(' ');
+    const words = data.slovenianTranslation.split(' ');
     const mix = [...words].sort(() => Math.random() - 0.5);
     const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
     const dataNew = [...mix];
@@ -186,6 +187,7 @@ const Exercises = () => {
       type: 'stavek',
       sentence: data.translation,
       availableWords: dataNew,
+      resitev: data.slovenianTranslation
     };
 
     return exerciseData;

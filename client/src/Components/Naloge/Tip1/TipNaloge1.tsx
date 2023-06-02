@@ -22,8 +22,7 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-  const [initial, setInitial] = useState(exercise.availableWords);
-  const [divs, setDivs] = useState(initial.map((_, index) => index));
+
 
 
   const location = useLocation();
@@ -58,14 +57,19 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
 
   const handleCheck = () => {
     const selectedSentence = selectedWords.join(' ');
+    console.log(selectedSentence)
 
     fetch(`http://localhost:4000/prevedi/${language}/${selectedSentence}`)
       .then((response) => response.json())
       .then(async (data) => {
-        const translation = data.translation;
+        const translation = data;
         setTranslation(translation)
         setSelectedWords([]);
+        console.log("xx")
+        console.log(translation)
+        console.log(exercise.sentence)
         const isAnswerCorrect = exercise.sentence === translation;
+
         if(isAnswerCorrect){
           await updateCorrectSolved(uid, document)
         }
@@ -119,10 +123,10 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-    <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '600px' }}>
+    <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
     <Row className="align-items-center">
   <Col md={6}>
-    <h5 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h5>
+    <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
   </Col>
 </Row>
 <Row className="mt-3 align-items-center">
@@ -133,12 +137,12 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     <div className="bubble">
       <Button
         onClick={() => audioRef.current && audioRef.current.play()}
-        className="mb-3 custom-button" 
+        className="buttonZvok mb-3 custom-button" 
       >
-        <BsFillVolumeUpFill style={{ fontSize: '36px', color: 'blue' }} />
+        <BsFillVolumeUpFill style={{ fontSize: '44px', color: 'blue' }} />
       </Button>
       <div className="text-container">
-        <span>{exercise.sentence}</span>
+      <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
       </div>
     </div>
   </Col>
@@ -153,10 +157,26 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     </audio>
     <div className="border-bottom my-3"></div>
 
-    <Row className="mt-2 justify-content-center">
+    <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
+  <Col md={8}>
+    {selectedWords.map((word, index) => (
+      <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
+        {word}
+      </Badge>
+    ))}
+  </Col>
+</Row>
+
+
+    <div className="border-bottom my-3"></div>
+
+    <Row className="mt-2">
+    <h5 className="mb-0 font-weight-bold">Razpoložljive besede:</h5>
+    <br></br>  <br></br>
       <Col md={8}>
-        {selectedWords.map((word, index) => (
-          <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="m-1 p-1 rounded">
+
+        {availableWords.map((word, index) => (
+          <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
             {word}
           </Badge>
         ))}
@@ -164,78 +184,58 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     </Row>
 
 
-    <div className="border-bottom my-3"></div>
-
-    <Row className="mt-2 justify-content-center">
-      <Col md={8}>
-        <div className="p-1 rounded">
-          {divs.map((div, index) => (
-           <div 
-           style={{
-             display: 'inline-flex', 
-             justifyContent: 'center',
-             alignItems: 'center',
-             border: '1px solid #ccc', 
-             borderRadius: '15px', 
-             margin: '5px', 
-             padding: '8px', 
-             boxSizing: 'border-box',
-             minWidth: '60px'
-           }} 
-           key={index}
-         >
-           {availableWords.includes(initial[div]) && (
-             <Badge pill onClick={() => handleWordClickAvailable(initial[div])} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-               {initial[div]}
-             </Badge>
-           )}
-         </div>
-          ))}
-        </div>
-      </Col>
-    </Row>
-
   </Container>
 
-
-
-      <div className="fixed-bottom">
-        <div className="container-fluid">
-          <div className="upper-line"></div>
-          <Row className="align-items-center">
-            <Col xs={4} md={4} className="text-end">
-
-              <Button className="custom-button1 btn-sm">
-                Preskoči
-              </Button>
-            </Col>
-            <Col xs={4} md={4}></Col>
-            <Col xs={4} md={4} className="text-start">
-              <Button onClick={handleCheck} className="custom-button1 btn-sm flex-grow-0">
-                Preveri rešitev
-              </Button>
-            </Col>
-          </Row>
-        </div>
-      </div>
-
-
+  <div className="fixed-bottom">
+  <div className="container-fluid">
+    <div className="upper-line"></div>
+    <Row className="align-items-center">
+    <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+        <Button className="btn first w-60 d-flex align-items-center justify-content-center">
+          <span className="btn-text">Preskoči</span>
+        </Button>
+      </Col>
+      <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+        <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
+          <span className="btn-text">Preveri</span>
+        </Button>
+      </Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
+    </Row>
+  </div>
+</div>
 
 
 
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${translation}"`}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+
+
+
+
+
+
+<Modal 
+    show={showModal} 
+    onHide={handleCloseModal}
+    dialogClassName="custom-modal-dialog"
+    contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
+>
+    <Modal.Header closeButton>
+        <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
+    </Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
             Zapri
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </Button>
+    </Modal.Footer>
+</Modal>
+
+
+
     </form>
 
 

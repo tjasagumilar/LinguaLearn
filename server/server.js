@@ -340,6 +340,7 @@ app.post('/solvedCorrect', (req, res) => {
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
 const csvParser = require('csv-parser');
+const { SourceTextModule } = require('vm');
 
 app.get('/generate', async (req, res) => {
   const uid = req.query.uid;
@@ -374,8 +375,9 @@ app.get('/generate', async (req, res) => {
   stream.on('end', async () => {
     if(selectedStatement != null){
       try {
+        const translationResult = await translatte(selectedStatement, { to: 'sl' });
         const result = await translatte(selectedStatement, { to: language });
-        res.json({statement: selectedStatement, translation: result.text});
+        res.json({statement: selectedStatement, translation: result.text, slovenianTranslation: translationResult.text});
       } catch(err) {
         console.error(err);
         res.status(500).send('Napaka pri prevodu');
@@ -391,10 +393,14 @@ app.get('/generate', async (req, res) => {
 app.get('/prevedi/:language/:statement', (req, res) => {
   const statement  = req.params.statement;
   const language = req.params.language;
+  console.log(language)
+  console.log(statement)
+  
 
   translatte(statement, { to: language })
     .then(translationResult => {
       const translation = translationResult.text;
+      console.log(translation)
       res.json({ translation });
     })
     .catch(err => {
