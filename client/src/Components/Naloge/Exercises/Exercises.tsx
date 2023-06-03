@@ -18,6 +18,7 @@ export interface Exercise {
   pageURL?: string;
   solved: boolean;
   resitev?:string;
+  resitve?:string[]
 }
 
 
@@ -64,16 +65,10 @@ const Exercises = () => {
       for (let i = 0; i < numExercises; i++) {
         let exercisePromise;
 
-        const random = Math.random();
-    if (random < 0.25) {
-      exercisePromise = fetchStavekExercise(uid);
-    } else if (random < 0.5) {
+
       exercisePromise = fetchStavek2Exercise(uid);
-    } else if (random < 0.75) {
-      exercisePromise = fetchStavek3Exercise(uid);
-    } else {
-      exercisePromise = fetchStavek4Exercise(uid);
-    }
+
+
 
         exercisePromises.push(exercisePromise.then(exercise => {
           return { ...exercise, index: i, solved: false };
@@ -168,7 +163,7 @@ const Exercises = () => {
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -203,7 +198,8 @@ const Exercises = () => {
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
+
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -212,29 +208,70 @@ const Exercises = () => {
     if (!prevodResponse.ok) {
       throw new Error('Failed to fetch translation');
     }
-
     const prevod = await prevodResponse.json();
-    const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord;
-    const generatedWord2 = wordsData.randomWord2;
-    const generatedWord3 = wordsData.randomWord3;
-    const dataNew = [generatedWord1, generatedWord2, generatedWord3, data.randomWord];
-    console.log(dataNew)
 
-    for (let i = dataNew.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
+
+    const prevodResponse2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${data.randomWord}`);
+    if (!prevodResponse.ok) {
+      throw new Error('Failed to fetch translation');
     }
-    console.log(dataNew)
+
+    const prevodSlovenski = await prevodResponse2.json()
+
+    const wordsData = await wordsResponse.json()
+
+    const response1 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord}`);
+    if (!response1.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord1 = (await response1.json()).translation;
+
+    const response2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord2}`);
+    if (!response2.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord2 = (await response2.json()).translation;
+
+    const response3 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord3}`);
+    if (!response3.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord3 = (await response3.json()).translation; 
+
+    const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevodSlovenski.translation];
+    const dataNewResitve=[wordsData.randomWord, wordsData.randomWord2, wordsData.randomWord3, data.randomWord]
+
+
+       const zipped = dataNew.map((value, i) => [value, dataNewResitve[i]]);
+
+       for (let i = zipped.length - 1; i > 0; i--) {
+           const j = Math.floor(Math.random() * (i + 1));
+           [zipped[i], zipped[j]] = [zipped[j], zipped[i]];
+       }
+   
+
+       const [shuffledDataNew, shuffledDataNewResitve] = zipped.reduce(
+           ([dataNewAcc, dataNewResitveAcc], [value1, value2]) => {
+               return [
+                   [...dataNewAcc, value1],
+                   [...dataNewResitveAcc, value2]
+               ];
+           },
+           [[], []]
+       );
+       console.log("XXXXXXXXXXXXX")
+       console.log(shuffledDataNew);
+       console.log(shuffledDataNewResitve);
 
     const exerciseData = {
       type: 'beseda',
       sentence: prevod.translation,
-      availableWords: dataNew,
+      availableWords: shuffledDataNew,
+      resitve: shuffledDataNewResitve
     };
 
     return exerciseData;
-  };
+};
 
   const fetchStavek3Exercise = async (uid: string) => {
     const response = await fetch(`http://localhost:4000/slika?uid=${uid}`)
@@ -265,8 +302,7 @@ const Exercises = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
     }
-    console.log(dataNew)
-    console.log(data.pageURL)
+
 
     const exerciseData = {
       type: 'slika',
@@ -279,7 +315,7 @@ const Exercises = () => {
   };
 
   const fetchStavek4Exercise = async (uid: string) => {
-    console.log(uid)
+
     const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
 
     if (!response.ok) {
@@ -440,7 +476,8 @@ const Exercises = () => {
       onCheck={handleNextExercise}
     />
   ) : currentExercise.type === 'beseda' ? (
-    <TipNaloge2 exercise={currentExercise} onCheck={handleNextExercise} />
+    <TipNaloge2 exercise={currentExercise}   uid={uid}
+    document={document} onCheck={handleNextExercise} />
   ) : currentExercise.type === 'slika' ? (
     <TipNaloge3 exercise={currentExercise} onCheck={handleNextExercise} />
   ) : currentExercise.type === 'zvok' ? (

@@ -11,34 +11,39 @@
   margin-top: 10px;
 }
 
-.my-heading {
+.myHeading2 {
   font-weight: bold;
+  font-family: 'PT Sans Caption', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 2.0em
 }
 
 .my-subheading {
   font-size: 1.25em;
 }
 
-.my-badge-tip-naloge2 {
-  cursor: pointer;
-  margin: 3px;
-  font-size: 1.2em;
-  transition: transform 0.2s;
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+
+.btnfirst2.isSelected {
+  color:white;
+  background-color: #6389fa;
 }
 
-.my-badge-tip-naloge2.isSelected {
-  background-color: #180680;
-  box-shadow: none;
+
+.btnfirst2 {
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
+  border: 2px solid #6389fa !important;
+  padding: 1.0em 4em !important; 
+  border-radius: 0.5em !important; 
+  background-color: white;
+  color:#6389fa;
+  font-family: 'PT Sans Caption', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.25em
 }
 
-.my-badge-tip-naloge2:hover {
-  transform: scale(0.9);
+.btnfirst2:hover {
+  box-shadow: 0 0 40px 40px #6389fa inset !important;
+  color:white
 }
+
 
 
 .bubble {
@@ -46,5 +51,13 @@
   background-color: #e9ecef;
   border-radius: 15px;
   margin-bottom: 10px;
+}
+
+.index-box {
+  border: 2px solid #6389fa; 
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: bold;
 }
 

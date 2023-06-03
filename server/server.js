@@ -187,8 +187,7 @@ app.delete('/odstranijezik', (req, res) => {
 //SHRANI NALOGE V BAZO
 app.post('/saveExercises', async (req, res) => {
   const { exercises, uid, language } = req.body;
-  console.log(uid)
-  console.log(exercises)
+
   const currentTime = new Date();
   const solved = false;
   const solvedRight = 0;
@@ -245,16 +244,14 @@ app.get('/loadExercises', async (req, res) => {
     }
   });
 
-  console.log(nalogeData);
+
   res.send(nalogeData);
 });
 
 //SPREMENI RESENO NALOGO NA TRUE
 app.post('/trueExercise', async (req, res) => {
   const { uid, exerciseId, document, language } = req.body;
-  console.log(uid)
-  console.log(exerciseId)
-  console.log(document)
+
 
   const userRef = dbFire.collection('users').doc(uid);
   const jezikiRef = userRef.collection('jeziki');
@@ -290,9 +287,7 @@ app.post('/trueExercise', async (req, res) => {
 //SPREMENI SESSION NALOG SOLVED NA TRUE
 app.post('/trueExercises', async (req, res) => {
   const { uid, document, language } = req.body;
-  console.log(uid)
 
-  console.log(document)
 
   const userRef = dbFire.collection('users').doc(uid);
   const jezikiRef = userRef.collection('jeziki');
@@ -403,14 +398,12 @@ app.get('/generate', async (req, res) => {
 app.get('/prevedi/:language/:statement', (req, res) => {
   const statement = req.params.statement;
   const language = req.params.language;
-  console.log(language)
-  console.log(statement)
+
 
 
   translatte(statement, { to: language })
     .then(translationResult => {
       const translation = translationResult.text;
-      console.log(translation)
       res.json({ translation });
     })
     .catch(err => {

@@ -105,21 +105,9 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     onCheck();
   };
 
-  const handleHalfSpeed = () => {
-    if (audioRef.current) {
-      audioRef.current.playbackRate = 0.5;
-      audioRef.current.play();
-
-      audioRef.current.onended = () => {
-        if(audioRef.current){
-        audioRef.current.playbackRate = 1.0;
-        }
-      };
-    }
+  const handleSkip = () => {
+    setShowModal(true);
   };
-
-
-
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -192,7 +180,7 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     <Row className="align-items-center">
     <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
       <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-        <Button className="btn first w-60 d-flex align-items-center justify-content-center">
+        <Button onClick={handleSkip}className="btn first w-60 d-flex align-items-center justify-content-center">
           <span className="btn-text">Preskoči</span>
         </Button>
       </Col>
