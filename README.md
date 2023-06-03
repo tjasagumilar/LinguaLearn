@@ -11,7 +11,7 @@ Pridruži se skupnosti ljudi, ki so enako zagnani do učenja jezikov kot ti!
 - Gradnja besedišča
 - Učne ure za slovnico
 - Sledenje napredku
-- Skupnostni forumi
+- Klepetalnice za določene jezike
 
 ## Demo
 

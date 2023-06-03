@@ -69,6 +69,8 @@ const Uredi = () => {
             .catch(error => {
                 console.log(error);
             });
+
+        navigate('/profil');
     }
 
     return (
