@@ -70,6 +70,7 @@ function ChatRoom({ languageCode }) {
                         key={msg.id}
                         message={msg}
                         currentUser={currentUser}
+                        photoURL={photoURL} // Pass the photoURL state to the ChatMessage component (po moznosti delete)
                     />
                 ))}
                 <span ref={dummy}></span>
@@ -91,7 +92,7 @@ function ChatMessage(props) {
     const { currentUser } = props;
     const messageClass = uid === currentUser?.uid ? 'sent' : 'received';
 
-    const imageSource = photoURL || (currentUser?.photoURL) || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png';
+    const imageSource = photoURL || currentUser?.photoURL || 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png';
 
     /*console.log('photoURL in ChatMessage:', photoURL); // Add this console log to check the value*/
 
