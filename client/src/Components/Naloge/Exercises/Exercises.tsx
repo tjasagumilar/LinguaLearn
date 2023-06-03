@@ -8,6 +8,7 @@ import './Exercises.css'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../../Config/firebase';
 import { doc } from 'firebase/firestore';
+import TipNaloge5 from '../Tip5/TipNaloge5';
 
 
 export interface Exercise {
@@ -59,28 +60,47 @@ const Exercises = () => {
 
   const generateExercises = async (uid: string) => {
     try {
-      const exercisePromises = [];
       const numExercises = 10;
-
-      for (let i = 0; i < numExercises; i++) {
+      const exercisePromises = [
+        fetchStavekExercise(uid),
+        fetchStavek2Exercise(uid),
+        fetchStavek3Exercise(uid),
+        fetchStavek4Exercise(uid),
+        fetchStavek5Exercise(uid),
+      ];
+  
+      for (let i = 5; i < numExercises; i++) {
+        const random = Math.random();
         let exercisePromise;
-
-
-      exercisePromise = fetchStavek2Exercise(uid);
-
-
-
-        exercisePromises.push(exercisePromise.then(exercise => {
-          return { ...exercise, index: i, solved: false };
-        }));
+        
+        if (random < 0.2) {
+          exercisePromise = fetchStavekExercise(uid);
+        } else if (random < 0.4) {
+          exercisePromise = fetchStavek2Exercise(uid);
+        } else if (random < 0.6) {
+          exercisePromise = fetchStavek3Exercise(uid);
+        } else if (random < 0.8) {
+          exercisePromise = fetchStavek4Exercise(uid);
+        } else {
+          exercisePromise = fetchStavek5Exercise(uid);
+        }
+        
+        exercisePromises.push(exercisePromise);
       }
-
-      const generatedExercises = await Promise.all(exercisePromises);
+  
+      const generatedExercises = await Promise.all(
+        exercisePromises.map((exercisePromise, i) => {
+          return exercisePromise.then(exercise => {
+            return { ...exercise, index: i, solved: false };
+          });
+        })
+      );
+  
       await saveExercises(generatedExercises, uid)
       setExercises(generatedExercises);
       setCurrentExerciseIndex(0)
       setCurrentExercise(generatedExercises[0])
-
+  
       setIsLoading(false);
     } catch (error) {
       console.error('An error occurred:', error);
@@ -278,9 +298,10 @@ const Exercises = () => {
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
-
     const data = await response.json();
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}`)
+
+    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`);
+
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -292,10 +313,10 @@ const Exercises = () => {
 
     const prevod = await prevodResponse.json();
     const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord;
-    const generatedWord2 = wordsData.randomWord2;
-    const generatedWord3 = wordsData.randomWord3;
-    const dataNew = [generatedWord1, generatedWord2, generatedWord3, data.beseda];
+    const generatedWord1 = wordsData.translation1;
+    const generatedWord2 = wordsData.translation2;
+    const generatedWord3 = wordsData.translation3;
+    const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevod.translation];
     console.log(dataNew)
 
     for (let i = dataNew.length - 1; i > 0; i--) {
@@ -346,6 +367,26 @@ const Exercises = () => {
       sentence: data.translation,
       availableWords: dataNew,
       resitev: data.statement
+    };
+
+    return exerciseData;
+  };
+
+  const fetchStavek5Exercise = async (uid: string) => {
+    console.log(uid)
+    const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch exercises');
+    }
+
+    const data = await response.json();
+  
+
+    const exerciseData = {
+      type: 'speech',
+      sentence: data.translation,
+      availableWords: []
     };
 
     return exerciseData;
@@ -476,16 +517,22 @@ const Exercises = () => {
       onCheck={handleNextExercise}
     />
   ) : currentExercise.type === 'beseda' ? (
-    <TipNaloge2 exercise={currentExercise}   uid={uid}
+    <TipNaloge2 exercise={currentExercise} uid={uid}
     document={document} onCheck={handleNextExercise} />
   ) : currentExercise.type === 'slika' ? (
-    <TipNaloge3 exercise={currentExercise} onCheck={handleNextExercise} />
+    <TipNaloge3 exercise={currentExercise} uid={uid}
+    document={document} onCheck={handleNextExercise} />
   ) : currentExercise.type === 'zvok' ? (
     <TipNaloge4  exercise={currentExercise}
     uid={uid}
     document={document}
     onCheck={handleNextExercise}/>
-  ) : null
+  ) : currentExercise.type === 'speech' ? (
+    <TipNaloge5  exercise={currentExercise}
+    uid={uid}
+    document={document}
+    onCheck={handleNextExercise}/>
+  ): null
 }
 
       <Modal

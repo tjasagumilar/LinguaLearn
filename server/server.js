@@ -399,11 +399,13 @@ app.get('/prevedi/:language/:statement', (req, res) => {
   const statement = req.params.statement;
   const language = req.params.language;
 
-
+  console.log(statement)
+  console.log(language)
 
   translatte(statement, { to: language })
     .then(translationResult => {
       const translation = translationResult.text;
+      console.log(translation)
       res.json({ translation });
     })
     .catch(err => {
@@ -616,7 +618,7 @@ app.get('/slika', async (req, res) => {
   axios
     .get('http://localhost:4000/generirajSliko', {
       params: {
-        difficulty: jezikiData,
+        difficulty: jezikiData
       },
     })
     .then((response) => {

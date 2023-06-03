@@ -42,6 +42,8 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
       return prevAudioSource;
     });
   }, [exercise.sentence]);
+  
+
 
   useEffect(() => {
     setAvailableWords(exercise.availableWords);
@@ -81,7 +83,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     const selectedWord = availableWords[selectedWordIndex]
 
     if (!selectedWord) {
-      alert();
+      alert("x");
       return;
     }
 
@@ -115,18 +117,18 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
       });
 
 
-    const isAnswerCorrect = exercise.sentence === translation;
-    setIsCorrect(isAnswerCorrect);
-    setShowModal(true);
-    onCheck()
+    
+
   }
 
   const handleSkip = () => {
     setShowModal(true);
+
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onCheck()
   };
 
   return (

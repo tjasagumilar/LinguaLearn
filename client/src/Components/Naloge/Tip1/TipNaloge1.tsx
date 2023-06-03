@@ -58,23 +58,34 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const handleCheck = () => {
     const selectedSentence = selectedWords.join(' ');
     console.log(selectedSentence)
-
-    fetch(`http://localhost:4000/prevedi/${language}/${selectedSentence}`)
+  
+    fetch(`http://localhost:4000/prevedi/en/${selectedSentence}`)
       .then((response) => response.json())
       .then(async (data) => {
-        const translation = data;
-        setTranslation(translation)
-        setSelectedWords([]);
-        console.log("xx")
-        console.log(translation)
-        console.log(exercise.sentence)
-        const isAnswerCorrect = exercise.sentence === translation;
-
-        if(isAnswerCorrect){
-          await updateCorrectSolved(uid, document)
-        }
-        setIsCorrect(isAnswerCorrect);
-        setShowModal(true);
+        const englishTranslation = data.translation;
+        console.log(englishTranslation);
+  
+        fetch(`http://localhost:4000/prevedi/${language}/${englishTranslation}`)
+          .then((response) => response.json())
+          .then(async (data) => {
+            const finalTranslation = data;
+            setTranslation(finalTranslation)
+            setSelectedWords([]);
+            console.log("xx")
+            console.log(finalTranslation)
+            console.log(exercise.sentence)
+            const isAnswerCorrect = exercise.sentence === finalTranslation;
+  
+            if(isAnswerCorrect){
+              await updateCorrectSolved(uid, document)
+            }
+            setIsCorrect(isAnswerCorrect);
+            setShowModal(true);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+  
       })
       .catch((error) => {
         console.error(error);

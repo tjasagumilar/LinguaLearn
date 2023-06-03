@@ -1,0 +1,214 @@
+import React, { useState, useEffect, useRef } from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Exercise } from '../Exercises/Exercises';
+import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap';
+import jsonIcon from '../Tip1/female-avatar.json';
+import Lottie from 'lottie-react';
+import { useLocation } from 'react-router-dom';
+import { BsFillVolumeUpFill } from 'react-icons/bs';
+
+
+interface TipNaloge5Props {
+    exercise: Exercise;
+    uid: string;
+    document: string;
+    onCheck: () => void;
+}
+
+const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
+    const besede = exercise.sentence.toLowerCase();
+    const [sentence, setSentence] = useState<string[]>(besede.split(' '))
+    const [correctIndexes, setCorrectIndexes] = useState<number[]>([])
+    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
+
+    const { transcript, resetTranscript } = useSpeechRecognition();
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const language = queryParams.get('language');
+
+    useEffect(() => {
+        if (transcript !== '') {
+            const lastWord = transcript.split(' ').pop() || '';
+            console.log(lastWord)
+            if (lastWord === sentence[correctIndexes.length]) {
+                console.log("its correct")
+                setCorrectIndexes(prevState => [...prevState, correctIndexes.length]);
+            }
+            resetTranscript();
+        }
+    }, [transcript]);
+
+    useEffect(() => {
+        setAudioSource(prevAudioSource => {
+            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+            if (prevAudioSource !== newAudioSource) {
+                if (audioRef.current) {
+                    audioRef.current.load();
+                }
+                return newAudioSource;
+            }
+            return prevAudioSource;
+        });
+    }, [exercise.sentence]);
+
+    const updateCorrectSolved = async (uid: string, document: string) => {
+        try {
+            const response = await fetch('http://localhost:4000/solvedCorrect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ uid: uid, document: document, language: language }),
+            });
+
+            if (response.ok) {
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        } catch (error) {
+            console.error('Error: ' + error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        onCheck();
+    };
+
+    const handleSkip = () => {
+        setShowModal(true);
+    };
+
+    const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: 'de-DE' });
+
+    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+        console.log("Browser doesn't support speech recognition.");
+        return null;
+    }
+
+    const handleCheck = async () => {
+        if (correctIndexes.length == sentence.length) {
+            await updateCorrectSolved(uid, document)
+            setIsCorrect(true);
+            setShowModal(true);
+
+        }
+
+    };
+
+    return (
+        <form onSubmit={(e) => e.preventDefault()}>
+            <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
+                <Row className="align-items-center">
+                    <Col md={6}>
+                        <h4 className="mb-0 font-weight-bold">Posnemajte glas</h4>
+                    </Col>
+                </Row>
+                <Row className="mt-3 align-items-center">
+                    <Col xs={6} md={3} lg={3} xl={3}>
+                        <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
+                    </Col>
+                    <Col xs={6} md={9} lg={9} xl={9}>
+                        <div className="bubble">
+                            <Button
+                                onClick={() => audioRef.current && audioRef.current.play()}
+                                className="buttonZvok mb-3 custom-button"
+                            >
+                                <BsFillVolumeUpFill style={{ fontSize: '44px', color: 'blue' }} />
+                            </Button>
+                            <div className="text-container">
+                                <h4 className="mb-0 font-weight-bold"> {sentence.map((word, index) => (
+                                    <span style={{ color: correctIndexes.includes(index) ? 'blue' : 'black' }}>{word + " "}</span>
+                                ))}</h4>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+
+
+
+
+                <audio ref={audioRef} style={{ display: 'none' }}>
+                    <source src={audioSource} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                </audio>
+
+
+
+
+
+                <Row className="mt-2">
+                    <button onClick={startListening}>Start</button>
+                    <button onClick={SpeechRecognition.stopListening}>Stop</button>
+                    <br></br>  <br></br>
+                    <Col md={8}>
+
+
+
+
+                    </Col>
+                </Row>
+
+
+            </Container>
+
+            <div className="fixed-bottom">
+                <div className="container-fluid">
+                    <div className="upper-line"></div>
+                    <Row className="align-items-center">
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+                            <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
+                                <span className="btn-text">Preskoči</span>
+                            </Button>
+                        </Col>
+                        <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+                            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
+                                <span className="btn-text">Preveri</span>
+                            </Button>
+                        </Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
+                    </Row>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <Modal
+                show={showModal}
+                onHide={handleCloseModal}
+                dialogClassName="custom-modal-dialog"
+                contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Zapri
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+
+
+        </form>
+    );
+}
+
+export default TipNaloge5;

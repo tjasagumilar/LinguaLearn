@@ -6,15 +6,20 @@ import { FaLanguage, FaImages, FaRandom } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import slika1 from './1.svg';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 
 interface ExerciseCardProps {
   difficulty: string;
   imageSrc: string;
 }
 
+
+
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ difficulty, imageSrc }) => {
 
   const navigate = useNavigate();
+
 
 
   const handleClick = () => {
@@ -37,7 +42,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ difficulty, imageSrc }) => 
               <button className="btn first" onClick={handleClick} >
               Začni
                 </button>
-
+             
             </Container>
           </Card.Footer>
         </Card>
@@ -53,10 +58,20 @@ const SeznamNalog = () => {
   const [rank, setRank] = useState('Raziskovalec')  
 
 
+  const { transcript, resetTranscript } = useSpeechRecognition();
 
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log("Browser doesn't support speech recognition.");
+    return null;
+  }
+
+  const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: 'de-DE' });
+
+  console.log(transcript);
   return (
     <div style={{ paddingTop: '20px' }}>
       <Container>
+
         {rank === 'Začetnik' && 
           <ExerciseCard difficulty={"Začetnik"} imageSrc={slika1}  />}
         {rank === 'Raziskovalec' && 
@@ -65,6 +80,8 @@ const SeznamNalog = () => {
           <ExerciseCard difficulty={"Pustolovec"} imageSrc={slika1}  />}
         {rank === 'Prvak' && 
           <ExerciseCard difficulty={"Prvak"} imageSrc={slika1} />}
+
+       
       </Container>
     </div>
   );
