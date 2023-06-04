@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
-import { auth, firestore } from "../../../Config/firebase";
+import { auth } from "../../../Config/firebase";
 import logging from "../../../Config/logging";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -15,35 +15,6 @@ const Signin = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-
-    /*
-        const navigate = useNavigate();
-    
-        const handleSubmit = () => {
-    
-            const formData = {
-                email: email,
-                password: password,
-            };
-    
-            fetch('http://localhost:5000/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            })
-                .then(response => {
-                    if (response.status === 200) {
-                        navigate('/');
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-    
-        };
-    */
 
     const history = useNavigate();
 

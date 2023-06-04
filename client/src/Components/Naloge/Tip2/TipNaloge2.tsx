@@ -72,14 +72,15 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     }
   };
 
-  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+ const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+  const type = "beseda"
     try {
       const response = await fetch('http://localhost:4000/yourWords', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod}),
+        body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
       });
 
 

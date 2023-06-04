@@ -35,6 +35,7 @@
 }
 
 .odstrani-jezik {
+    width: 100px !important;
     border-radius: 30px;
     background:#fa9746;
     border: none;

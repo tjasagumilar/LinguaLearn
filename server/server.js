@@ -92,7 +92,7 @@ app.post('/izbirajezika', (req, res) => {
   const tezavnost = 0;
   const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp , xpDummy: xp })
     .then(() => {
       res.sendStatus(200);
     })
@@ -183,6 +183,32 @@ app.delete('/odstranijezik', (req, res) => {
       console.error('Error getting documents: ', error);
     });
 
+});
+
+
+//PRIDOBITEV SKUPNEGA XP IZBRANEGA JEZIKA
+app.get('/pridobiXp', (req, res) => {
+  const uid = req.query.uid;
+  const language = req.query.language;
+
+  const userRef = dbFire.collection('users').doc(uid);
+
+  userRef.collection("jeziki")
+    .where("jezik", "==", language)
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const xp = doc.data().xpSkupen;
+        res.json({xp: xp});
+      } else {
+        console.log("No document found with the specified language.");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
 });
 
 // -------------------------------------------------------------------------------------------
@@ -334,16 +360,44 @@ app.post('/solvedCorrect', async (req, res) => {
         solvedRight: solvedRight,
         xp: xp
       }).then(() => {
-        console.log("Dokument uspešno posodobljen!");
+        console.log("Dokument uspešno posodobljen!"); 
 
-        jezikDocSnapshot.ref.update({
-          xpSkupen: admin.firestore.FieldValue.increment(xp - doc.data().xp) // posodobi skupen xp
-        }).then(() => {
-          console.log("xpSkupen updated successfully!");
-          res.sendStatus(200);
+        jezikDocSnapshot.ref.get().then((jezikDoc) => {
+          if (jezikDoc.exists) {
+            let xpSkupen = jezikDoc.data().xpSkupen + xp - doc.data().xp; // posodobi skupen xp
+            let xpDummy = jezikDoc.data().xpDummy + xp - doc.data().xp;
+            let tezavnost = jezikDoc.data().tezavnost;
+            let nivo = jezikDoc.data().nivo;
+            if (xpDummy >= 300) {
+              tezavnost = tezavnost +1 ;
+              xpDummy = xpDummy - 300;
+              console.log(tezavnost)
+            }
+              if (tezavnost >= 90) {
+                nivo = "Prvak";
+              } else if (tezavnost >= 60) {
+                nivo = "Pustolovec";
+              } else if (tezavnost >= 30) {
+                nivo = "Raziskovalec";
+              }
+            
+            jezikDocSnapshot.ref.update({
+              xpSkupen: xpSkupen,
+              xpDummy: xpDummy,
+              tezavnost: tezavnost,
+              nivo: nivo
+            }).then(() => {
+              console.log("xpSkupen, xpDummy, tezavnost, and nivo updated successfully!");
+              res.sendStatus(200);
+            }).catch((error) => {
+              console.error("Error updating xpSkupen, xpDummy, tezavnost, and nivo:", error);
+              res.status(500).send('Napaka');
+            });
+          } else {
+            console.log("No such jezik document!");
+          }
         }).catch((error) => {
-          console.error("Error updating xpAll:", error);
-          res.status(500).send('Napaka');
+          console.error("Error getting jezik document:", error);
         });
 
       }).catch((error) => {
@@ -357,7 +411,6 @@ app.post('/solvedCorrect', async (req, res) => {
     console.log("Error getting document:", error);
   });
 });
-
 
 /*
 app.post('/solvedCorrect', async (req, res) => {
@@ -531,29 +584,29 @@ app.get('/generateWord', async (req, res) => {
     })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
-    const randomWord2 = words[Math.floor(Math.random() * words.length)];
-    const randomWord3 = words[Math.floor(Math.random() * words.length)];
+      const randomWord2 = words[Math.floor(Math.random() * words.length)];
+      const randomWord3 = words[Math.floor(Math.random() * words.length)];
 
-    Promise.all([
-      translatte(randomWord, { to: language }),
-      translatte(randomWord2, { to: language }),
-      translatte(randomWord3, { to: language })
-    ])
-    .then(([translationResult1, translationResult2, translationResult3]) => {
-      res.json({ 
-        randomWord: randomWord, 
-        randomWord2: randomWord2, 
-        randomWord3: randomWord3, 
-        translation1: translationResult1.text, 
-        translation2: translationResult2.text, 
-        translation3: translationResult3.text 
-      });
+      Promise.all([
+        translatte(randomWord, { to: language }),
+        translatte(randomWord2, { to: language }),
+        translatte(randomWord3, { to: language })
+      ])
+        .then(([translationResult1, translationResult2, translationResult3]) => {
+          res.json({
+            randomWord: randomWord,
+            randomWord2: randomWord2,
+            randomWord3: randomWord3,
+            translation1: translationResult1.text,
+            translation2: translationResult2.text,
+            translation3: translationResult3.text
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).send('Napaka v prevodu');
+        });
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Napaka v prevodu');
-    });
-  })
 });
 
 // generiraj 1 besedo 
@@ -731,7 +784,7 @@ app.get('/tts', async (req, res) => {
 // -------------------------------------------------------------------------------------------
 //dodaj besedo na seznam znanih besed
 app.post('/yourWords', async (req, res) => {
-  const { uid, newWord, language , slovenskiPrevod} = req.body;
+  const { uid, newWord, language, slovenskiPrevod, type } = req.body;
 
 
   const userRef = dbFire.collection('users').doc(uid);
@@ -743,7 +796,7 @@ app.post('/yourWords', async (req, res) => {
   const docRef = jezikDocSnapshot.ref;
 
   docRef.update({
-    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod })
+    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod, type: type })
   }).then(() => {
     console.log("Dokument uspešno posodobljen!");
     res.sendStatus(200);
@@ -754,11 +807,13 @@ app.post('/yourWords', async (req, res) => {
     });
 });
 
+//pridobi znane besede
+
 app.get('/getWords', async (req, res) => {
   const { uid, language } = req.query;
   console.log(uid)
   console.log(language)
-  
+
   const userRef = dbFire.collection('users').doc(uid);
   const jezikiRef = userRef.collection('jeziki');
   const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
@@ -780,6 +835,46 @@ app.get('/getWords', async (req, res) => {
 // -------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------
 
+// -------------------------------------------------------------------------------------------
+//  P R E V E R I  T E Z A V N O S T
+// -------------------------------------------------------------------------------------------
+
+
+app.get('/getRank', async (req, res) => {
+  const { uid, language } = req.query;
+  console.log(uid)
+  console.log(language)
+  
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+
+  const docRef = jezikDocSnapshot.ref;
+  const docData = await docRef.get();
+
+
+  if (!docData.exists) {
+    res.status(404).send('Dokument ne obstaja!');
+  } else {
+    const wordsData = docData.data().nivo;
+    console.log(wordsData)
+    res.json({rank: wordsData});
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 
 const db = mysql.createConnection({

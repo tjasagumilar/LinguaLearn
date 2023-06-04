@@ -3,7 +3,6 @@ import "./IzberiJezik.css";
 import { auth } from "../../../Config/firebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logging from "../../../Config/logging";
 
 
 const IzberiJezik = () => {

@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { auth } from "../../Config/firebase";
 import "./Profil.css"
 import { useEffect, useState } from "react";
