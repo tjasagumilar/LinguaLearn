@@ -185,6 +185,32 @@ app.delete('/odstranijezik', (req, res) => {
 
 });
 
+
+//PRIDOBITEV SKUPNEGA XP IZBRANEGA JEZIKA
+app.get('/pridobiXp', (req, res) => {
+  const uid = req.query.uid;
+  const language = req.query.language;
+
+  const userRef = dbFire.collection('users').doc(uid);
+
+  userRef.collection("jeziki")
+    .where("jezik", "==", language)
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const xp = doc.data().xpSkupen;
+        res.json({xp: xp});
+      } else {
+        console.log("No document found with the specified language.");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+});
+
 // -------------------------------------------------------------------------------------------
 //  N A L O G E               
 // -------------------------------------------------------------------------------------------
@@ -531,29 +557,29 @@ app.get('/generateWord', async (req, res) => {
     })
     .on('end', () => {
       const randomWord = words[Math.floor(Math.random() * words.length)];
-    const randomWord2 = words[Math.floor(Math.random() * words.length)];
-    const randomWord3 = words[Math.floor(Math.random() * words.length)];
+      const randomWord2 = words[Math.floor(Math.random() * words.length)];
+      const randomWord3 = words[Math.floor(Math.random() * words.length)];
 
-    Promise.all([
-      translatte(randomWord, { to: language }),
-      translatte(randomWord2, { to: language }),
-      translatte(randomWord3, { to: language })
-    ])
-    .then(([translationResult1, translationResult2, translationResult3]) => {
-      res.json({ 
-        randomWord: randomWord, 
-        randomWord2: randomWord2, 
-        randomWord3: randomWord3, 
-        translation1: translationResult1.text, 
-        translation2: translationResult2.text, 
-        translation3: translationResult3.text 
-      });
+      Promise.all([
+        translatte(randomWord, { to: language }),
+        translatte(randomWord2, { to: language }),
+        translatte(randomWord3, { to: language })
+      ])
+        .then(([translationResult1, translationResult2, translationResult3]) => {
+          res.json({
+            randomWord: randomWord,
+            randomWord2: randomWord2,
+            randomWord3: randomWord3,
+            translation1: translationResult1.text,
+            translation2: translationResult2.text,
+            translation3: translationResult3.text
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).send('Napaka v prevodu');
+        });
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Napaka v prevodu');
-    });
-  })
 });
 
 // generiraj 1 besedo 
@@ -731,7 +757,7 @@ app.get('/tts', async (req, res) => {
 // -------------------------------------------------------------------------------------------
 //dodaj besedo na seznam znanih besed
 app.post('/yourWords', async (req, res) => {
-  const { uid, newWord, language , slovenskiPrevod,type} = req.body;
+  const { uid, newWord, language, slovenskiPrevod, type } = req.body;
 
 
   const userRef = dbFire.collection('users').doc(uid);
@@ -743,7 +769,7 @@ app.post('/yourWords', async (req, res) => {
   const docRef = jezikDocSnapshot.ref;
 
   docRef.update({
-    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod , type: type})
+    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod, type: type })
   }).then(() => {
     console.log("Dokument uspešno posodobljen!");
     res.sendStatus(200);
@@ -760,7 +786,7 @@ app.get('/getWords', async (req, res) => {
   const { uid, language } = req.query;
   console.log(uid)
   console.log(language)
-  
+
   const userRef = dbFire.collection('users').doc(uid);
   const jezikiRef = userRef.collection('jeziki');
   const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
