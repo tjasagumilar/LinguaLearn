@@ -91,7 +91,7 @@ app.post('/izbirajezika', (req, res) => {
   const { jezik, naziv, nivo, uid, path } = req.body;
   const tezavnost = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [] })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [] , })
     .then(() => {
       res.sendStatus(200);
     })
@@ -679,7 +679,7 @@ app.get('/tts', async (req, res) => {
 // -------------------------------------------------------------------------------------------
 //dodaj besedo na seznam znanih besed
 app.post('/yourWords', async (req, res) => {
-  const { uid, newWord, language , slovenskiPrevod} = req.body;
+  const { uid, newWord, language , slovenskiPrevod,type} = req.body;
 
 
   const userRef = dbFire.collection('users').doc(uid);
@@ -691,7 +691,7 @@ app.post('/yourWords', async (req, res) => {
   const docRef = jezikDocSnapshot.ref;
 
   docRef.update({
-    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod })
+    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod , type: type})
   }).then(() => {
     console.log("Dokument uspešno posodobljen!");
     res.sendStatus(200);
@@ -701,6 +701,8 @@ app.post('/yourWords', async (req, res) => {
       res.status(500).send('Napaka');
     });
 });
+
+//pridobi znane besede
 
 app.get('/getWords', async (req, res) => {
   const { uid, language } = req.query;

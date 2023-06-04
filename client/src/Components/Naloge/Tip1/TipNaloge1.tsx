@@ -14,7 +14,7 @@ interface TipNaloge1Props {
   onCheck: () => void;
 }
 
-const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
+const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -28,20 +28,20 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const language = queryParams.get('language');
-  
-  
+
+
   useEffect(() => {
     setAudioSource(prevAudioSource => {
-        const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
-        if (prevAudioSource !== newAudioSource) {
-            if (audioRef.current) {
-                audioRef.current.load();
-            }
-            return newAudioSource;
+      const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+      if (prevAudioSource !== newAudioSource) {
+        if (audioRef.current) {
+          audioRef.current.load();
         }
-        return prevAudioSource;
+        return newAudioSource;
+      }
+      return prevAudioSource;
     });
-}, [exercise.sentence]);
+  }, [exercise.sentence]);
 
 
   const handleWordClickAvailable = (word: string) => {
@@ -55,156 +55,162 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
     setSelectedWords((prevWords) => prevWords.filter((w) => w !== word));
   };
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
     const selectedSentence = selectedWords.join(' ');
     console.log(selectedSentence)
-  
-    fetch(`http://localhost:4000/prevedi/en/${selectedSentence}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        const englishTranslation = data.translation;
-        console.log(englishTranslation);
-  
-        fetch(`http://localhost:4000/prevedi/${language}/${englishTranslation}`)
-          .then((response) => response.json())
-          .then(async (data) => {
-            const finalTranslation = data;
-            setTranslation(finalTranslation)
-            setSelectedWords([]);
-            console.log("xx")
-            console.log(finalTranslation)
-            console.log(exercise.sentence)
-            const isAnswerCorrect = exercise.sentence === finalTranslation;
-  
-            if(isAnswerCorrect){
-              await updateCorrectSolved(uid, document)
-            }
-            setIsCorrect(isAnswerCorrect);
-            setShowModal(true);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-  
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+
+
+
+        setSelectedWords([]);
+
+        console.log(exercise.sentence)
+        const isAnswerCorrect = exercise.resitev === selectedSentence;
+
+        if (isAnswerCorrect && exercise.resitev != null) {
+          await updateCorrectSolved(uid, document)
+          await updateYourWords(uid, exercise.sentence, exercise.resitev)
+        }
+        setIsCorrect(isAnswerCorrect);
+        setShowModal(true);
+   
+   
   };
 
-  const updateCorrectSolved = async (uid: string, document: string) => {
-    try {
-      const response = await fetch('http://localhost:4000/solvedCorrect', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ uid: uid, document: document, language: language}),
-      });
+
+
+  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    const type = "stavek"
+      try {
+        const response = await fetch('http://localhost:4000/yourWords', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+        });
   
-      if (response.ok) {
-      } else {
-        throw new Error('Error: ' + response.status);
+  
+        if (!response.ok) {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error' + error)
       }
-    } catch (error) {
-      console.error('Error: ' + error);
     }
-  };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    onCheck();
-  };
+const updateCorrectSolved = async (uid: string, document: string) => {
+  try {
+    const response = await fetch('http://localhost:4000/solvedCorrect', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ uid: uid, document: document, language: language }),
+    });
 
-  const handleSkip = () => {
-    setShowModal(true);
-  };
+    if (response.ok) {
+    } else {
+      throw new Error('Error: ' + response.status);
+    }
+  } catch (error) {
+    console.error('Error: ' + error);
+  }
+};
 
-  return (
-    <form onSubmit={(e) => e.preventDefault()}>
+const handleCloseModal = () => {
+  setShowModal(false);
+  onCheck();
+};
+
+const handleSkip = () => {
+  setShowModal(true);
+};
+
+return (
+  <form onSubmit={(e) => e.preventDefault()}>
     <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
-    <Row className="align-items-center">
-  <Col md={6}>
-    <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
-  </Col>
-</Row>
-<Row className="mt-3 align-items-center">
-  <Col xs={6} md={3} lg={3} xl={3}>
-    <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
-  </Col>
-  <Col xs={6} md={9} lg={9} xl={9}>
-    <div className="bubble">
-      <Button
-        onClick={() => audioRef.current && audioRef.current.play()}
-        className="buttonZvok mb-3 custom-button" 
-      >
-        <BsFillVolumeUpFill style={{ fontSize: '44px', color: 'blue' }} />
-      </Button>
-      <div className="text-container">
-      <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
+      <Row className="align-items-center">
+        <Col md={6}>
+          <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
+        </Col>
+      </Row>
+      <Row className="mt-3 align-items-center">
+        <Col xs={6} md={3} lg={3} xl={3}>
+          <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
+        </Col>
+        <Col xs={6} md={9} lg={9} xl={9}>
+          <div className="bubble">
+            <Button
+              onClick={() => audioRef.current && audioRef.current.play()}
+              className="buttonZvok mb-3 custom-button"
+            >
+              <BsFillVolumeUpFill style={{ fontSize: '44px', color: 'blue' }} />
+            </Button>
+            <div className="text-container">
+              <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+
+
+
+      <audio ref={audioRef} style={{ display: 'none' }}>
+        <source src={audioSource} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <div className="border-bottom my-3"></div>
+
+      <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
+        <Col md={8}>
+          {selectedWords.map((word, index) => (
+            <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
+              {word}
+            </Badge>
+          ))}
+        </Col>
+      </Row>
+
+
+      <div className="border-bottom my-3"></div>
+
+      <Row className="mt-2">
+        <h5 className="mb-0 font-weight-bold">Razpoložljive besede:</h5>
+        <br></br>  <br></br>
+        <Col md={8}>
+
+          {availableWords.map((word, index) => (
+            <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
+              {word}
+            </Badge>
+          ))}
+        </Col>
+      </Row>
+
+
+    </Container>
+
+    <div className="fixed-bottom">
+      <div className="container-fluid">
+        <div className="upper-line"></div>
+        <Row className="align-items-center">
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+            <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
+              <span className="btn-text">Preskoči</span>
+            </Button>
+          </Col>
+          <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
+              <span className="btn-text">Preveri</span>
+            </Button>
+          </Col>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
+        </Row>
       </div>
     </div>
-  </Col>
-</Row>
-
-
-
-
-<audio ref={audioRef} style={{ display: 'none' }}>
-      <source src={audioSource} type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <div className="border-bottom my-3"></div>
-
-    <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
-  <Col md={8}>
-    {selectedWords.map((word, index) => (
-      <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-        {word}
-      </Badge>
-    ))}
-  </Col>
-</Row>
-
-
-    <div className="border-bottom my-3"></div>
-
-    <Row className="mt-2">
-    <h5 className="mb-0 font-weight-bold">Razpoložljive besede:</h5>
-    <br></br>  <br></br>
-      <Col md={8}>
-
-        {availableWords.map((word, index) => (
-          <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-            {word}
-          </Badge>
-        ))}
-      </Col>
-    </Row>
-
-
-  </Container>
-
-  <div className="fixed-bottom">
-  <div className="container-fluid">
-    <div className="upper-line"></div>
-    <Row className="align-items-center">
-    <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-        <Button onClick={handleSkip}className="btn first w-60 d-flex align-items-center justify-content-center">
-          <span className="btn-text">Preskoči</span>
-        </Button>
-      </Col>
-      <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
-      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-        <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
-          <span className="btn-text">Preveri</span>
-        </Button>
-      </Col>
-      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
-    </Row>
-  </div>
-</div>
 
 
 
@@ -214,32 +220,32 @@ const TipNaloge1 = ({ exercise,uid, document, onCheck }: TipNaloge1Props) => {
 
 
 
-<Modal 
-    show={showModal} 
-    onHide={handleCloseModal}
-    dialogClassName="custom-modal-dialog"
-    contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
->
-    <Modal.Header closeButton>
+    <Modal
+      show={showModal}
+      onHide={handleCloseModal}
+      dialogClassName="custom-modal-dialog"
+      contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
+    >
+      <Modal.Header closeButton>
         <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
+      </Modal.Header>
+      <Modal.Body>
         {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
-    </Modal.Body>
-    <Modal.Footer>
+      </Modal.Body>
+      <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseModal}>
-            Zapri
+          Zapri
         </Button>
-    </Modal.Footer>
-</Modal>
+      </Modal.Footer>
+    </Modal>
 
 
 
-    </form>
+  </form>
 
 
 
-  );
+);
 };
 
 export default TipNaloge1;
