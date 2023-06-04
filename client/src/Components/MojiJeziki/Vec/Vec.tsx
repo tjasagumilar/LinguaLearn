@@ -1,12 +1,13 @@
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
-import { auth } from "../../../Config/firebase";
-import { useState } from "react";
-import Progress from "./Progress/Progress";
+import { auth, firestore } from "../../../Config/firebase";
+import { useState, useEffect } from "react";
+import Progress from "../Progress/Progress";
 
 const Vec = () => {
     const [show, setShow] = useState(false);
+    const [xp, setXP] = useState(0); // State to store the xp value
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,7 +19,6 @@ const Vec = () => {
     const path = require(`../../../Assets/${language}.jpg`);
 
     const navigate = useNavigate();
-
 
     function getLanguageName(shortName: string | null) {
         let languageName;
@@ -108,11 +108,21 @@ const Vec = () => {
                         </div>
                     </Col>
                 </Row>
+                <Row>
+                    <Col md>
+                        <div>
+                            <Button
+                                className="odstrani-jezik"
+                                onClick={() => navigate(`/leaderboard?language=${language}`)}
+                            >
+                                Vodilna Lestvica
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
             </div>
             <div className="napredek-container">
-
                 <Progress />
-
             </div>
 
             <Modal show={show} onHide={handleClose} animation={false} >

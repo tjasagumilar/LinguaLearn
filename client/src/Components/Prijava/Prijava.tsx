@@ -3,7 +3,7 @@ import Signin from "./Signin/Signin";
 import Dobrodosli from "./Dobrodosli/Dobrodosli";
 import { useLocation } from "react-router-dom";
 import Signup from "./Signup/Signup";
-import LogoutPage from "./LogoutPage/LogoutPage";
+
 
 const Prijava = () => {
 
