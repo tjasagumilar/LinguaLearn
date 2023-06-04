@@ -731,8 +731,10 @@ app.get('/slika', async (req, res) => {
 
 app.get('/tts', async (req, res) => {
   const text = req.query.tts;
+  const language = req.query.language;
+
   const url = googleTTS.getAudioUrl(text, {
-    lang: 'en',
+    lang: language,
     slow: false,
     host: 'https://translate.google.com',
   });

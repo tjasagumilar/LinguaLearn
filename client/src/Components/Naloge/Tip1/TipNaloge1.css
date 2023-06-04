@@ -50,6 +50,8 @@
 .buttonZvok {
   background-color: white !important;
   transition: background-color 300ms ease-in-out;
+  background-color: transparent;
+  border: none;
 }
 
 .buttonZvok:hover {
@@ -57,32 +59,46 @@
 }
 
 
-button.btn.first {
+button.btn.first1 {
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
   border: 2px solid #6389fa !important;
   padding: 0.5em 4em !important; 
   border-radius: 2em !important; 
-  background-color: white;
-  color:#6389fa
+  background-color: #6389fa;
+  color:white
 }
 
-button.btn.first:hover {
+button.btn.first1p:hover {
   box-shadow: 0 0 40px 40px #6389fa inset !important;
   color:white
 }
 
+button.btn.first1p {
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
+  border: 2px solid #6389fa !important;
+  padding: 0.5em 4em !important; 
+  border-radius: 2em !important; 
+  background-color: rgb(255, 255, 255);
+  color:#6389fa
+}
+
+button.btn.first1:hover {
+  box-shadow: 0 0 40px 40px white inset !important;
+  color:#6389fa
+}
 
 
-.my-badge-tip-naloge1_1 {
+
+.my-badge-tip-naloge1T {
   cursor: pointer;
   margin: 3px;
-  font-size: 1.1em; 
-  padding: 8px 12px; 
+  font-size: 1.3em;  
   transition: transform 0.2s;
-  border: 2px solid gray;
+  border: 3px solid #d6d1d1;
   background-color: white !important;
   color: black;
   border-radius: 15px; 
+  font-weight: normal !important;
 }
 
 
@@ -105,7 +121,6 @@ button.btn.first:hover {
 }
 
 
-/* Add this to your TipNaloge1.css */
 .bottom-modal-wrapper {
   display: flex;
   justify-content: center;

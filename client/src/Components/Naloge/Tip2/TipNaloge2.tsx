@@ -16,32 +16,37 @@ interface TipNaloge2Props {
 }
 
 const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const language = queryParams.get('language');
+  
   const [selectedWordIndex, setSelectedWordIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
+  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
 
 
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const language = queryParams.get('language');
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }
 
   useEffect(() => {
-    setAudioSource(prevAudioSource => {
-      const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
-      if (prevAudioSource !== newAudioSource) {
-        if (audioRef.current) {
-          audioRef.current.load();
-        }
-        return newAudioSource;
-      }
-      return prevAudioSource;
-    });
-  }, [exercise.sentence]);
+    if (selectedWordIndex === null || !availableWords[selectedWordIndex]) return;
+
+    const word = availableWords[selectedWordIndex];
+    const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(word)}&language=${language}`;
+
+    setAudioSource(newAudioSource);
+    playAudio();
+  }, [selectedWordIndex, language, availableWords]);
+  
   
 
 
@@ -105,7 +110,6 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     const selectedWord = availableWords[selectedWordIndex]
   
     if (!selectedWord) {
-      alert("x");
       return;
     }
   
@@ -136,6 +140,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
         await updateCorrectSolved(uid, document)
         await updateYourWords(uid, exercise.sentence, slovenskiPrevod)
       }
+      setTranslation("i need a resitev here")
       console.log(isAnswerCorrect)
       setIsCorrect(isAnswerCorrect);
       setShowModal(true);
@@ -157,6 +162,12 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+
+      
+<audio ref={audioRef} style={{ display: 'none' }}>
+        <source src={audioSource} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
 
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
 
@@ -201,9 +212,13 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
             </Col>
             <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-              <Button type="submit" className="btn first w-60 d-flex align-items-center justify-content-center">
-                <span className="btn-text">Preveri</span>
-              </Button>
+            <Button 
+type="submit"
+  className="btn first1 w-60 d-flex align-items-center justify-content-center"
+  disabled={selectedWordIndex == null}
+>
+  <span className="btn-text">Preveri</span>
+</Button>
             </Col>
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
           </Row>
@@ -221,7 +236,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
           <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
+          {isCorrect ? 'Pravilno!' : `Poizkusite znova`}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>

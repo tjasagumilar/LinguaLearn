@@ -15,24 +15,30 @@ interface TipNaloge1Props {
 }
 
 const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const language = queryParams.get('language');
+
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
-  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
+  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
 
 
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const language = queryParams.get('language');
+
+
+  useEffect(() => {
+    setAvailableWords(exercise.availableWords)
+  }, [exercise.sentence])
 
 
   useEffect(() => {
     setAudioSource(prevAudioSource => {
-      const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+      const newAudioSource = `http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`;
       if (prevAudioSource !== newAudioSource) {
         if (audioRef.current) {
           audioRef.current.load();
@@ -135,16 +141,16 @@ return (
         </Col>
       </Row>
       <Row className="mt-3 align-items-center">
-        <Col xs={6} md={3} lg={3} xl={3}>
+        <Col xs={5} md={3} lg={3} xl={3}>
           <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
         </Col>
-        <Col xs={6} md={9} lg={9} xl={9}>
+        <Col xs={7} md={9} lg={9} xl={9}>
           <div className="bubble">
             <Button
               onClick={() => audioRef.current && audioRef.current.play()}
               className="buttonZvok mb-3 custom-button"
             >
-              <BsFillVolumeUpFill style={{ fontSize: '44px', color: 'blue' }} />
+              <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'orange' }} />
             </Button>
             <div className="text-container">
               <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
@@ -165,8 +171,8 @@ return (
       <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
         <Col md={8}>
           {selectedWords.map((word, index) => (
-            <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-              {word}
+            <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1T m-1 p-1 rounded">
+              <h5 className="mb-0"> {word}</h5>
             </Badge>
           ))}
         </Col>
@@ -176,13 +182,13 @@ return (
       <div className="border-bottom my-3"></div>
 
       <Row className="mt-2">
-        <h5 className="mb-0 font-weight-bold">Razpoložljive besede:</h5>
+        <h5 className="mb-0">Razpoložljive besede:</h5>
         <br></br>  <br></br>
         <Col md={8}>
 
           {availableWords.map((word, index) => (
-            <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-              {word}
+            <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1T m-1 p-1 rounded">
+              <h5 className="mb-0"> {word}</h5>
             </Badge>
           ))}
         </Col>
@@ -197,15 +203,19 @@ return (
         <Row className="align-items-center">
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-            <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
+            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
               <span className="btn-text">Preskoči</span>
             </Button>
           </Col>
           <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
-              <span className="btn-text">Preveri</span>
-            </Button>
+          <Button 
+  onClick={handleCheck} 
+  className="btn first1 w-60 d-flex align-items-center justify-content-center"
+  disabled={selectedWords.length === 0}
+>
+  <span className="btn-text">Preveri</span>
+</Button>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
         </Row>

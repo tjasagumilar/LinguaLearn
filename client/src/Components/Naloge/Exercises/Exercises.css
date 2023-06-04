@@ -1,5 +1,5 @@
 .custom-progress-bar {
-  height: 12px;  
+  height: 17px;  
   background-color: #92989e3d;
   border-radius: 5px;
 }
@@ -36,10 +36,10 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  .custom-button {
+  .custom-buttonX{
     background-color: transparent;
     border: none;
-    font-size: 20px; 
+    font-size: 30px; 
     padding: 12px 24px; 
   }
   

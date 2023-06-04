@@ -18,8 +18,8 @@ export interface Exercise {
   availableWords: string[];
   pageURL?: string;
   solved: boolean;
-  resitev?:string;
-  resitve?:string[]
+  resitev?: string;
+  resitve?: string[]
 }
 
 
@@ -107,6 +107,8 @@ const Exercises = () => {
     }
   }
 
+
+
   const saveExercises = async (exercises: Exercise[], uid: string) => {
     try {
       const response = await fetch('http://localhost:4000/saveExercises', {
@@ -187,19 +189,38 @@ const Exercises = () => {
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
-
     const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.randomWord;
-    const generatedWord2 = wordsData.randomWord2;
-    const generatedWord3 = wordsData.randomWord3;
 
+
+
+    const response1 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord}`);
+    if (!response1.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord1 = (await response1.json()).translation;
+
+    const response2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord2}`);
+    if (!response2.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord2 = (await response2.json()).translation;
+
+    const response3 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord3}`);
+    if (!response3.ok) {
+      throw new Error('Failed to fetch translation');
+    }
+    const generatedWord3 = (await response3.json()).translation;
+
+    const besede = [generatedWord1, generatedWord2, generatedWord3];
     const words = data.slovenianTranslation.split(' ');
     const mix = [...words].sort(() => Math.random() - 0.5);
-    const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
-    const dataNew = [...mix];
-    dataNew.splice(random[0], 0, generatedWord1);
-    dataNew.splice(random[1], 0, generatedWord2);
-    dataNew.splice(random[1], 0, generatedWord3);
+
+    const combined = [...besede, ...mix];
+
+    const shuffled = combined.sort(() => Math.random() - 0.5);
+
+    const dataNew = [...shuffled];
+
 
     const exerciseData = {
       type: 'stavek',
@@ -256,32 +277,32 @@ const Exercises = () => {
     if (!response3.ok) {
       throw new Error('Failed to fetch translation');
     }
-    const generatedWord3 = (await response3.json()).translation; 
+    const generatedWord3 = (await response3.json()).translation;
 
     const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevodSlovenski.translation];
-    const dataNewResitve=[wordsData.randomWord, wordsData.randomWord2, wordsData.randomWord3, data.randomWord]
+    const dataNewResitve = [wordsData.randomWord, wordsData.randomWord2, wordsData.randomWord3, data.randomWord]
 
 
-       const zipped = dataNew.map((value, i) => [value, dataNewResitve[i]]);
+    const zipped = dataNew.map((value, i) => [value, dataNewResitve[i]]);
 
-       for (let i = zipped.length - 1; i > 0; i--) {
-           const j = Math.floor(Math.random() * (i + 1));
-           [zipped[i], zipped[j]] = [zipped[j], zipped[i]];
-       }
-   
+    for (let i = zipped.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [zipped[i], zipped[j]] = [zipped[j], zipped[i]];
+    }
 
-       const [shuffledDataNew, shuffledDataNewResitve] = zipped.reduce(
-           ([dataNewAcc, dataNewResitveAcc], [value1, value2]) => {
-               return [
-                   [...dataNewAcc, value1],
-                   [...dataNewResitveAcc, value2]
-               ];
-           },
-           [[], []]
-       );
-       console.log("XXXXXXXXXXXXX")
-       console.log(shuffledDataNew);
-       console.log(shuffledDataNewResitve);
+
+    const [shuffledDataNew, shuffledDataNewResitve] = zipped.reduce(
+      ([dataNewAcc, dataNewResitveAcc], [value1, value2]) => {
+        return [
+          [...dataNewAcc, value1],
+          [...dataNewResitveAcc, value2]
+        ];
+      },
+      [[], []]
+    );
+    console.log("XXXXXXXXXXXXX")
+    console.log(shuffledDataNew);
+    console.log(shuffledDataNewResitve);
 
     const exerciseData = {
       type: 'beseda',
@@ -291,7 +312,7 @@ const Exercises = () => {
     };
 
     return exerciseData;
-};
+  };
 
   const fetchStavek3Exercise = async (uid: string) => {
     const response = await fetch(`http://localhost:4000/slika?uid=${uid}`)
@@ -381,7 +402,7 @@ const Exercises = () => {
     }
 
     const data = await response.json();
-  
+
 
     const exerciseData = {
       type: 'speech',
@@ -399,10 +420,10 @@ const Exercises = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document, language: language}),
+        body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document, language: language }),
       });
 
-      if (response.ok) {   
+      if (response.ok) {
         setCorrect((prevCorrect) => prevCorrect + 1);
       } else {
         throw new Error('Error: ' + response.status);
@@ -419,7 +440,7 @@ const Exercises = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid: uid, document: document, language: language}),
+        body: JSON.stringify({ uid: uid, document: document, language: language }),
       });
 
 
@@ -489,7 +510,7 @@ const Exercises = () => {
             <div className="d-flex align-items-center justify-content-center">
               <Button
                 variant="light"
-                className="custom-button"
+                className="custom-buttonX"
                 style={{ background: 'transparent' }}
                 onClick={redirectToPage}
               >
@@ -498,7 +519,7 @@ const Exercises = () => {
 
               <ProgressBar
                 striped
-                variant="success"
+                variant="warning"
                 now={(currentExerciseIndex) * (100 / exercises.length)}
                 className="custom-progress-bar ml-3 w-100"
               />
@@ -509,31 +530,31 @@ const Exercises = () => {
 
 
       {
-  currentExercise.type === 'stavek' ? (
-    <TipNaloge1
-      exercise={currentExercise}
-      uid={uid}
-      document={document}
-      onCheck={handleNextExercise}
-    />
-  ) : currentExercise.type === 'beseda' ? (
-    <TipNaloge2 exercise={currentExercise} uid={uid}
-    document={document} onCheck={handleNextExercise} />
-  ) : currentExercise.type === 'slika' ? (
-    <TipNaloge3 exercise={currentExercise} uid={uid}
-    document={document} onCheck={handleNextExercise} />
-  ) : currentExercise.type === 'zvok' ? (
-    <TipNaloge4  exercise={currentExercise}
-    uid={uid}
-    document={document}
-    onCheck={handleNextExercise}/>
-  ) : currentExercise.type === 'speech' ? (
-    <TipNaloge5  exercise={currentExercise}
-    uid={uid}
-    document={document}
-    onCheck={handleNextExercise}/>
-  ): null
-}
+        currentExercise.type === 'stavek' ? (
+          <TipNaloge1
+            exercise={currentExercise}
+            uid={uid}
+            document={document}
+            onCheck={handleNextExercise}
+          />
+        ) : currentExercise.type === 'beseda' ? (
+          <TipNaloge2 exercise={currentExercise} uid={uid}
+            document={document} onCheck={handleNextExercise} />
+        ) : currentExercise.type === 'slika' ? (
+          <TipNaloge3 exercise={currentExercise} uid={uid}
+            document={document} onCheck={handleNextExercise} />
+        ) : currentExercise.type === 'zvok' ? (
+          <TipNaloge4 exercise={currentExercise}
+            uid={uid}
+            document={document}
+            onCheck={handleNextExercise} />
+        ) : currentExercise.type === 'speech' ? (
+          <TipNaloge5 exercise={currentExercise}
+            uid={uid}
+            document={document}
+            onCheck={handleNextExercise} />
+        ) : null
+      }
 
       <Modal
         show={showConfirmation}

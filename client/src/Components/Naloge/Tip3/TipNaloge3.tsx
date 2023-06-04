@@ -13,39 +13,54 @@ interface TipNaloge3Props {
 
 
 const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
-  const [selectedWordIndex, setSelectedWordIndex] = useState<number | null>(null);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-  const [url, seturl] = useState<string| undefined>(exercise.pageURL)
-  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [showModal, setShowModal] = useState(false);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const language = queryParams.get('language');
+
+
+  const [selectedWordIndex, setSelectedWordIndex] = useState<number | null>(null);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
+  const [url, seturl] = useState<string| undefined>(exercise.pageURL)
+ const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setAvailableWords(exercise.availableWords);
     seturl(exercise.pageURL)
   }, [exercise.availableWords]);
 
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }
+  
+
+  useEffect(() => {
+    if (selectedWordIndex === null || !availableWords[selectedWordIndex]) return;
+
+    const word = availableWords[selectedWordIndex];
+    const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(word)}&language=${language}`;
+
+    setAudioSource(newAudioSource);
+    playAudio();
+  }, [selectedWordIndex, language, availableWords]);
+
+
+
+
+
   const handleWordClickAvailable = (index: number) => {
     setSelectedWordIndex(index);
   };
 
-  useEffect(() => {
-    setAudioSource(prevAudioSource => {
-      const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
-      if (prevAudioSource !== newAudioSource) {
-        if (audioRef.current) {
-          audioRef.current.load();
-        }
-        return newAudioSource;
-      }
-      return prevAudioSource;
-    });
-  }, [exercise.sentence]);
+  
+
 
   const updateCorrectSolved = async (uid: string, document: string) => {
     try {
@@ -114,18 +129,23 @@ const handleSubmit = (e: React.FormEvent) => {
 return (
     <form onSubmit={handleSubmit}>
 
-<Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
-      <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
-        <Col md={6} xl={12} className="text-center">
-          <div className="myHeading2">Kaj je na sliki?</div>
-        </Col>
-      </Row>
+<audio ref={audioRef} style={{ display: 'none' }}>
+        <source src={audioSource} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
 
-      <Row className="justify-content-center w-100 mb-4">
-        <Col md={17} xl={12} className="text-center">
-        <Image src={url} alt="Generated Image" fluid className="image-styled" />
-        </Col>
-      </Row>
+<Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
+  <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
+    <Col md={6} xl={12} className="text-center">
+      <div className="myHeading2">Kaj je na sliki?</div>
+    </Col>
+  </Row>
+
+  <Row className="justify-content-center w-100 mb-4">
+    <Col md={12} xl={12} sm={12} lg={12} className="text-center">
+      <Image src={url} alt="Generated Image" fluid className="image-styled" />
+    </Col>
+  </Row>
 
       {availableWords.map((word, index) => (
         <Row className="justify-content-center w-100 mb-4 mt-3" key={index}>
@@ -157,7 +177,8 @@ return (
             </Col>
             <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-              <Button type="submit" className="btn first w-60 d-flex align-items-center justify-content-center">
+              <Button type="submit" className="btn first w-60 d-flex align-items-center justify-content-center"
+              disabled={selectedWordIndex == null}>
                 <span className="btn-text">Preveri</span>
               </Button>
             </Col>

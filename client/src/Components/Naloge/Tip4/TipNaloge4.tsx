@@ -16,24 +16,38 @@ interface TipNaloge1Props {
 }
 
 const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
-    const [selectedWords, setSelectedWords] = useState<string[]>([]);
-    const [showModal, setShowModal] = useState(false);
-    const [isCorrect, setIsCorrect] = useState(false);
-    const [translation, setTranslation] = useState<string>();
-    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
-    const audioRef = useRef<HTMLAudioElement>(null);
-    const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-
-
-
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const language = queryParams.get('language');
 
+    const [selectedWords, setSelectedWords] = useState<string[]>([]);
+    const [showModal, setShowModal] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [translation, setTranslation] = useState<string>();
+    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`);
+    const [audioSource2, setAudioSource2] = useState<string>();
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const audioRef2 = useRef<HTMLAudioElement>(null);
+    const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
+
+    useEffect(() => {
+        setAvailableWords(exercise.availableWords);
+      }, [exercise.availableWords]);
+    
+
+
+  const playAudio = () => {
+    if (audioRef2.current) {
+      audioRef2.current.pause();
+      audioRef2.current.load();
+      audioRef2.current.play();
+    }
+  }
+
 
     useEffect(() => {
         setAudioSource(prevAudioSource => {
-            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}`;
             if (prevAudioSource !== newAudioSource) {
                 if (audioRef.current) {
                     audioRef.current.load();
@@ -48,6 +62,10 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
     const handleWordClickAvailable = (word: string) => {
         setAvailableWords((prevWords) => prevWords.filter((w) => w !== word));
         setSelectedWords((prevSelected) => [...prevSelected, word]);
+    
+        const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(word)}&language=${language}`;
+        setAudioSource2(newAudioSource);
+        playAudio();  
     };
 
 
@@ -148,6 +166,12 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                     <source src={audioSource} type="audio/mpeg" />
                     Your browser does not support the audio element.
                 </audio>
+
+                
+                <audio ref={audioRef2} style={{ display: 'none' }}>
+    <source src={audioSource2} type="audio/mpeg" />
+    Your browser does not support the audio element.
+</audio>
                 <div className="border-bottom my-3"></div>
 
                 <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
@@ -191,7 +215,8 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                         </Col>
                         <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-                            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center">
+                            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center"
+                            disabled={selectedWords.length === 0}>
                                 <span className="btn-text">Preveri</span>
                             </Button>
                         </Col>

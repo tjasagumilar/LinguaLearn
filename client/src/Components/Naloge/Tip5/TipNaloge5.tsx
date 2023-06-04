@@ -15,28 +15,134 @@ interface TipNaloge5Props {
     onCheck: () => void;
 }
 
+function getLocaleCode(language: string): string {
+    const localeMap: Record<string, string> = {
+      af: 'af-ZA',
+      am: 'am-ET',
+      ar: 'ar-SA',
+      as: 'as-IN',
+      az: 'az-AZ',
+      be: 'be-BY',
+      bg: 'bg-BG',
+      bn: 'bn-IN',
+      br: 'br-FR',
+      bs: 'bs-BA',
+      ca: 'ca-ES',
+      cs: 'cs-CZ',
+      cy: 'cy-GB',
+      da: 'da-DK',
+      de: 'de-DE',
+      el: 'el-GR',
+      en: 'en-US',
+      eo: 'eo',
+      es: 'es-ES',
+      et: 'et-EE',
+      eu: 'eu-ES',
+      fa: 'fa-IR',
+      fi: 'fi-FI',
+      fil: 'fil-PH',
+      fo: 'fo-FO',
+      fr: 'fr-FR',
+      ga: 'ga-IE',
+      gd: 'gd-GB',
+      gl: 'gl-ES',
+      gu: 'gu-IN',
+      he: 'he-IL',
+      hi: 'hi-IN',
+      hr: 'hr-HR',
+      ht: 'ht-HT',
+      hu: 'hu-HU',
+      hy: 'hy-AM',
+      id: 'id-ID',
+      is: 'is-IS',
+      it: 'it-IT',
+      ja: 'ja-JP',
+      jv: 'jv-ID',
+      ka: 'ka-GE',
+      kk: 'kk-KZ',
+      km: 'km-KH',
+      kn: 'kn-IN',
+      ko: 'ko-KR',
+      ky: 'ky-KG',
+      lb: 'lb-LU',
+      lo: 'lo-LA',
+      lt: 'lt-LT',
+      lv: 'lv-LV',
+      mk: 'mk-MK',
+      ml: 'ml-IN',
+      mn: 'mn-MN',
+      mr: 'mr-IN',
+      ms: 'ms-MY',
+      mt: 'mt-MT',
+      nb: 'nb-NO',
+      ne: 'ne-NP',
+      nl: 'nl-NL',
+      nn: 'nn-NO',
+      no: 'no-NO',
+      oc: 'oc-FR',
+      or: 'or-IN',
+      pa: 'pa-IN',
+      pl: 'pl-PL',
+      ps: 'ps-AF',
+      pt: 'pt-PT',
+      ro: 'ro-RO',
+      ru: 'ru-RU',
+      rw: 'rw-RW',
+      se: 'se-NO',
+      si: 'si-LK',
+      sk: 'sk-SK',
+      sl: 'sl-SI',
+      sq: 'sq-AL',
+      sr: 'sr-RS',
+      sv: 'sv-SE',
+      sw: 'sw-KE',
+      ta: 'ta-IN',
+      te: 'te-IN',
+      th: 'th-TH',
+      tl: 'tl-PH',
+      tr: 'tr-TR',
+      ug: 'ug-CN',
+      uk: 'uk-UA',
+      ur: 'ur-PK',
+      uz: 'uz-UZ',
+      vi: 'vi-VN',
+      yo: 'yo-NG',
+      zh: 'zh-CN',
+      zu: 'zu-ZA',
+    };
+  
+    return localeMap[language] || language;
+  }
+
 const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const language = queryParams.get('language') ?? "en";
+
     const besede = exercise.sentence.toLowerCase();
-    const [sentence, setSentence] = useState<string[]>(besede.split(' '))
+    const cleanedSentence = besede.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""); // replace all punctuation with empty string
+    const [sentence, setSentence] = useState<string[]>(cleanedSentence.split(' '));
     const [correctIndexes, setCorrectIndexes] = useState<number[]>([])
-    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}`);
+    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [showModal, setShowModal] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
     const { transcript, resetTranscript } = useSpeechRecognition();
 
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const language = queryParams.get('language');
+
+  
 
     useEffect(() => {
         if (transcript !== '') {
-            const lastWord = transcript.split(' ').pop() || '';
-            console.log(lastWord)
+            const lastWord = transcript.toLowerCase().split(' ').pop() || '';
+            console.log("Transcript word: " + lastWord);
+            console.log("Expected word: " + sentence[correctIndexes.length]);
             if (lastWord === sentence[correctIndexes.length]) {
-                console.log("its correct")
-                setCorrectIndexes(prevState => [...prevState, correctIndexes.length]);
+                console.log("Word match successful!")
+                setCorrectIndexes(prevState => [...prevState, prevState.length]);
+            } else {
+                console.log("Word match failed!")
             }
             resetTranscript();
         }
@@ -44,7 +150,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
     useEffect(() => {
         setAudioSource(prevAudioSource => {
-            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}`;
+            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}}`;
             if (prevAudioSource !== newAudioSource) {
                 if (audioRef.current) {
                     audioRef.current.load();
@@ -82,8 +188,9 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     const handleSkip = () => {
         setShowModal(true);
     };
-
-    const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: 'de-DE' });
+    const languageSpeech = getLocaleCode(language);
+    console.log(languageSpeech)
+    const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: languageSpeech });
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         console.log("Browser doesn't support speech recognition.");
@@ -99,7 +206,6 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
         }
 
     };
-
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
