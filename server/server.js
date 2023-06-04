@@ -90,8 +90,9 @@ app.post('/signin', async (req, res) => {
 app.post('/izbirajezika', (req, res) => {
   const { jezik, naziv, nivo, uid, path } = req.body;
   const tezavnost = 0;
+  const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [] })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp })
     .then(() => {
       res.sendStatus(200);
     })
@@ -195,6 +196,7 @@ app.post('/saveExercises', async (req, res) => {
   const currentTime = new Date();
   const solved = false;
   const solvedRight = 0;
+  const xp = 0;
 
   try {
     const userRef = dbFire.collection('users').doc(uid);
@@ -204,7 +206,7 @@ app.post('/saveExercises', async (req, res) => {
     if (!jezikQuery.empty) {
       const jezikDocSnapshot = jezikQuery.docs[0];
       const nalogeRef = jezikDocSnapshot.ref.collection('naloge');
-      const nalogeDocRef = await nalogeRef.add({ exercises, solved, currentTime, solvedRight });
+      const nalogeDocRef = await nalogeRef.add({ exercises, solved, currentTime, solvedRight, xp });
       const docId = nalogeDocRef.id;
       res.status(200).send(docId);
 
@@ -312,6 +314,7 @@ app.post('/trueExercises', async (req, res) => {
 });
 
 //spremeni število pravilno rešenih 
+
 app.post('/solvedCorrect', async (req, res) => {
   const { uid, document, language } = req.body;
 
@@ -325,9 +328,56 @@ app.post('/solvedCorrect', async (req, res) => {
     if (doc.exists) {
       let solvedRight = doc.data().solvedRight;
       solvedRight = solvedRight + 1;
+      const xp = solvedRight * 5; // za vsako pravilno rešeno nalogo dobi 5 xp-ja
 
       docRef.update({
-        solvedRight: solvedRight
+        solvedRight: solvedRight,
+        xp: xp
+      }).then(() => {
+        console.log("Dokument uspešno posodobljen!");
+
+        jezikDocSnapshot.ref.update({
+          xpSkupen: firebase.firestore.FieldValue.increment(xp - doc.data().xp) // posodobi skupen xp
+        }).then(() => {
+          console.log("xpAll updated successfully!");
+          res.sendStatus(200);
+        }).catch((error) => {
+          console.error("Error updating xpAll:", error);
+          res.status(500).send('Napaka');
+        });
+
+      }).catch((error) => {
+        console.error("Error pri updejtanju dokumenta: ", error);
+        res.status(500).send('Napaka');
+      });
+    } else {
+      console.log("No such document!");
+    }
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
+});
+
+
+/*
+app.post('/solvedCorrect', async (req, res) => {
+  const { uid, document, language } = req.body;
+
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
+
+  docRef.get().then((doc) => {
+    if (doc.exists) {
+      let solvedRight = doc.data().solvedRight;
+      solvedRight = solvedRight + 1;
+      xp = solvedRight * 5; // za vsako pravilno rešeno nalogo dobi 5 xp-ja
+
+      docRef.update({
+        solvedRight: solvedRight,
+        xp: xp
       }).then(() => {
         console.log("Dokument uspešno posodobljen!");
         res.sendStatus(200);
@@ -343,6 +393,8 @@ app.post('/solvedCorrect', async (req, res) => {
     console.log("Error getting document:", error);
   });
 });
+
+*/
 
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
