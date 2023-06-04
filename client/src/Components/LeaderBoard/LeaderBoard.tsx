@@ -1,58 +1,118 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LeaderBoard.css';
-// import Profiles from './profiles';
-// import { Leaderboard, LeaderboardData } from './database';
+import { Button, Col, Modal, Row } from "react-bootstrap";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { auth, firestore } from "../../Config/firebase";
+import Progress from "../MojiJeziki/Progress/Progress";
+
+interface LeaderboardEntry {
+    username: string;
+    xp: number;
+}
+
 
 const LeaderBoard = () => {
+    const [xp, setXP] = useState(0);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [photoURL, setPhotoURL] = useState('');
+    const [username, setUsername] = useState('');
+    const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
 
-    const [period, setPeriod] = useState<number>(0);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const language = queryParams.get('language');
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const id = parseInt(e.currentTarget.dataset.id || '0');
-        setPeriod(id);
-    };
+    const navigate = useNavigate();
 
-/*
-    const filteredLeaderboard: LeaderboardData[] = between(Leaderboard, period);
-*/
+    function getLanguageName(shortName: string | null) {
+        let languageName;
+
+        switch (shortName) {
+            case 'en':
+                languageName = 'Angleščina';
+                break;
+            case 'es':
+                languageName = 'Španščina';
+                break;
+            case 'fr':
+                languageName = 'Francoščina';
+                break;
+            case 'de':
+                languageName = 'Nemščina';
+                break;
+            case 'it':
+                languageName = 'Italijanščina';
+                break;
+            case 'fi':
+                languageName = 'Finščina';
+                break;
+            case 'hr':
+                languageName = 'Hrvaščina';
+                break;
+            case 'ru':
+                languageName = 'Ruščina';
+                break;
+        }
+
+        return languageName;
+    }
+
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Fetch leaderboard data from the server for the specific language
+                fetch(`http://localhost:4000/leaderboard?language=${language}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setLeaderboardData(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setUsername(data.username);
+                        setPhotoURL(require(`../../Assets/${data.slika}`));
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+                fetch(`http://localhost:4000/pridobiXp?uid=${user.uid}&language=${language}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setXP(data.xp);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
+    }, [language]);
+
 
     return (
         <div className="leaderboard-container">
             <h1 className="leaderboard">Vodilna Lestvica</h1>
-            <div className="duration">
-                <button onClick={handleClick} data-id="7">
-                    7 Dni
-                </button>
-                <button onClick={handleClick} data-id="30">
-                    30 Dni
-                </button>
-                <button onClick={handleClick} data-id="0">
-                    Vseh časov
-                </button>
+            {/* Render leaderboard */}
+            <div>
+                <h2>Vodilna lestvica: {getLanguageName(language)}</h2>
+                {Array.isArray(leaderboardData) && leaderboardData.length > 0 ? (
+                    <ul>
+                        {leaderboardData.map((item, index) => (
+                            <li key={index}>
+                                {item.username} - XP: {item.xp}
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No leaderboard data available.</p>
+                )}
             </div>
-{/*
-            <Profiles Leaderboard={filteredLeaderboard} />
-*/}
         </div>
     );
 }
-
-/*
-function between(data: LeaderboardData[], between: number): LeaderboardData[] {
-    const today = new Date();
-    const previous = new Date(today);
-    previous.setDate(previous.getDate() - (between + 1));
-
-    const filtered = data.filter((val) => {
-        const userDate = new Date(val.dt);
-        if (between === 0) return true;
-        return previous <= userDate && today >= userDate;
-    });
-
-    // sort with descending order
-    return filtered.sort((a, b) => b.score - a.score);
-}
-*/
-
-
 export default LeaderBoard;

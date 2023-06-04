@@ -1,7 +1,7 @@
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
-import { auth, firestore } from "../../../Config/firebase"; // Assuming you have a Firestore configuration file
+import { auth, firestore } from "../../../Config/firebase";
 import { useState, useEffect } from "react";
 import Progress from "../Progress/Progress";
 
@@ -105,6 +105,18 @@ const Vec = () => {
                     <Col md>
                         <div>
                             <Button className="odstrani-jezik" onClick={handleShow}>Odstrani</Button>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md>
+                        <div>
+                            <Button
+                                className="odstrani-jezik"
+                                onClick={() => navigate(`/leaderboard?language=${language}`)}
+                            >
+                                Vodilna Lestvica
+                            </Button>
                         </div>
                     </Col>
                 </Row>

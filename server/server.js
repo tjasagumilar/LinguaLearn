@@ -211,6 +211,31 @@ app.get('/pridobiXp', (req, res) => {
     });
 });
 
+//PRIDOBITEV LESTVICE IZ DB
+app.get('/leaderboard', (req, res) => {
+  const language = req.query.language;
+
+  const leaderboardRef = dbFire.collection('leaderboard');
+  const leaderboardData = [];
+
+  leaderboardRef.where('language', '==', language)
+      .orderBy('xp', 'desc')
+      .limit(10)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const username = doc.data().username;
+          const xp = doc.data().xp;
+          leaderboardData.push({ username, xp });
+        });
+        res.json(leaderboardData);
+      })
+      .catch((error) => {
+        console.log('Error getting leaderboard data:', error);
+        res.status(500).json({ error: 'Failed to retrieve leaderboard data' });
+      });
+});
+
 // -------------------------------------------------------------------------------------------
 //  N A L O G E               
 // -------------------------------------------------------------------------------------------
