@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
 import { auth } from "../../../Config/firebase";
 import { useState } from "react";
-import Progress from "./Progress/Progress";
+import Progress from "../Progress/Progress";
 
 const Vec = () => {
     const [show, setShow] = useState(false);
@@ -111,7 +111,7 @@ const Vec = () => {
             </div>
             <div className="napredek-container">
 
-                <Progress />
+                <Progress/>
 
             </div>
 
@@ -129,6 +129,7 @@ const Vec = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
         </div>
 
 
