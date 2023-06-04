@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
 import "./Signup.css";
 
 const Signup = () => {
-    const [registering, setRegistering] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -15,6 +14,7 @@ const Signup = () => {
         password: '',
         confirm: ''
     });
+
 
     const navigate = useNavigate();
 
