@@ -72,53 +72,76 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     }
   };
 
+  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    try {
+      const response = await fetch('http://localhost:4000/yourWords', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod}),
+      });
+
+
+      if (!response.ok) {
+        throw new Error('Error: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error' + error)
+    }
+  }
+
+  
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if(selectedWordIndex == null){
       return null;
     }
-
+  
     const selectedWord = availableWords[selectedWordIndex]
-
+  
     if (!selectedWord) {
       alert("x");
       return;
     }
-
+  
     if (exercise.resitve == null) {
       return null;
     }
-
+  
     let element = availableWords.indexOf(selectedWord)
     let elementEng = exercise.resitve[element]
-
-
-    fetch(`http://localhost:4000/prevedi/${language}/${elementEng}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        const translation = data.translation;
-        console.log(translation)
-        console.log(exercise.sentence)
-
-        const isAnswerCorrect = exercise.sentence === translation;
-        setSelectedWordIndex(null)
-
-        if (isAnswerCorrect) {
-          await updateCorrectSolved(uid, document)
-        }
-        console.log(isAnswerCorrect)
-        setIsCorrect(isAnswerCorrect);
-        setShowModal(true);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-
-    
-
+    let slovenskiPrevod: string;
+  
+    fetch(`http://localhost:4000/prevedi/sl/${elementEng}`)
+    .then((response) => response.json())
+    .then(async (data) => {
+      slovenskiPrevod = data.translation;
+      return fetch(`http://localhost:4000/prevedi/${language}/${elementEng}`)
+    })
+    .then((response) => response.json())
+    .then(async (data) => {
+      const translation = data.translation;
+      console.log(translation)
+      console.log(exercise.sentence)
+  
+      const isAnswerCorrect = exercise.sentence === translation;
+      setSelectedWordIndex(null)
+  
+      if (isAnswerCorrect) {
+        await updateCorrectSolved(uid, document)
+        await updateYourWords(uid, exercise.sentence, slovenskiPrevod)
+      }
+      console.log(isAnswerCorrect)
+      setIsCorrect(isAnswerCorrect);
+      setShowModal(true);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   const handleSkip = () => {

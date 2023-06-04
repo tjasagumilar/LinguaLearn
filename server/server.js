@@ -91,7 +91,7 @@ app.post('/izbirajezika', (req, res) => {
   const { jezik, naziv, nivo, uid, path } = req.body;
   const tezavnost = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [] })
     .then(() => {
       res.sendStatus(200);
     })
@@ -184,7 +184,11 @@ app.delete('/odstranijezik', (req, res) => {
 
 });
 
-//SHRANI NALOGE V BAZO
+// -------------------------------------------------------------------------------------------
+//  N A L O G E               
+// -------------------------------------------------------------------------------------------
+
+//shrani naloge v bazo
 app.post('/saveExercises', async (req, res) => {
   const { exercises, uid, language } = req.body;
 
@@ -215,7 +219,7 @@ app.post('/saveExercises', async (req, res) => {
   }
 });
 
-//NALOŽI NALOGE IZ BAZE
+//naloži naloge iz baze
 app.get('/loadExercises', async (req, res) => {
   const uid = req.query.uid;
   const language = req.query.language;
@@ -248,7 +252,7 @@ app.get('/loadExercises', async (req, res) => {
   res.send(nalogeData);
 });
 
-//SPREMENI RESENO NALOGO NA TRUE
+//spremeni reseno nalogo na true
 app.post('/trueExercise', async (req, res) => {
   const { uid, exerciseId, document, language } = req.body;
 
@@ -284,7 +288,7 @@ app.post('/trueExercise', async (req, res) => {
     });
 });
 
-//SPREMENI SESSION NALOG SOLVED NA TRUE
+//spremeni session nalog solved na true
 app.post('/trueExercises', async (req, res) => {
   const { uid, document, language } = req.body;
 
@@ -305,11 +309,9 @@ app.post('/trueExercises', async (req, res) => {
       console.error("Error pri updejtanju dokumenta: ", error);
       res.status(500).send('Napaka');
     });
-
-
 });
 
-//SPREMENI ŠTEVILO PRAVILNO REŠENIH
+//spremeni število pravilno rešenih 
 app.post('/solvedCorrect', async (req, res) => {
   const { uid, document, language } = req.body;
 
@@ -667,8 +669,64 @@ app.get('/tts', async (req, res) => {
   response.data.pipe(res);
 });
 
+// -------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 
+
+// -------------------------------------------------------------------------------------------
+// S T A T I S T I K A 
+// -------------------------------------------------------------------------------------------
+//dodaj besedo na seznam znanih besed
+app.post('/yourWords', async (req, res) => {
+  const { uid, newWord, language , slovenskiPrevod} = req.body;
+
+
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  console.log(jezikDocSnapshot)
+
+  const docRef = jezikDocSnapshot.ref;
+
+  docRef.update({
+    mojeBesede: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod })
+  }).then(() => {
+    console.log("Dokument uspešno posodobljen!");
+    res.sendStatus(200);
+  })
+    .catch((error) => {
+      console.error("Error pri updejtanju dokumenta: ", error);
+      res.status(500).send('Napaka');
+    });
+});
+
+app.get('/getWords', async (req, res) => {
+  const { uid, language } = req.query;
+  console.log(uid)
+  console.log(language)
+  
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+
+  const docRef = jezikDocSnapshot.ref;
+  const docData = await docRef.get();
+
+  if (!docData.exists) {
+    res.status(404).send('Dokument ne obstaja!');
+  } else {
+    const wordsData = docData.data().mojeBesede;
+    res.send(wordsData);
+  }
+});
+
+
+
+// -------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 
 

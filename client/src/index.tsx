@@ -19,6 +19,7 @@ import { render } from '@testing-library/react';
 import ExercisesHome from './Components/Naloge/ExercisesHome';
 import Vec from './Components/MojiJeziki/Vec/Vec';
 import LeaderBoard from "./Components/LeaderBoard/LeaderBoard";
+import MojeBesede from './Components/MojeBesede/MojeBesede';
 
 
 const router = createBrowserRouter([
@@ -78,7 +79,10 @@ const router = createBrowserRouter([
         path: '/leaderboard',
         element: <LeaderBoard />
       },
-
+      {
+        path: '/mojebesede',
+        element: <MojeBesede />
+      },
     ],
 
   },

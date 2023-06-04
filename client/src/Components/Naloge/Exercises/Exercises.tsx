@@ -402,7 +402,7 @@ const Exercises = () => {
         body: JSON.stringify({ uid: uid, exerciseId: exerciseId, document: document, language: language}),
       });
 
-      if (response.ok) {
+      if (response.ok) {   
         setCorrect((prevCorrect) => prevCorrect + 1);
       } else {
         throw new Error('Error: ' + response.status);
