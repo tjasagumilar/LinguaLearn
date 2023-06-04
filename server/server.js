@@ -337,9 +337,9 @@ app.post('/solvedCorrect', async (req, res) => {
         console.log("Dokument uspešno posodobljen!");
 
         jezikDocSnapshot.ref.update({
-          xpSkupen: firebase.firestore.FieldValue.increment(xp - doc.data().xp) // posodobi skupen xp
+          xpSkupen: admin.firestore.FieldValue.increment(xp - doc.data().xp) // posodobi skupen xp
         }).then(() => {
-          console.log("xpAll updated successfully!");
+          console.log("xpSkupen updated successfully!");
           res.sendStatus(200);
         }).catch((error) => {
           console.error("Error updating xpAll:", error);
