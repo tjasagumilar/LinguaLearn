@@ -1,12 +1,13 @@
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
-import { auth } from "../../../Config/firebase";
-import { useState } from "react";
+import { auth, firestore } from "../../../Config/firebase"; // Assuming you have a Firestore configuration file
+import { useState, useEffect } from "react";
 import Progress from "./Progress/Progress";
 
 const Vec = () => {
     const [show, setShow] = useState(false);
+    const [xp, setXP] = useState(0); // State to store the xp value
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,6 +19,29 @@ const Vec = () => {
     const path = require(`../../../Assets/${language}.jpg`);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Fetch the user's xp data for the specific language
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                const userRef = firestore.collection('users').doc(user.uid);
+                const jezikiRef = userRef.collection('jeziki');
+                const jezikQuery = jezikiRef.where('jezik', '==', language).limit(1);
+
+                jezikQuery.get().then(querySnapshot => {
+                    if (!querySnapshot.empty) {
+                        const jezikDocSnapshot = querySnapshot.docs[0];
+                        const xpAll = jezikDocSnapshot.data().xpSkupen;
+
+                        setXP(xpAll);
+                        console.log("XP: ", xp )
+                    }
+                }).catch(error => {
+                    console.log("Error fetching xp data:", error);
+                });
+            }
+        });
+    }, [language]);
 
 
     function getLanguageName(shortName: string | null) {
@@ -110,9 +134,8 @@ const Vec = () => {
                 </Row>
             </div>
             <div className="napredek-container">
-
                 <Progress />
-
+                <div>XP: {xp}</div> {/* Display the xp value */}
             </div>
 
             <Modal show={show} onHide={handleClose} animation={false} >
