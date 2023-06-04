@@ -3,85 +3,69 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import './SeznamNalog.css';
 import { FaLanguage, FaImages, FaRandom } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import slika1 from './1.svg';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { auth } from '../../../Config/firebase';
 
+const SeznamNalog = () => {
 
-interface ExerciseCardProps {
-  difficulty: string;
-  imageSrc: string;
-}
+  const [rank, setRank] = useState('Raziskovalec');  
+  const [uid, setUid] = useState('');
+  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+ //  const language = "de"
 
-
-
-const ExerciseCard: React.FC<ExerciseCardProps> = ({ difficulty, imageSrc }) => {
-
+ /*
   const navigate = useNavigate();
-
-
 
   const handleClick = () => {
     navigate('/generirajNaloge');
   };
 
-  return (
-    <Row className="mb-5 justify-content-center">
-
-      <Col xs={12} sm={10} md={8} lg={8}>
-        <Card>
-          <Card.Header className={`CardS text-white text-left py-3`}>TEŽAVNOST:  {difficulty}</Card.Header>
-          <Card.Img variant="top" src={imageSrc} style={{ maxHeight: '400px', objectFit: 'cover' }} className="mx-auto d-block" />
-          <Card.Footer className="p-3">
-          <Container className={`ConS rounded p-3 text-center`}>
-
-              <ProgressBar now={60} className="mb-2"  />
-            <br></br>
-
-              <button className="btn first" onClick={handleClick} >
-              Začni
-                </button>
-             
-            </Container>
-          </Card.Footer>
-        </Card>
-      </Col>
-    </Row>
-  );
-};
-
-
-
-const SeznamNalog = () => {
-
-  const [rank, setRank] = useState('Raziskovalec')  
-
-
-  const { transcript, resetTranscript } = useSpeechRecognition();
-
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log("Browser doesn't support speech recognition.");
-    return null;
+  const naloziTezavnost = (uid: string) => {
+    fetch(`http://localhost:4000/getRank?uid=${uid}&language=${"de"}`) 
+      .then(response => response.json())
+      .then(data => setRank(data.rank))
+      .catch(error => console.error(error));
   }
 
-  const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: 'de-DE' });
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            setUid(user.uid);
+            naloziTezavnost(user.uid)
+            console.log(rank)
+        }
+    });
+  }, []);
 
-  console.log(transcript);
+  useEffect(() => {
+    console.log(rank); // This will log whenever rank changes
+}, [rank]);
+*/
   return (
     <div style={{ paddingTop: '20px' }}>
       <Container>
-
-        {rank === 'Začetnik' && 
-          <ExerciseCard difficulty={"Začetnik"} imageSrc={slika1}  />}
-        {rank === 'Raziskovalec' && 
-          <ExerciseCard difficulty={"Raziskovalec"} imageSrc={slika1}  />}
-        {rank === 'Pustolovec' && 
-          <ExerciseCard difficulty={"Pustolovec"} imageSrc={slika1}  />}
-        {rank === 'Prvak' && 
-          <ExerciseCard difficulty={"Prvak"} imageSrc={slika1} />}
-
-       
+        <Row className="mb-5 justify-content-center">
+          <Col xs={12} sm={10} md={8} lg={8}>
+            <Card>
+              <Card.Header className={`CardS text-white text-left py-3`}>TEŽAVNOST:  {rank}</Card.Header>
+              <Card.Img variant="top" src={slika1} style={{ maxHeight: '400px', objectFit: 'cover' }} className="mx-auto d-block" />
+              <Card.Footer className="p-3">
+                <Container className={`ConS rounded p-3 text-center`}>
+                  <ProgressBar now={60} className="mb-2"  />
+                  <br></br>
+                  <button className="btn first" >
+                    Začni
+                  </button>
+                </Container>
+              </Card.Footer>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </div>
   );
