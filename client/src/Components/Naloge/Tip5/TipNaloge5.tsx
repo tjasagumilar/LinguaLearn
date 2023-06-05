@@ -120,10 +120,10 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     const language = queryParams.get('language') ?? "en";
 
     const besede = exercise.sentence.toLowerCase();
-    const cleanedSentence = besede.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""); // replace all punctuation with empty string
+    const cleanedSentence = besede.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""); 
     const [sentence, setSentence] = useState<string[]>(cleanedSentence.split(' '));
     const [correctIndexes, setCorrectIndexes] = useState<number[]>([])
-    const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`);
+    const [audioSource, setAudioSource] = useState<string>(`${process.env.REACT_APP_BACKEND_URL}/tts?tts=${exercise.sentence}&language=${language}`);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [showModal, setShowModal] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -150,7 +150,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
     useEffect(() => {
         setAudioSource(prevAudioSource => {
-            const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}}`;
+            const newAudioSource = `${process.env.REACT_APP_BACKEND_URL}/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}}`;
             if (prevAudioSource !== newAudioSource) {
                 if (audioRef.current) {
                     audioRef.current.load();
@@ -163,7 +163,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
     const updateCorrectSolved = async (uid: string, document: string) => {
         try {
-            const response = await fetch('http://localhost:4000/solvedCorrect', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/solvedCorrect`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -23,7 +23,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
-  const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`);
+  const [audioSource, setAudioSource] = useState<string>(`${process.env.REACT_APP_BACKEND_URL}/tts?tts=${exercise.sentence}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
 
@@ -38,7 +38,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
   useEffect(() => {
     setAudioSource(prevAudioSource => {
-      const newAudioSource = `http://localhost:4000/tts?tts=${exercise.sentence}&language=${language}`;
+      const newAudioSource = `${process.env.REACT_APP_BACKEND_URL}/tts?tts=${exercise.sentence}&language=${language}`;
       if (prevAudioSource !== newAudioSource) {
         if (audioRef.current) {
           audioRef.current.load();
@@ -87,7 +87,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "stavek"
       try {
-        const response = await fetch('http://localhost:4000/yourMistakes', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourMistakes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "stavek"
       try {
-        const response = await fetch('http://localhost:4000/yourWords', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourWords`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
 const updateCorrectSolved = async (uid: string, document: string) => {
   try {
-    const response = await fetch('http://localhost:4000/solvedCorrect', {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/solvedCorrect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
