@@ -476,7 +476,7 @@ const Exercises = () => {
     }
     if (currentExerciseIndex == exercises.length - 1) {
       await updateExercisesSolved(uid, document)
-      navigate(`/lessoncomplete?uid=${uid}&naloge=${document}`);
+      navigate(`/lessoncomplete?uid=${uid}&document=${document}&language=${language}`);
     }
     setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
     setCurrentExercise(exercises[currentExerciseIndex + 1])
