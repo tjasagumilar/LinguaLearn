@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { auth } from "../../../Config/firebase";
 import slika from "../../../Assets/win.jpg"
+import { BASE_URL } from "../../../api";
 
 const LessonComplete = () => {
   const [xp, setXp] = useState(0);
@@ -14,13 +15,13 @@ const LessonComplete = () => {
   const uid = queryParams.get('uid');
   const document = queryParams.get('document');
   const lang = queryParams.get('language');
-/*
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
         if (user) {
             //setUid(user.uid);
             
-            fetch(`${process.env.REACT_APP_BACKEND_URL}/lessoncomplete?uid=${uid}&document=${document}&language=${lang}`)
+            fetch(`${BASE_URL}/lessoncomplete?uid=${uid}&document=${document}&language=${lang}`)
                 .then(response => response.json())
                 .then(data => {
                   setXp(data.xp);
@@ -33,7 +34,7 @@ const LessonComplete = () => {
         }
     });
 }, []);
-*/
+
   return (
     <div className="complete-box">
       <Row className="col-12 col-sm-10 col-md-8 col-lg-5">
@@ -50,7 +51,7 @@ const LessonComplete = () => {
       </Row>
      <Row>
       <Col>
-      <Button>Nadaljuj</Button>
+      <a href="/jeziki"><Button>Nadaljuj</Button></a>
       </Col>
      </Row>
     </div>
