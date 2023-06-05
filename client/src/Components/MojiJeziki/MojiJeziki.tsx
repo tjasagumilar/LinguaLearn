@@ -10,7 +10,8 @@ const MojiJeziki = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 //setUid(user.uid);
-                fetch(`http://localhost:4000/mojijeziki?uid=${user.uid}`)
+                console.log(process.env.REACT_APP_BACKEND_URL)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/mojijeziki?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setJeziki(data);
