@@ -142,11 +142,11 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     let elementEng = exercise.resitve[element]
     let slovenskiPrevod: string;
   
-    fetch(`http://localhost:4000/prevedi/sl/${elementEng}`)
+    fetch(`${BASE_URL}/prevedi/sl/${elementEng}`)
     .then((response) => response.json())
     .then(async (data) => {
       slovenskiPrevod = data.translation;
-      return fetch(`http://localhost:4000/prevedi/${language}/${elementEng}`)
+      return fetch(`${BASE_URL}/prevedi/${language}/${elementEng}`)
     })
     .then((response) => response.json())
     .then(async (data) => {
