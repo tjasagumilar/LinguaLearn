@@ -21,14 +21,14 @@ const Navigation = () => {
         logging.info('User detected.');
         setDisplayName(user.displayName || ' ');
         setUporabnik(true);
-        fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        setDisplayName(data.username);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+          .then(response => response.json())
+          .then(data => {
+            setDisplayName(data.username);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       } else {
         logging.info('No user detected.');
         setUporabnik(false);
@@ -56,9 +56,9 @@ const Navigation = () => {
               <Nav.Link href="/onas">O nas</Nav.Link>
               <NavDropdown title={displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item href="/profil">Profil</NavDropdown.Item>
-                <NavDropdown.Item href="/naloge">Naloge</NavDropdown.Item>
+                {/*<NavDropdown.Item href="/naloge">Naloge</NavDropdown.Item>*/}
                 <NavDropdown.Item href="/jeziki">Moji jeziki</NavDropdown.Item>
-                <NavDropdown.Item href="/chat">Chat</NavDropdown.Item>
+                <NavDropdown.Item href="/chat">Klepet</NavDropdown.Item>
                 <NavDropdown.Item href="/leaderboard">Vodilna Lestvica</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}> Odjava</NavDropdown.Item>

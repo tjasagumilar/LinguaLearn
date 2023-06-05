@@ -13,7 +13,7 @@ const Progress = () => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                fetch(`http://localhost:4000/pridobiXp?uid=${user.uid}&language=${language}`)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
                     .then(response => response.json())
                     .then(data => {
                         setXp(data.xp);

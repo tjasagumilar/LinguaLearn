@@ -68,11 +68,11 @@ const Exercises = () => {
         fetchStavek4Exercise(uid),
         fetchStavek5Exercise(uid),
       ];
-  
+
       for (let i = 5; i < numExercises; i++) {
         const random = Math.random();
         let exercisePromise;
-        
+
         if (random < 0.2) {
           exercisePromise = fetchStavekExercise(uid);
         } else if (random < 0.4) {
@@ -84,10 +84,10 @@ const Exercises = () => {
         } else {
           exercisePromise = fetchStavek5Exercise(uid);
         }
-        
+
         exercisePromises.push(exercisePromise);
       }
-  
+
       const generatedExercises = await Promise.all(
         exercisePromises.map((exercisePromise, i) => {
           return exercisePromise.then(exercise => {
@@ -95,12 +95,12 @@ const Exercises = () => {
           });
         })
       );
-  
+
       await saveExercises(generatedExercises, uid)
       setExercises(generatedExercises);
       setCurrentExerciseIndex(0)
       setCurrentExercise(generatedExercises[0])
-  
+
       setIsLoading(false);
     } catch (error) {
       console.error('An error occurred:', error);
@@ -477,7 +477,7 @@ const Exercises = () => {
     }
     if (currentExerciseIndex == exercises.length - 1) {
       await updateExercisesSolved(uid, document)
-      // napiši še kodo da redirecta 
+      navigate(`/lessoncomplete?uid=${uid}&naloge=${document}`);
     }
     setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
     setCurrentExercise(exercises[currentExerciseIndex + 1])

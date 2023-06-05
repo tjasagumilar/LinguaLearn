@@ -53,7 +53,7 @@ const Signup = () => {
             slika: 'avatar1.png'
         };
 
-        fetch('http://localhost:4000/signup', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

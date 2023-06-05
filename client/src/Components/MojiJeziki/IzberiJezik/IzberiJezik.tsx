@@ -63,7 +63,7 @@ const IzberiJezik = () => {
             path: require(`../../../Assets/${jezik}.jpg`)
         }
 
-        fetch('http://localhost:4000/izbirajezika', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/izbirajezika`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -17,6 +17,7 @@
 .uredi-container img {
    width: 80px;
    border-radius: 50px;
+   margin: 2px;
 }
 
 .uredi-container h2 {

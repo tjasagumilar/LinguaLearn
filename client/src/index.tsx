@@ -20,6 +20,7 @@ import ExercisesHome from './Components/Naloge/ExercisesHome';
 import Vec from './Components/MojiJeziki/Vec/Vec';
 import LeaderBoard from "./Components/LeaderBoard/LeaderBoard";
 import MojeBesede from './Components/MojeBesede/MojeBesede';
+import LessonComplete from './Components/Naloge/LessonComplete/LessonComplete';
 
 
 const router = createBrowserRouter([
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
         path: '/mojebesede',
         element: <MojeBesede />
       },
+      {
+        path: '/lessoncomplete',
+        element: <LessonComplete/>
+      }
     ],
 
   },

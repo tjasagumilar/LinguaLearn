@@ -1,16 +1,13 @@
 const express = require('express');
 const mysql = require('mysql')
 const cors = require('cors')
-const tf = require('@tensorflow/tfjs');
 const axios = require('axios');
 const fs = require('fs');
 const csv = require('csv-parser');
-const { exec } = require('child_process');
 const translatte = require('translatte');
 const googleTTS = require('google-tts-api');
 const { initializeApp } = require('firebase/app')
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
-const { getFirestore, collection, getDocs } = require('firebase/firestore/lite');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -960,3 +957,4 @@ const db = mysql.createConnection({
 })
 
 app.listen(4000, () => { console.log("Listening on port 4000") })
+

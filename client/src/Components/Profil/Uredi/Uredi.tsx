@@ -24,7 +24,7 @@ const Uredi = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 setUid(user.uid);
-                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setIme(data.ime);
@@ -52,7 +52,7 @@ const Uredi = () => {
             opis: opis
         }
 
-        fetch('http://localhost:4000/uredi', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/uredi`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

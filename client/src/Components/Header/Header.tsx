@@ -18,7 +18,7 @@ const Header = () => {
                 logging.info('User detected.');
                 setUporabnik(true);
                 setDisplayName(user.displayName || ' ');
-                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setDisplayName(data.username);

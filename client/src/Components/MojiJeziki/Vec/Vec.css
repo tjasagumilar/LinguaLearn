@@ -35,10 +35,11 @@
 }
 
 .odstrani-jezik {
-    width: 100px !important;
+    width: 150px !important;
     border-radius: 30px;
     background:#fa9746;
     border: none;
+    margin-top: 0;
     margin-bottom: 10px;
 }
 

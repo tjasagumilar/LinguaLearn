@@ -66,7 +66,7 @@ const Vec = () => {
                     uid: user.uid,
                 };
 
-                fetch('http://localhost:4000/odstranijezik', {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/odstranijezik`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const Vec = () => {
 
     return (
         <div>
-    
+
             <div className="podatki-container">
                 <Row>
                     <Col md>
@@ -101,7 +101,9 @@ const Vec = () => {
                 <Row>
                     <Col md>
                         <div className="podatki-jezik">
-                            <div> {getLanguageName(language)} <br /> {nivo} </div>
+                            <div> {getLanguageName(language)} <br /> {nivo}
+                                <Progress />
+                            </div>
                         </div>
                     </Col>
                 </Row>
@@ -126,9 +128,9 @@ const Vec = () => {
                 </Row>
             </div>
             <div className="napredek-container">
-                <Progress />
+          
             </div>
-           
+
 
             <Modal show={show} onHide={handleClose} animation={false} >
                 <Modal.Header closeButton>

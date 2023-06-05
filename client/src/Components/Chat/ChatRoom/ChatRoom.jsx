@@ -22,7 +22,7 @@ function ChatRoom({ languageCode }) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
                 setCurrentUser(user);
-                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setPhotoURL(require(`../../../Assets/${data.slika}`));

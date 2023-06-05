@@ -15,7 +15,7 @@ const Profil = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 //setUid(user.uid);
-                fetch(`http://localhost:4000/uporabnik?uid=${user.uid}`)
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setIme(data.ime);
