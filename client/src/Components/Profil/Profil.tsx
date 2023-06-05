@@ -2,6 +2,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { auth } from "../../Config/firebase";
 import "./Profil.css"
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../../api";
 
 const Profil = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ const Profil = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 //setUid(user.uid);
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setIme(data.ime);

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
 import "./Signup.css";
+import { BASE_URL } from '../../../api';
 
 const Signup = () => {
     const [username, setUsername] = useState<string>('');
@@ -53,7 +54,7 @@ const Signup = () => {
             slika: 'avatar1.png'
         };
 
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
+        fetch(`${BASE_URL}/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

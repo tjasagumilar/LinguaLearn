@@ -4,6 +4,7 @@ import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { auth, firestore } from "../../Config/firebase";
 import Progress from "../MojiJeziki/Progress/Progress";
+import { BASE_URL } from '../../api';
 
 interface LeaderboardEntry {
     username: string;
@@ -62,7 +63,7 @@ const LeaderBoard = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 // Fetch leaderboard data from the server for the specific language
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/leaderboard?language=${language}`)
+                fetch(`${BASE_URL}/leaderboard?language=${language}`)
                     .then(response => response.json())
                     .then(data => {
                         setLeaderboardData(data);
@@ -71,7 +72,7 @@ const LeaderBoard = () => {
                         console.log(error);
                     });
 
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setUsername(data.username);
@@ -81,7 +82,7 @@ const LeaderBoard = () => {
                         console.log(error);
                     });
 
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
+                fetch(`${BASE_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
                     .then(response => response.json())
                     .then(data => {
                         setXP(data.xp);

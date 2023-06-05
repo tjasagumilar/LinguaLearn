@@ -6,6 +6,7 @@ import 'firebase/compat/analytics';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { auth, firestore } from "../../../Config/firebase";
 import '../Chat.css';
+import { BASE_URL } from "../../../api";
 
 function ChatRoom({ languageCode }) {
     const dummy = useRef(null);
@@ -22,7 +23,7 @@ function ChatRoom({ languageCode }) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
                 setCurrentUser(user);
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setPhotoURL(require(`../../../Assets/${data.slika}`));

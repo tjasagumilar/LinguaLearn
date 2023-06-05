@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { auth } from "../../Config/firebase";
 import "./MojiJeziki.css";
+import { BASE_URL } from "../../api";
 
 const MojiJeziki = () => {
     const [jeziki, setJeziki] = useState([{ jezik: '', naziv: '', nivo: '', path: '' }]);
@@ -10,8 +11,8 @@ const MojiJeziki = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 //setUid(user.uid);
-                console.log(process.env.REACT_APP_BACKEND_URL)
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/mojijeziki?uid=${user.uid}`)
+  
+                fetch(`${BASE_URL}/mojijeziki?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setJeziki(data);

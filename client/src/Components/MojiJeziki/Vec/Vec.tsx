@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Progress from "../Progress/Progress";
 import LeaderBoard from "../../LeaderBoard/LeaderBoard";
 import { Routes, Route } from 'react-router-dom';
+import { BASE_URL } from "../../../api";
 
 
 const Vec = () => {
@@ -66,7 +67,7 @@ const Vec = () => {
                     uid: user.uid,
                 };
 
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/odstranijezik`, {
+                fetch(`${BASE_URL}/odstranijezik`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',

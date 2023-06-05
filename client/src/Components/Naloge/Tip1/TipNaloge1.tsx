@@ -6,6 +6,7 @@ import jsonIcon from './female-avatar.json';
 import Lottie from 'lottie-react';
 import { BsFillVolumeUpFill } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
+import { BASE_URL } from '../../../api';
 
 interface TipNaloge1Props {
   exercise: Exercise;
@@ -23,7 +24,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const [showModal, setShowModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
-  const [audioSource, setAudioSource] = useState<string>(`${process.env.REACT_APP_BACKEND_URL}/tts?tts=${exercise.sentence}&language=${language}`);
+  const [audioSource, setAudioSource] = useState<string>(`${BASE_URL}/tts?tts=${exercise.sentence}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
 
@@ -38,7 +39,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
   useEffect(() => {
     setAudioSource(prevAudioSource => {
-      const newAudioSource = `${process.env.REACT_APP_BACKEND_URL}/tts?tts=${exercise.sentence}&language=${language}`;
+      const newAudioSource = `${BASE_URL}/tts?tts=${exercise.sentence}&language=${language}`;
       if (prevAudioSource !== newAudioSource) {
         if (audioRef.current) {
           audioRef.current.load();
@@ -87,7 +88,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "stavek"
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourMistakes`, {
+        const response = await fetch(`${BASE_URL}/yourMistakes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "stavek"
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourWords`, {
+        const response = await fetch(`${BASE_URL}/yourWords`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -126,7 +127,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
 const updateCorrectSolved = async (uid: string, document: string) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/solvedCorrect`, {
+    const response = await fetch(`${BASE_URL}/solvedCorrect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

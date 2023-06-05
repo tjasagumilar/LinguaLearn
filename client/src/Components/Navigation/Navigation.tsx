@@ -8,6 +8,7 @@ import logging from '../../Config/logging';
 import { useNavigate } from 'react-router';
 import "./Navigation.css";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
+import { BASE_URL } from '../../api';
 
 
 const Navigation = () => {
@@ -21,7 +22,7 @@ const Navigation = () => {
         logging.info('User detected.');
         setDisplayName(user.displayName || ' ');
         setUporabnik(true);
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+        fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
           .then(response => response.json())
           .then(data => {
             setDisplayName(data.username);

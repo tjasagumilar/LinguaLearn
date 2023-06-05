@@ -3,6 +3,7 @@ import "./IzberiJezik.css";
 import { auth } from "../../../Config/firebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../api";
 
 
 const IzberiJezik = () => {
@@ -63,7 +64,7 @@ const IzberiJezik = () => {
             path: require(`../../../Assets/${jezik}.jpg`)
         }
 
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/izbirajezika`, {
+        fetch(`${BASE_URL}/izbirajezika`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
