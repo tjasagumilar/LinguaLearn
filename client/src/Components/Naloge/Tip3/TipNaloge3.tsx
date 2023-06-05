@@ -23,7 +23,7 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
   const [url, seturl] = useState<string| undefined>(exercise.pageURL)
- const [audioSource, setAudioSource] = useState<string>(`http://localhost:4000/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
+ const [audioSource, setAudioSource] = useState<string>(`${process.env.REACT_APP_BACKEND_URL}/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -45,7 +45,7 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
     if (selectedWordIndex === null || !availableWords[selectedWordIndex]) return;
 
     const word = availableWords[selectedWordIndex];
-    const newAudioSource = `http://localhost:4000/tts?tts=${encodeURIComponent(word)}&language=${language}`;
+    const newAudioSource = `${process.env.REACT_APP_BACKEND_URL}/tts?tts=${encodeURIComponent(word)}&language=${language}`;
 
     setAudioSource(newAudioSource);
     playAudio();
@@ -64,7 +64,7 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
 
   const updateCorrectSolved = async (uid: string, document: string) => {
     try {
-      const response = await fetch('http://localhost:4000/solvedCorrect', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/solvedCorrect`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const handleSubmit = (e: React.FormEvent) => {
 
   const selectedWord = availableWords[selectedWordIndex]
 
-  fetch(`http://localhost:4000/prevedi/${language}/${selectedWord}`)
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${language}/${selectedWord}`)
     .then(response => response.json())
     .then(async data => {
       const translation = data.translation;

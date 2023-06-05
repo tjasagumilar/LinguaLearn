@@ -30,14 +30,14 @@ useEffect(() => {
 }, []);
   
   const naloziBesede = (uid: string) => {
-    fetch(`http://localhost:4000/getWords?uid=${uid}&language=${language}`) 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/getWords?uid=${uid}&language=${language}`) 
       .then(response => response.json())
       .then(data => setWords(data))
       .catch(error => console.error(error));
   }
 
   const naloziNapake = (uid: string) => {
-    fetch(`http://localhost:4000/getMistakes?uid=${uid}&language=${language}`) 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/getMistakes?uid=${uid}&language=${language}`) 
       .then(response => response.json())
       .then(data => setMistakes(data))
       .catch(error => console.error(error));

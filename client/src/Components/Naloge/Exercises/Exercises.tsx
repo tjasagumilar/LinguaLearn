@@ -111,7 +111,8 @@ const Exercises = () => {
 
   const saveExercises = async (exercises: Exercise[], uid: string) => {
     try {
-      const response = await fetch('http://localhost:4000/saveExercises', {
+ 
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveExercises`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +135,7 @@ const Exercises = () => {
 
   const loadExercises = async (uid: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/loadExercises?uid=${uid}&language=${language}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/loadExercises?uid=${uid}&language=${language}`);
       if (response.ok) {
         console.log(response)
         const text = await response.text();
@@ -178,14 +179,14 @@ const Exercises = () => {
 
   const fetchStavekExercise = async (uid: string) => {
     console.log(uid)
-    const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate?uid=${uid}&language=${language}`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
+    const wordsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generateWord?uid=${uid}&language=${language}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -193,19 +194,19 @@ const Exercises = () => {
 
 
 
-    const response1 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord}`);
+    const response1 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
     if (!response1.ok) {
       throw new Error('Failed to fetch translation');
     }
     const generatedWord1 = (await response1.json()).translation;
 
-    const response2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord2}`);
+    const response2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
     if (!response2.ok) {
       throw new Error('Failed to fetch translation');
     }
     const generatedWord2 = (await response2.json()).translation;
 
-    const response3 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord3}`);
+    const response3 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
     if (!response3.ok) {
       throw new Error('Failed to fetch translation');
     }
@@ -233,26 +234,26 @@ const Exercises = () => {
   };
 
   const fetchStavek2Exercise = async (uid: string) => {
-    const response = await fetch(`http://localhost:4000/generateWordOne?uid=${uid}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generateWordOne?uid=${uid}`)
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
 
     const data = await response.json();
 
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
+    const wordsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generateWord?uid=${uid}&language=${language}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
 
-    const prevodResponse = await fetch(`http://localhost:4000/prevedi/${language}/${data.randomWord}`);
+    const prevodResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${language}/${data.randomWord}`);
     if (!prevodResponse.ok) {
       throw new Error('Failed to fetch translation');
     }
     const prevod = await prevodResponse.json();
 
 
-    const prevodResponse2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${data.randomWord}`);
+    const prevodResponse2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${data.randomWord}`);
     if (!prevodResponse.ok) {
       throw new Error('Failed to fetch translation');
     }
@@ -261,19 +262,19 @@ const Exercises = () => {
 
     const wordsData = await wordsResponse.json()
 
-    const response1 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord}`);
+    const response1 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
     if (!response1.ok) {
       throw new Error('Failed to fetch translation');
     }
     const generatedWord1 = (await response1.json()).translation;
 
-    const response2 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord2}`);
+    const response2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
     if (!response2.ok) {
       throw new Error('Failed to fetch translation');
     }
     const generatedWord2 = (await response2.json()).translation;
 
-    const response3 = await fetch(`http://localhost:4000/prevedi/${"sl"}/${wordsData.randomWord3}`);
+    const response3 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
     if (!response3.ok) {
       throw new Error('Failed to fetch translation');
     }
@@ -300,9 +301,7 @@ const Exercises = () => {
       },
       [[], []]
     );
-    console.log("XXXXXXXXXXXXX")
-    console.log(shuffledDataNew);
-    console.log(shuffledDataNewResitve);
+
 
     const exerciseData = {
       type: 'beseda',
@@ -315,19 +314,19 @@ const Exercises = () => {
   };
 
   const fetchStavek3Exercise = async (uid: string) => {
-    const response = await fetch(`http://localhost:4000/slika?uid=${uid}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/slika?uid=${uid}`)
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
     const data = await response.json();
 
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`);
+    const wordsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generateWord?uid=${uid}&language=${language}`);
 
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
 
-    const prevodResponse = await fetch(`http://localhost:4000/prevedi/${language}/${data.beseda}`);
+    const prevodResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${language}/${data.beseda}`);
     if (!prevodResponse.ok) {
       throw new Error('Failed to fetch translation');
     }
@@ -358,14 +357,14 @@ const Exercises = () => {
 
   const fetchStavek4Exercise = async (uid: string) => {
 
-    const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate?uid=${uid}&language=${language}`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
 
     const data = await response.json();
-    const wordsResponse = await fetch(`http://localhost:4000/generateWord?uid=${uid}&language=${language}`)
+    const wordsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generateWord?uid=${uid}&language=${language}`)
     if (!wordsResponse.ok) {
       throw new Error('Failed to fetch words');
     }
@@ -395,7 +394,7 @@ const Exercises = () => {
 
   const fetchStavek5Exercise = async (uid: string) => {
     console.log(uid)
-    const response = await fetch(`http://localhost:4000/generate?uid=${uid}&language=${language}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate?uid=${uid}&language=${language}`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
@@ -415,7 +414,7 @@ const Exercises = () => {
 
   const updateExerciseSolved = async (uid: string, exerciseId: number, document: string) => {
     try {
-      const response = await fetch('http://localhost:4000/trueExercise', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/trueExercise`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -435,7 +434,7 @@ const Exercises = () => {
 
   const updateExercisesSolved = async (uid: string, document: string) => {
     try {
-      const response = await fetch('http://localhost:4000/trueExercises', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/trueExercises`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
