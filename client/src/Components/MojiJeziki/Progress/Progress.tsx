@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../../../Config/firebase";
 import { useLocation } from "react-router";
 import "./Progress.css"
+import { BASE_URL } from "../../../api";
 
 const Progress = () => {
     const [xp, setXp] = useState(0);
@@ -13,7 +14,7 @@ const Progress = () => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
+                fetch(`${BASE_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
                     .then(response => response.json())
                     .then(data => {
                         setXp(data.xp);

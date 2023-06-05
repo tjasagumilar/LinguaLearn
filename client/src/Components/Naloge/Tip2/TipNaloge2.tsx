@@ -7,6 +7,7 @@ import jsonIcon from '../Tip1/female-avatar.json';
 
 import Lottie from 'lottie-react';
 import { BsFillVolumeUpFill } from 'react-icons/bs';
+import { BASE_URL } from '../../../api';
 
 interface TipNaloge2Props {
   exercise: Exercise;
@@ -25,7 +26,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-  const [audioSource, setAudioSource] = useState<string>(`${process.env.REACT_APP_BACKEND_URL}/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
+  const [audioSource, setAudioSource] = useState<string>(`${BASE_URL}/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
 
 
@@ -41,7 +42,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     if (selectedWordIndex === null || !availableWords[selectedWordIndex]) return;
 
     const word = availableWords[selectedWordIndex];
-    const newAudioSource = `${process.env.REACT_APP_BACKEND_URL}/tts?tts=${encodeURIComponent(word)}&language=${language}`;
+    const newAudioSource = `${BASE_URL}/tts?tts=${encodeURIComponent(word)}&language=${language}`;
 
     setAudioSource(newAudioSource);
     playAudio();
@@ -60,7 +61,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
 
   const updateCorrectSolved = async (uid: string, document: string) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/solvedCorrect`, {
+      const response = await fetch(`${BASE_URL}/solvedCorrect`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
   const type = "beseda"
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourWords`, {
+      const response = await fetch(`${BASE_URL}/yourWords`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
   const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "beseda"
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/yourMistakes`, {
+        const response = await fetch(`${BASE_URL}/yourMistakes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -141,11 +142,11 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     let elementEng = exercise.resitve[element]
     let slovenskiPrevod: string;
   
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/sl/${elementEng}`)
+    fetch(`http://localhost:4000/prevedi/sl/${elementEng}`)
     .then((response) => response.json())
     .then(async (data) => {
       slovenskiPrevod = data.translation;
-      return fetch(`${process.env.REACT_APP_BACKEND_URL}/prevedi/${language}/${elementEng}`)
+      return fetch(`http://localhost:4000/prevedi/${language}/${elementEng}`)
     })
     .then((response) => response.json())
     .then(async (data) => {

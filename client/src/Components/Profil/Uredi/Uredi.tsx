@@ -9,6 +9,7 @@ import avatar3 from "../../../Assets/avatar3.png";
 import avatar4 from "../../../Assets/avatar4.png";
 import avatar5 from "../../../Assets/avatar5.png";
 import avatar6 from "../../../Assets/avatar6.png";
+import { BASE_URL } from "../../../api";
 
 
 const Uredi = () => {
@@ -24,7 +25,7 @@ const Uredi = () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 setUid(user.uid);
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setIme(data.ime);
@@ -52,7 +53,7 @@ const Uredi = () => {
             opis: opis
         }
 
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/uredi`, {
+        fetch(`http://localhost:4000/uredi`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import logging from "../../Config/logging";
 import { Button, Container } from "react-bootstrap";
 import { Col } from "reactstrap";
 import Row from 'react-bootstrap/Row';
+import { BASE_URL } from "../../api";
 
 
 const Header = () => {
@@ -18,7 +19,7 @@ const Header = () => {
                 logging.info('User detected.');
                 setUporabnik(true);
                 setDisplayName(user.displayName || ' ');
-                fetch(`${process.env.REACT_APP_BACKEND_URL}/uporabnik?uid=${user.uid}`)
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
                     .then(response => response.json())
                     .then(data => {
                         setDisplayName(data.username);

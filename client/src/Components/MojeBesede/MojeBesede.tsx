@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, ListGroup } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../Config/firebase';
+import { BASE_URL } from '../../api';
 
 export interface Word{
     word: string
@@ -30,14 +31,14 @@ useEffect(() => {
 }, []);
   
   const naloziBesede = (uid: string) => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/getWords?uid=${uid}&language=${language}`) 
+    fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`) 
       .then(response => response.json())
       .then(data => setWords(data))
       .catch(error => console.error(error));
   }
 
   const naloziNapake = (uid: string) => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/getMistakes?uid=${uid}&language=${language}`) 
+    fetch(`${BASE_URL}/getMistakes?uid=${uid}&language=${language}`) 
       .then(response => response.json())
       .then(data => setMistakes(data))
       .catch(error => console.error(error));
