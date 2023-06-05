@@ -4,6 +4,9 @@ import "./Vec.css";
 import { auth, firestore } from "../../../Config/firebase";
 import { useState, useEffect } from "react";
 import Progress from "../Progress/Progress";
+import LeaderBoard from "../../LeaderBoard/LeaderBoard";
+import { Routes, Route } from 'react-router-dom';
+
 
 const Vec = () => {
     const [show, setShow] = useState(false);
@@ -86,6 +89,7 @@ const Vec = () => {
 
     return (
         <div>
+    
             <div className="podatki-container">
                 <Row>
                     <Col md>
@@ -124,6 +128,7 @@ const Vec = () => {
             <div className="napredek-container">
                 <Progress />
             </div>
+           
 
             <Modal show={show} onHide={handleClose} animation={false} >
                 <Modal.Header closeButton>

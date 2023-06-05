@@ -571,7 +571,7 @@ app.get('/generateWord', async (req, res) => {
     .on('data', (data) => {
       const dataDifficulty = Number(data.difficulty);
 
-      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
+      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 50) {
         words.push(data.word);
       } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
         words.push(data.word);
@@ -655,7 +655,7 @@ app.get('/generateWordOne', async (req, res) => {
     .on('data', (data) => {
       const dataDifficulty = Number(data.difficulty);
 
-      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 20) {
+      if ((0 <= difficulty && difficulty <= 5) && dataDifficulty <= 50) {
         words.push(data.word);
       } else if ((6 <= difficulty && difficulty <= 10) && dataDifficulty <= 50) {
         words.push(data.word);

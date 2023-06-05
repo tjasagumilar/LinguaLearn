@@ -1,3 +1,1022 @@
 Statement,Prediction
-Who are you,0.5649999999999267
-I come from Koper,5.00000000
+This is a cat,6.152499999999954
+I have a red apple,10.73999999999996
+Can you see the dog,10.73999999999996
+She is my friend,6.152499999999954
+He likes to read books,25.919999999999963
+We are at the park,8.739999999999945
+They play soccer every Saturday,112.64000000000001
+The coffee is hot,8.65249999999996
+I am going to the store,13.1608333333333
+Can I borrow your pen,23.919999999999956
+The cat sitting on the roof is mine,29.23999999999997
+If you see him could you tell him to call me,27.083181818181778
+She usually goes for a run in the mornings,54.38999999999997
+The cake that you baked was delicious,56.87214285714283
+Im thinking about adopting a pet,73.76083333333334
+They moved to a different city last year,65.20250000000001
+She doesnt like to drink coffee after noon,30.489999999999977
+Im planning to travel to Europe next summer,55.202500000000015
+He prefers reading historical novels over watching television,134.11500000000007
+While I was at the grocery store I ran into an old friend,55.87846153846153
+Despite the heavy rain the game continued,67.71499999999999
+Although she had prepared thoroughly she was still nervous about the presentation,101.94416666666669
+I dont know whether I should take the job or continue with my studies,52.93464285714285
+Considering his commitment to environmental issues its no surprise he pursued a career in conservation,134.57500000000005
+Even though it was challenging learning a new language was a rewarding experience,95.07076923076923
+Before he became a famous author he used to work as a newspaper reporter,91.89178571428573
+The scenery was breathtaking from the lush green fields to the snow-capped mountains,77.8143131868132
+In spite of the distance they managed to maintain a close friendship,67.47749999999999
+In order to get a good grade youll need to study hard,45.16916666666666
+Though he was tired he stayed up late to finish his project,48.99416666666666
+The sun is bright,8.65249999999996
+My mother is cooking,41.602499999999985
+I ride my bike to school,14.827499999999972
+She has a beautiful dress,53.099999999999966
+The baby is sleeping,41.602499999999985
+It is raining outside,41.602499999999985
+He bought a new car,12.73999999999996
+I love eating ice cream,27.919999999999973
+They are playing video games,39.099999999999966
+You are a good friend,10.73999999999996
+The book on the table belongs to her,27.989999999999966
+If it rains tomorrow we will stay at home,47.06777777777776
+He is studying to become a doctor,45.4435714285714
+They are planning to go on a trip next month,33.767499999999984
+The cake she made for my birthday was fantastic,54.38999999999997
+I always drink a glass of water in the morning,46.947499999999984
+The boy playing the piano is my cousin,37.477499999999985
+We visited the museum last weekend,73.76083333333334
+She prefers tea over coffee,39.099999999999966
+I am looking forward to the summer holidays,72.19
+In spite of the criticism he continued his work,70.6011111111111
+Even though I studied all night I found the exam difficult,61.95590909090907
+I cant decide whether to go to the concert or the movie,48.16083333333332
+Given her background in art she enjoys visiting galleries,94.79
+After working for many years he decided to retire early,75.7175
+The film was interesting but the book was better,60.60111111111109
+Despite being a vegetarian she cooks meat for her family,82.7175
+They were sad to leave but excited about the new opportunities,86.29227272727273
+She was disappointed with the grade but determined to do better next time,83.84769230769231
+It was difficult but I managed to finish the race,75.1275
+I am learning to swim,23.919999999999956
+My father is a teacher,37.09999999999996
+The bird is in the tree,13.1608333333333
+I have two brothers,25.12749999999997
+She is my sister,22.627499999999955
+We love to play games,25.919999999999963
+They live in a big house,14.827499999999972
+The food is delicious,61.60249999999999
+He is writing a letter,37.09999999999996
+You are very kind,22.627499999999955
+The fastest runner won the race,36.79416666666664
+If you come early we can start the movie,30.856666666666634
+She is saving money for a car,36.02928571428569
+They are moving to a new apartment next week,55.50111111111109
+The dinner she prepared was very tasty,75.70071428571427
+I drink coffee every morning,70.28
+The girl drawing in the corner is my niece,38.17888888888888
+We went to the zoo last Sunday,28.043571428571386
+He likes orange juice more than apple juice,37.47749999999999
+I am excited about the winter holidays,96.54357142857143
+Despite the obstacles he finished the project on time,85.24555555555557
+Even though I practised for hours the song is still difficult to play,70.17846153846153
+I can't decide whether to have pasta or rice for dinner,56.15249999999999
+Given his interest in astronomy he loves stargazing,126.39000000000003
+After years of hard work she finally published her first book,70.13772727272726
+The concert was fun but the crowd was too loud,31.767499999999977
+Even though he doesn't like sweets he made a cake for his daughter's birthday,54.565
+They were sad to say goodbye but excited for their new adventure,68.65249999999999
+She didn't do well in the test but she's determined to improve,63.35607142857142
+It was challenging but he managed to climb the mountain,75.1275
+She has a blue car,10.73999999999996
+My brother plays guitar,44.10249999999999
+It is snowing outside,41.602499999999985
+He is eating an apple,23.919999999999956
+We go to school every day,51.794166666666655
+I am drinking water,41.602499999999985
+They have a dog and a cat,14.343571428571387
+You are very smart,22.627499999999955
+I live in a small town,14.827499999999972
+The moon is full tonight,25.919999999999963
+The tallest man in the room is my uncle,30.856666666666634
+If it's sunny we can go to the beach,32.76749999999998
+She is preparing for her final exams,66.28642857142856
+They are decorating their house for Christmas,66.28642857142856
+The lunch I packed was very satisfying,66.28642857142856
+I exercise for thirty minutes every day,120.24357142857146
+The woman singing in the choir is my aunt,38.17888888888888
+We visited the aquarium yesterday,139.82000000000005
+She prefers pineapple juice to grape juice,37.45785714285712
+I am excited about my birthday party,75.70071428571427
+Despite the strict deadline she completed the work with precision,82.7175
+Even though I rehearsed the speech it still made me nervous,56.874090909090896
+I can't decide if I should walk or take the bus to work,43.52035714285712
+Given his passion for marine life he enjoys scuba diving,68.7175
+After a long journey he finally reached his destination,93.67888888888889
+The play was intriguing but the acting could have been better,61.04681818181815
+Despite not being a fan of thrillers he watched the movie for his friends,52.93464285714284
+They were anxious about the move but eager for a fresh start,48.99416666666666
+Although she made a mistake she is determined to learn from it,60.31916666666665
+The task was daunting but they managed to complete it successfully,86.29227272727273
+I am wearing a red shirt,25.81083333333331
+She is brushing her hair,23.919999999999956
+They are reading books,25.12749999999997
+We have a big family,53.099999999999966
+He is driving a car,23.919999999999956
+The sky is blue,8.65249999999996
+My favorite color is green,68.27999999999999
+I love to draw pictures,55.09999999999997
+They are singing a song,23.919999999999956
+You have a beautiful smile,53.099999999999966
+The man in the blue shirt is my father,30.856666666666634
+If the weather is nice we can have a picnic,38.35749999999998
+He is training for a marathon,59.44416666666666
+They are planning a surprise birthday party,56.28642857142856
+The breakfast I made was very tasty,45.4435714285714
+I meditate for fifteen minutes every morning,129.65785714285715
+The boy playing guitar in the band is my nephew,40.35749999999999
+We went to an amusement park last month,56.964999999999996
+He prefers hot chocolate to coffee,62.7775
+I am looking forward to the music concert,53.9525
+Despite the setbacks she kept pursuing her dreams,46.96499999999999
+Even though I reviewed the material the test was still challenging,88.4831818181818
+I can't decide if I should wear the red dress or the blue one,46.00833333333331
+Given his fascination with aviation he enjoys flying kites,102.11222222222224
+After years of training he finally won the championship,77.92333333333333
+The lecture was informative but the professor spoke too fast,82.7175
+Despite not liking horror movies he went with his friends for the experience,73.39384615384614
+They were apprehensive about the change but open to new possibilities,98.27409090909092
+Although he didn't win he was glad to have participated,60.13772727272725
+The problem was complex but they managed to find a solution,80.30136363636362
+The grass is green,8.65249999999996
+She is wearing a hat,23.919999999999956
+I am listening to music,66.27999999999997
+We live in a city,23.919999999999956
+They are eating lunch,25.12749999999997
+He is riding a bicycle,37.09999999999996
+The cat is sleeping,25.12749999999997
+I have a new book,10.73999999999996
+You are playing soccer,25.12749999999997
+They are studying for a test,24.14416666666664
+I am walking to the park,24.14416666666664
+He is cutting the grass,23.919999999999956
+We are climbing a hill,23.919999999999956
+They are watching a movie,23.919999999999956
+I am baking a cake,23.919999999999956
+The woman in the green dress is my mother,38.17888888888888
+If the traffic is light we will be there soon,31.767499999999977
+She is applying for a new job,26.614999999999952
+They are arranging a charity event,96.41083333333334
+The sandwich I made for lunch was delicious,55.71499999999999
+I take a walk for an hour every evening,71.71222222222221
+The girl dancing in the group is my daughter,38.17888888888888
+We went to a music festival last week,56.964999999999996
+She prefers strawberry ice cream to chocolate ice cream,79.03444444444446
+I am excited about the book fair,56.87214285714283
+The dog chasing its tail is mine,28.043571428571386
+If you finish your homework you can play games,60.60111111111109
+He is working on a science project,36.02928571428569
+They are planning a trip to the mountains,36.22749999999998
+The soup that she cooked was very comforting,62.7025
+Despite the hurdles she persisted in her efforts,72.19
+Even though I proofread the report there were still a few errors,49.82749999999999
+I can't decide if I should buy a laptop or a desktop,49.724615384615376
+Given his enthusiasm for wildlife he enjoys bird watching,78.5788888888889
+After many attempts he finally mastered the recipe,99.91500000000002
+The presentation was captivating but the speaker was a bit monotone,104.63772727272728
+Despite not being an athlete he joined the marathon for fun,67.03772727272727
+They were unsure about the journey but optimistic about the outcome,82.28318181818182
+Even though she didn't reach her goal she was happy with her progress,47.51321428571427
+The puzzle was tricky but they managed to solve it,53.947499999999984
+Despite the weather conditions they went hiking,78.55785714285713
+Even though I practiced the piano piece I still made mistakes,76.12863636363636
+I can't decide if I should have tea or coffee,34.8922727272727
+Given her love for outdoors she enjoys camping,55.20250000000001
+After a lot of practice he finally learned the dance routine,67.94681818181817
+She is cooking dinner,41.602499999999985
+We are going to the zoo,13.1608333333333
+They are painting the house,23.919999999999956
+I am learning to play piano,36.79416666666664
+The rose is beautiful,61.60249999999999
+He is fixing the bike,23.919999999999956
+You are doing a great job,13.1608333333333
+They are growing vegetables,94.55250000000001
+I am brushing my teeth,23.919999999999956
+We are visiting our grandparents,95.46000000000001
+The girl in the yellow dress is my friend,30.856666666666634
+If the train is on time we will arrive by noon,34.89227272727269
+He is preparing for a job interview,77.71499999999999
+They are organizing a book club,61.11083333333333
+The homemade pizza was delicious,110.64000000000001
+I do yoga every afternoon,110.64000000000001
+The boy solving the math problem is my son,39.28999999999999
+We went to a flower show yesterday,58.300714285714264
+He prefers grapefruit to oranges,110.64000000000001
+I am eager to attend the science fair,37.477499999999985
+Despite facing defeat he remained positive,121.71083333333337
+Even though I followed the directions the dish didn't turn out as expected,84.9132142857143
+I can't decide if I should take the bus or the subway,44.65538461538458
+Given his interest in archaeology he enjoys visiting ancient ruins,119.07750000000003
+After a lot of research she finally bought a house,53.94749999999999
+The seminar was educational but the venue was too crowded,87.3075
+Despite not being a swimmer he joined the water polo team,60.6740909090909
+They were confused about the assignment but excited to learn new things,91.79416666666667
+Even though she missed her target she was satisfied with her effort,65.81083333333333
+The assignment was complicated but they managed to complete it on time,96.45250000000001
+The cat is black,8.65249999999996
+I have a big dog,10.73999999999996
+The sky is clear,8.65249999999996
+My mom is a nurse,10.73999999999996
+You are very kind,22.627499999999955
+We are at the beach,8.739999999999945
+They love to dance,8.65249999999996
+I like eating strawberries,80.57750000000001
+He is fixing the computer,66.27999999999997
+It is very cold outside,37.09999999999996
+My father is tall,25.12749999999997
+She has a pink dress,10.73999999999996
+You have a nice car,10.73999999999996
+They play football on Sundays,39.099999999999966
+We live in a quiet neighborhood,50.127499999999976
+I am reading a book,23.919999999999956
+He is washing the car,23.919999999999956
+The pizza is hot,25.12749999999997
+I like to play piano,25.919999999999963
+She is jumping on the trampoline,59.44416666666666
+The moon is shining brightly,39.099999999999966
+My shoes are dirty,25.12749999999997
+The bird is flying high,12.73999999999996
+I am making a sandwich,37.09999999999996
+He loves playing video games,54.279999999999994
+We are swimming in the pool,24.14416666666664
+They are planting flowers,41.602499999999985
+She is running very fast,37.09999999999996
+You are driving a truck,23.919999999999956
+My sister is a dancer,37.09999999999996
+The fish is swimming in the water,36.02928571428569
+I am taking a nap,23.919999999999956
+They are watching a comedy show,61.11083333333333
+We are climbing a tree,23.919999999999956
+He is singing a song,23.919999999999956
+The elephant is big,61.60249999999999
+I am wearing glasses,41.602499999999985
+You are learning Spanish,41.602499999999985
+They are going to school,10.73999999999996
+We are baking cookies,41.602499999999985
+My brother is a pilot,37.09999999999996
+I am going to the gym,13.1608333333333
+The house is old,8.65249999999996
+She is brushing her hair,23.919999999999956
+He is studying for an exam,35.12749999999997
+The soup is hot,8.65249999999996
+They are playing chess,8.65249999999996
+We are going on a trip,13.1608333333333
+I am drawing a picture,37.09999999999996
+You are very brave,22.627499999999955
+The book is interesting,78.0775
+I am feeding the birds,23.919999999999956
+He is watching television,94.55250000000001
+She is wearing a hat,23.919999999999956
+We are making a snowman,37.09999999999996
+They are riding bicycles,78.0775
+The teacher is explaining the lesson,72.09416666666667
+I am going to bed,10.73999999999996
+The apple is sweet,8.65249999999996
+He is writing a letter,37.09999999999996
+She is knitting a sweater,37.09999999999996
+We are listening to music,66.27999999999997
+They are setting the table,23.919999999999956
+I am brushing my teeth,23.919999999999956
+The sun is setting,25.12749999999997
+He is drinking coffee,25.12749999999997
+She is walking the dog,23.919999999999956
+We are cleaning the house,23.919999999999956
+They are eating breakfast,41.602499999999985
+The car is fast,8.65249999999996
+I am folding the clothes,37.09999999999996
+He is reading the newspaper,66.27999999999997
+She is watering the plants,53.099999999999966
+We are playing basketball,61.60249999999999
+They are doing homework,59.10249999999998
+The horse is running,25.12749999999997
+I am drinking milk,25.12749999999997
+He is taking a shower,37.09999999999996
+She is opening the door,53.099999999999966
+We are shopping for groceries,66.27999999999997
+They are flying kites,25.12749999999997
+The cake is delicious,61.60249999999999
+I am painting a picture,37.09999999999996
+He is cutting the grass,23.919999999999956
+She is playing the violin,23.919999999999956
+We are building a sandcastle,37.09999999999996
+They are picking apples,41.602499999999985
+The mountain is high,25.12749999999997
+I am tying my shoes,10.73999999999996
+He is wearing a mask,23.919999999999956
+She is riding a horse,23.919999999999956
+We are grilling burgers,41.602499999999985
+They are cleaning their rooms,23.919999999999956
+The river is flowing fast,39.099999999999966
+I am petting the cat,23.919999999999956
+He is shoveling the snow,53.099999999999966
+She is playing the drums,10.73999999999996
+We are throwing a party,37.09999999999996
+They are climbing the mountain,37.09999999999996
+The butterfly is colorful,114.55250000000002
+I am a girl,6.152499999999954
+You are a doctor,22.627499999999955
+He is a student,22.627499999999955
+She is a teacher,22.627499999999955
+We are friends,3.8983333333332766
+They are siblings,25.864999999999966
+It is a dog,6.152499999999954
+I am a boy,6.152499999999954
+You are a nurse,6.152499999999954
+He is a policeman,75.57749999999999
+She is a pilot,22.627499999999955
+We are classmates,74.4983333333333
+They are musicians,74.4983333333333
+It is a cat,6.152499999999954
+I am a toddler,22.627499999999955
+You are an engineer,59.10249999999998
+He is a dentist,22.627499999999955
+She is a chef,6.152499999999954
+We are neighbors,25.864999999999966
+They are athletes,74.4983333333333
+It is a bird,6.152499999999954
+I am a teenager,59.10249999999998
+You are a scientist,22.627499999999955
+He is a firefighter,75.57749999999999
+She is a singer,22.627499999999955
+We are cousins,25.864999999999966
+They are actors,25.864999999999966
+It is a fish,6.152499999999954
+I am a child,6.152499999999954
+You are a lawyer,22.627499999999955
+He is a driver,22.627499999999955
+She is a dancer,22.627499999999955
+We are partners,25.864999999999966
+They are painters,25.864999999999966
+It is a horse,6.152499999999954
+I am an adult,22.627499999999955
+You are a builder,22.627499999999955
+He is a farmer,22.627499999999955
+She is a writer,22.627499999999955
+We are teammates,74.4983333333333
+They are twins,3.8983333333332766
+It is a rabbit,22.627499999999955
+I am a baby,22.627499999999955
+You are a manager,59.10249999999998
+He is a sailor,22.627499999999955
+She is an artist,22.627499999999955
+We are colleagues,74.4983333333333
+They are chefs,3.8983333333332766
+It is a turtle,6.152499999999954
+I am a grandfather,59.10249999999998
+You are a director,59.10249999999998
+He is a soldier,22.627499999999955
+She is a cashier,22.627499999999955
+We are roommates,74.4983333333333
+They are carpenters,74.4983333333333
+It is a frog,6.152499999999954
+I am a grandmother,59.10249999999998
+You are a designer,59.10249999999998
+He is a coach,6.152499999999954
+She is a librarian,59.10249999999998
+We are relatives,96.465
+They are gardeners,74.4983333333333
+It is a duck,6.152499999999954
+I am a father,22.627499999999955
+You are a photographer,75.57749999999999
+He is a mechanic,59.10249999999998
+She is a hairdresser,59.10249999999998
+We are a family,59.10249999999998
+They are soldiers,25.864999999999966
+It is a chicken,22.627499999999955
+I am a mother,22.627499999999955
+You are a programmer,59.10249999999998
+He is a postman,22.627499999999955
+She is a baker,22.627499999999955
+We are children,25.864999999999966
+They are policemen,96.465
+It is a squirrel,22.627499999999955
+I am an uncle,6.152499999999954
+You are an architect,59.10249999999998
+He is a miner,22.627499999999955
+She is a tailor,22.627499999999955
+We are students,25.864999999999966
+They are doctors,25.864999999999966
+It is a mouse,6.152499999999954
+I am an aunt,6.152499999999954
+You are a journalist,59.10249999999998
+He is a barber,22.627499999999955
+She is a florist,22.627499999999955
+We are teachers,25.864999999999966
+They are engineers,74.4983333333333
+It is a bear,6.152499999999954
+I am a brother,22.627499999999955
+You are a cashier,22.627499999999955
+He is a plumber,22.627499999999955
+She is a seamstress,22.627499999999955
+We are policemen,96.465
+They are pilots,25.864999999999966
+It is a monkey,22.627499999999955
+I am a sister,22.627499999999955
+You are a pharmacist,59.10249999999998
+I am tall,3.8983333333332766
+You are short,3.8983333333332766
+He is old,3.8983333333332766
+She is young,3.8983333333332766
+We are happy,25.864999999999966
+They are sad,3.8983333333332766
+It is big,3.8983333333332766
+I am small,3.8983333333332766
+You are fast,3.8983333333332766
+He is slow,3.8983333333332766
+She is strong,3.8983333333332766
+We are tired,25.864999999999966
+They are energetic,96.465
+It is small,3.8983333333332766
+I am sleepy,25.864999999999966
+You are awake,25.864999999999966
+He is angry,25.864999999999966
+She is calm,3.8983333333332766
+We are hungry,25.864999999999966
+They are full,3.8983333333332766
+It is heavy,25.864999999999966
+I am light,3.8983333333332766
+You are wet,3.8983333333332766
+He is dry,3.8983333333332766
+She is hot,3.8983333333332766
+We are cold,3.8983333333332766
+They are noisy,25.864999999999966
+It is quiet,3.8983333333332766
+I am busy,25.864999999999966
+You are free,3.8983333333332766
+He is sick,3.8983333333332766
+She is healthy,25.864999999999966
+We are brave,3.8983333333332766
+They are scared,25.864999999999966
+It is dangerous,74.4983333333333
+I am safe,3.8983333333332766
+You are generous,74.4983333333333
+He is selfish,25.864999999999966
+She is funny,25.864999999999966
+We are serious,25.864999999999966
+They are polite,25.864999999999966
+It is rude,3.8983333333332766
+I am rich,3.8983333333332766
+You are poor,3.8983333333332766
+He is famous,25.864999999999966
+She is unknown,25.864999999999966
+We are intelligent,96.465
+They are foolish,25.864999999999966
+It is smart,3.8983333333332766
+I am dumb,3.8983333333332766
+You are handsome,25.864999999999966
+He is ugly,25.864999999999966
+She is beautiful,74.4983333333333
+We are ordinary,96.465
+They are extraordinary,118.43166666666669
+It is normal,25.864999999999966
+I am weird,3.8983333333332766
+You are normal,25.864999999999966
+He is strange,3.8983333333332766
+She is perfect,25.864999999999966
+We are imperfect,74.4983333333333
+They are wise,3.8983333333332766
+It is foolish,25.864999999999966
+I am clean,3.8983333333332766
+You are dirty,25.864999999999966
+He is neat,3.8983333333332766
+She is messy,25.864999999999966
+We are late,3.8983333333332766
+They are early,25.864999999999966
+It is on time,6.152499999999954
+I am first,3.8983333333332766
+You are last,3.8983333333332766
+He is second,25.864999999999966
+She is third,3.8983333333332766
+We are fourth,3.8983333333332766
+They are fifth,3.8983333333332766
+It is sixth,3.8983333333332766
+I am seventh,25.864999999999966
+You are eighth,3.8983333333332766
+He is ninth,3.8983333333332766
+She is tenth,3.8983333333332766
+We are winners,25.864999999999966
+They are losers,25.864999999999966
+It is a tie,6.152499999999954
+I am right,3.8983333333332766
+You are wrong,3.8983333333332766
+He is left,3.8983333333332766
+She is right,3.8983333333332766
+We are up,0.5649999999999267
+They are down,0.5649999999999267
+It is far,3.8983333333332766
+I am near,3.8983333333332766
+You are here,0.5649999999999267
+He is there,0.5649999999999267
+She is inside,25.864999999999966
+We are outside,25.864999999999966
+They are above,22.531666666666617
+It is below,22.531666666666617
+I am open,25.864999999999966
+You are closed,25.864999999999966
+I am happy,25.864999999999966
+You are sad,3.8983333333332766
+He is excited,74.4983333333333
+She is nervous,25.864999999999966
+We are proud,3.8983333333332766
+They are shy,3.8983333333332766
+It is empty,25.864999999999966
+I am full,3.8983333333332766
+You are sick,3.8983333333332766
+He is healthy,25.864999999999966
+She is early,25.864999999999966
+We are late,3.8983333333332766
+They are ready,25.864999999999966
+It is unprepared,96.465
+I am big,3.8983333333332766
+You are small,3.8983333333332766
+He is tall,3.8983333333332766
+She is short,3.8983333333332766
+We are hot,3.8983333333332766
+They are cold,3.8983333333332766
+It is sunny,25.864999999999966
+I am rainy,25.864999999999966
+You are windy,25.864999999999966
+He is stormy,25.864999999999966
+She is calm,3.8983333333332766
+We are wild,3.8983333333332766
+They are peaceful,74.4983333333333
+It is noisy,25.864999999999966
+I am quiet,3.8983333333332766
+You are loud,3.8983333333332766
+He is silent,25.864999999999966
+She is talkative,74.4983333333333
+We are hungry,25.864999999999966
+They are full,3.8983333333332766
+It is delicious,74.4983333333333
+I am nasty,25.864999999999966
+You are sweet,3.8983333333332766
+He is sour,3.8983333333332766
+She is bitter,25.864999999999966
+We are spicy,25.864999999999966
+They are bland,3.8983333333332766
+It is colourful,74.4983333333333
+I am grey,3.8983333333332766
+You are pink,3.8983333333332766
+He is blue,3.8983333333332766
+She is green,3.8983333333332766
+We are red,3.8983333333332766
+They are yellow,25.864999999999966
+It is black,3.8983333333332766
+I am white,3.8983333333332766
+You are fast,3.8983333333332766
+He is slow,3.8983333333332766
+She is quick,3.8983333333332766
+We are sluggish,25.864999999999966
+They are swift,3.8983333333332766
+It is delayed,25.864999999999966
+I am prompt,3.8983333333332766
+You are tardy,25.864999999999966
+He is punctual,25.864999999999966
+She is late,3.8983333333332766
+We are timely,74.4983333333333
+They are overdue,25.864999999999966
+It is old,3.8983333333332766
+I am new,3.8983333333332766
+You are modern,25.864999999999966
+He is ancient,25.864999999999966
+She is outdated,74.4983333333333
+We are current,25.864999999999966
+They are futuristic,96.465
+It is traditional,96.465
+I am unique,25.864999999999966
+You are common,25.864999999999966
+He is special,25.864999999999966
+She is regular,74.4983333333333
+We are different,74.4983333333333
+They are similar,74.4983333333333
+It is identical,96.465
+I am distinctive,74.4983333333333
+You are normal,25.864999999999966
+He is weird,3.8983333333332766
+She is typical,74.4983333333333
+We are peculiar,74.4983333333333
+They are average,74.4983333333333
+It is extraordinary,118.43166666666669
+I am clean,3.8983333333332766
+You are dirty,25.864999999999966
+He is neat,3.8983333333332766
+She is messy,25.864999999999966
+We are organized,96.465
+They are chaotic,25.864999999999966
+It is tidy,25.864999999999966
+I am cluttered,74.4983333333333
+You are precise,25.864999999999966
+He is vague,3.8983333333332766
+She is clear,3.8983333333332766
+We are confusing,74.4983333333333
+They are explicit,74.4983333333333
+It is ambiguous,74.4983333333333
+I am obvious,25.864999999999966
+You are obscure,25.864999999999966
+I am quiet,3.8983333333332766
+You are loud,3.8983333333332766
+He is gentle,3.8983333333332766
+She is rough,3.8983333333332766
+We are easy,25.864999999999966
+They are hard,3.8983333333332766
+It is smooth,3.8983333333332766
+I am rough,3.8983333333332766
+You are light,3.8983333333332766
+He is dark,3.8983333333332766
+She is clear,3.8983333333332766
+We are cloudy,25.864999999999966
+They are bright,3.8983333333332766
+It is dull,3.8983333333332766
+I am sharp,3.8983333333332766
+You are blunt,3.8983333333332766
+He is smooth,3.8983333333332766
+She is wrinkled,25.864999999999966
+We are crisp,3.8983333333332766
+They are soft,3.8983333333332766
+It is hard,3.8983333333332766
+I am flexible,25.864999999999966
+You are stiff,3.8983333333332766
+He is loose,3.8983333333332766
+She is tight,3.8983333333332766
+We are thick,3.8983333333332766
+They are thin,3.8983333333332766
+It is narrow,25.864999999999966
+I am wide,3.8983333333332766
+You are big,3.8983333333332766
+He is small,3.8983333333332766
+She is short,3.8983333333332766
+We are long,3.8983333333332766
+They are tiny,25.864999999999966
+It is huge,3.8983333333332766
+I am microscopic,96.465
+You are giant,3.8983333333332766
+He is miniature,74.4983333333333
+She is large,3.8983333333332766
+We are compact,25.864999999999966
+They are spacious,25.864999999999966
+It is cramped,25.864999999999966
+I am crowded,25.864999999999966
+You are empty,25.864999999999966
+He is full,3.8983333333332766
+She is abundant,74.4983333333333
+We are scarce,3.8983333333332766
+They are plenty,25.864999999999966
+It is lacking,25.864999999999966
+I am overflowing,96.465
+You are sparse,3.8983333333332766
+He is abundant,74.4983333333333
+She is lacking,25.864999999999966
+We are generous,74.4983333333333
+They are stingy,25.864999999999966
+It is abundant,74.4983333333333
+I am few,0.5649999999999267
+You are many,25.864999999999966
+He is multiple,25.864999999999966
+She is single,3.8983333333332766
+We are double,3.8983333333332766
+They are triple,3.8983333333332766
+It is multiple,25.864999999999966
+I am simple,3.8983333333332766
+You are complex,25.864999999999966
+He is easy,25.864999999999966
+She is difficult,74.4983333333333
+We are challenging,74.4983333333333
+They are effortless,74.4983333333333
+It is hard,3.8983333333332766
+I am possible,25.864999999999966
+You are impossible,74.4983333333333
+He is probable,25.864999999999966
+She is unlikely,96.465
+We are certain,25.864999999999966
+They are doubtful,25.864999999999966
+It is likely,74.4983333333333
+I am definite,74.4983333333333
+You are uncertain,74.4983333333333
+He is clear,3.8983333333332766
+She is vague,3.8983333333332766
+We are specific,74.4983333333333
+They are general,74.4983333333333
+It is detailed,74.4983333333333
+I am brief,3.8983333333332766
+You are long,3.8983333333332766
+He is short,3.8983333333332766
+She is lengthy,25.864999999999966
+We are concise,25.864999999999966
+They are verbose,25.864999999999966
+It is succinct,25.864999999999966
+I am wordy,25.864999999999966
+You are laconic,74.4983333333333
+He is talkative,74.4983333333333
+She is quiet,3.8983333333332766
+We are silent,25.864999999999966
+They are noisy,25.864999999999966
+It is soundless,25.864999999999966
+I am loud,3.8983333333332766
+You are soft,3.8983333333332766
+He is high,3.8983333333332766
+She is low,3.8983333333332766
+We are deep,3.8983333333332766
+They are shallow,25.864999999999966
+It is surface,25.864999999999966
+I am bottom,25.864999999999966
+You are top,3.8983333333332766
+He is middle,3.8983333333332766
+She is end,3.8983333333332766
+We are start,3.8983333333332766
+They are finish,25.864999999999966
+It is beginning,74.4983333333333
+I am conclusion,74.4983333333333
+You are commencement,96.465
+He is termination,96.465
+She is inception,74.4983333333333
+We are cessation,74.4983333333333
+They are introduction,96.465
+It is closing,25.864999999999966
+I am first,3.8983333333332766
+You are last,3.8983333333332766
+He is second,25.864999999999966
+She is third,3.8983333333332766
+We are fourth,3.8983333333332766
+They are fifth,3.8983333333332766
+It is sixth,3.8983333333332766
+I am seventh,25.864999999999966
+You are eighth,3.8983333333332766
+He is ninth,3.8983333333332766
+She is tenth,3.8983333333332766
+We are eleventh,74.4983333333333
+They are twelfth,3.8983333333332766
+It is thirteenth,25.864999999999966
+I am fourteenth,25.864999999999966
+You are fifteenth,25.864999999999966
+He is sixteenth,25.864999999999966
+She is seventeenth,74.4983333333333
+We are eighteenth,25.864999999999966
+They are nineteenth,74.4983333333333
+It is twentieth,25.864999999999966
+I am twenty-first,22.460833333333298
+You are twenty-second,38.93583333333331
+He is twenty-third,22.460833333333298
+She is twenty-fourth,22.460833333333298
+We are twenty-fifth,22.460833333333298
+They are twenty-sixth,22.460833333333298
+It is twenty-seventh,38.93583333333331
+I am twenty-eighth,22.460833333333298
+You are twenty-ninth,22.460833333333298
+He is thirtieth,25.864999999999966
+She is thirty-first,22.460833333333298
+We are thirty-second,38.93583333333331
+They are thirty-third,22.460833333333298
+It is thirty-fourth,22.460833333333298
+I am thirty-fifth,22.460833333333298
+You are thirty-sixth,22.460833333333298
+He is thirty-seventh,38.93583333333331
+She is thirty-eighth,22.460833333333298
+We are thirty-ninth,22.460833333333298
+They are fortieth,25.864999999999966
+It is forty-first,22.460833333333298
+I am forty-second,38.93583333333331
+You are forty-third,22.460833333333298
+He is forty-fourth,22.460833333333298
+She is forty-fifth,22.460833333333298
+We are forty-sixth,22.460833333333298
+They are forty-seventh,38.93583333333331
+It is forty-eighth,22.460833333333298
+I am forty-ninth,22.460833333333298
+You are fiftieth,25.864999999999966
+He is fifty-first,22.460833333333298
+She is fifty-second,38.93583333333331
+We are fifty-third,22.460833333333298
+They are fifty-fourth,22.460833333333298
+It is fifty-fifth,22.460833333333298
+I am fifty-sixth,22.460833333333298
+You are fifty-seventh,38.93583333333331
+He is fifty-eighth,22.460833333333298
+She is fifty-ninth,22.460833333333298
+We are sixtieth,25.864999999999966
+They are sixty-first,22.460833333333298
+It is sixty-second,38.93583333333331
+I am sixty-third,22.460833333333298
+You are sixty-fourth,22.460833333333298
+He is sixty-fifth,22.460833333333298
+She is sixty-sixth,22.460833333333298
+We are sixty-seventh,38.93583333333331
+They are sixty-eighth,22.460833333333298
+It is sixty-ninth,22.460833333333298
+I am seventieth,74.4983333333333
+You are seventy-first,58.93583333333332
+He is seventy-second,75.41083333333333
+She is seventy-third,58.93583333333332
+We are seventy-fourth,58.93583333333332
+They are seventy-fifth,58.93583333333332
+It is seventy-sixth,58.93583333333332
+I am seventy-seventh,75.41083333333333
+You are seventy-eighth,58.93583333333332
+He is seventy-ninth,58.93583333333332
+She is eightieth,25.864999999999966
+I am standing in the park,24.14416666666664
+You are reading a book on the beach,27.989999999999966
+He is cooking dinner in the kitchen,45.4435714285714
+She is playing soccer in the backyard,36.02928571428569
+We are having a picnic in the park,34.97749999999998
+They are watching a movie at the cinema,54.46499999999999
+It is raining outside the window,47.777499999999996
+I am walking my dog in the neighborhood,54.46499999999999
+You are studying at the library,59.44416666666666
+He is talking on the phone in his office,37.06777777777776
+She is dancing at a party,35.12749999999997
+We are swimming in the pool,24.14416666666664
+They are hiking in the mountains,35.12749999999997
+It is snowing on the mountain peak,36.02928571428569
+I am eating breakfast in the dining room,45.71499999999999
+You are writing a letter in your bedroom,44.46499999999998
+He is driving a car on the highway,36.22749999999998
+She is painting a picture in the art studio,45.501111111111086
+We are playing board games in the living room,39.28999999999999
+They are traveling to a new country,56.87214285714283
+It is sunny at the beach,24.14416666666664
+I am shopping at the mall,24.14416666666664
+You are running in the park,24.14416666666664
+He is playing the guitar in a band,27.989999999999966
+She is taking photographs in the garden,66.28642857142856
+We are cooking together in the kitchen,66.28642857142856
+They are studying for exams at the library,62.7025
+It is windy on top of the hill,27.989999999999966
+I am attending a concert in the stadium,62.7025
+You are practicing yoga in the gym,56.87214285714283
+He is teaching a class in the classroom,36.22749999999998
+She is working in the office,35.12749999999997
+We are enjoying a barbecue in the backyard,44.46499999999998
+They are volunteering at a local shelter,75.70071428571427
+It is quiet in the library,48.460833333333305
+I am playing basketball in the sports court,47.47749999999999
+You are jogging in the park,24.14416666666664
+He is fixing a bicycle in the garage,44.46499999999998
+She is gardening in the backyard,59.44416666666666
+We are having a family dinner at the dining table,67.1275
+They are exploring a museum,66.27999999999997
+It is crowded in the city center,45.4435714285714
+I am riding a bike in the bike lane,29.745555555555526
+You are painting a picture in the art class,38.17888888888888
+He is playing chess in the park,17.20071428571425
+She is sewing a dress in the sewing room,37.06777777777776
+We are cheering at a football match,36.02928571428569
+They are camping in the forest,35.12749999999997
+It is peaceful by the lakeside,83.76083333333332
+I am practicing meditation in the meditation room,115.65250000000002
+You are taking photos at a scenic spot,45.71499999999999
+He is playing tennis on the tennis court,36.227499999999985
+She is performing on stage in the theater,54.46499999999999
+We are having a picnic by the river,43.214999999999975
+They are skiing on the snowy slopes,36.02928571428569
+It is festive at the carnival,59.44416666666666
+I am riding a roller coaster at the amusement park,74.7175
+You are studying in the university library,105.95785714285715
+He is playing video games in his room,37.477499999999985
+She is cooking a meal in the kitchenette,54.46499999999999
+We are sunbathing on the beach,48.460833333333305
+They are rock climbing on a cliff,26.614999999999952
+It is tranquil in the countryside,59.44416666666666
+I am attending a conference in the convention center,101.45666666666666
+You are hiking on a trail in the mountains,37.06777777777776
+He is skateboarding in the skate park,56.87214285714283
+She is creating art in the studio,36.02928571428569
+We are celebrating a birthday at the party venue,69.03444444444443
+They are kayaking on the river,35.12749999999997
+It is bustling in the market,35.12749999999997
+I am riding a horse in the equestrian center,61.7122222222222
+I am wearing a red shirt today,37.45785714285712
+You have a beautiful smile,53.099999999999966
+He loves playing soccer in the park,37.45785714285712
+She enjoys reading books in her free time,38.72749999999999
+We are going on a picnic this weekend,36.22749999999998
+They are studying for their upcoming exams,66.28642857142856
+It is raining outside so remember to bring an umbrella,82.7175
+I am meeting my friends at the coffee shop,30.856666666666634
+You can find the keys on the kitchen counter,37.06777777777776
+He is going to the gym to work out,21.312222222222175
+She is listening to her favorite songs on the radio,75.1275
+We are having a barbecue party in the backyard,51.712222222222195
+They are planning a road trip across the country,46.6122222222222
+It is snowing heavily creating a winter wonderland,99.91500000000002
+I am attending a conference for professionals in my field,96.3075
+You should try the new restaurant in town,47.47749999999999
+He is learning to play the guitar,36.02928571428569
+She is taking a dance class at the local studio,46.947499999999984
+We are volunteering at the animal shelter,96.54357142857143
+They are organizing a charity event to raise funds,86.35666666666668
+It is a sunny day perfect for a day at the beach,41.83583333333332
+I am preparing a delicious meal for dinner,82.19
+You are invited to the birthday party this Saturday,85.24555555555557
+He is playing basketball with his friends,47.45785714285712
+She is studying for her driver's license test,46.6122222222222
+We are decorating the house for the holiday season,84.13444444444445
+They are participating in a marathon for a good cause,80.7175
+It is a beautiful sunset painting the sky with vibrant colors,73.93772727272726
+I am visiting my grandparents during the summer break,85.24555555555557
+You are going on a hiking trip to the mountains,39.35749999999998
+He is practicing his piano skills for the recital,77.92333333333333
+She is painting a picture of a serene landscape,51.7122222222222
+We are exploring a new city on our vacation,77.92333333333333
+They are watching a movie at the cinema,54.46499999999999
+It is a busy day at work with meetings and deadlines,61.04681818181815
+I am taking a yoga class to relax and stay fit,48.6922727272727
+You are attending a concert by your favorite band,77.92333333333333
+He is working on a DIY project in his garage,45.947499999999984
+She is writing a heartfelt letter to a dear friend,45.947499999999984
+We are hosting a family gathering at our house,77.92333333333333
+They are planting flowers in the garden,45.4435714285714
+It is a hot summer day perfect for swimming,46.6122222222222
+I am baking cookies for a bake sale,37.477499999999985
+You are attending a language course to learn a new language,60.13772727272725
+He is fixing his car in the garage,36.22749999999998
+She is attending a photography workshop to enhance her skills,89.3075
+We are going on a sightseeing tour in the city,39.35749999999998
+They are renovating their house to give it a fresh look,55.05590909090907
+It is a clear night sky ideal for stargazing,55.50111111111109
+I am babysitting my little cousin for the weekend,69.03444444444443
+You are going on a shopping spree at the mall,32.76749999999998
+He is coaching a youth soccer team,37.45785714285712
+She is knitting a sweater for her newborn niece,45.501111111111086
+We are planning a surprise party for our friend's birthday,54.683181818181794
+They are enjoying a picnic in the park,36.22749999999998
+It is a windy day making the leaves rustle,46.6122222222222
+I am studying for my final exams at the library,67.1275
+You are attending a wedding ceremony this evening,116.90250000000002
+He is fishing by the river hoping for a big catch,47.783181818181795
+She is practicing ballet in the dance studio,63.9525
+We are camping in the wilderness surrounded by nature,85.24555555555557
+They are going on a safari to see wild animals,69.5375
+It is a foggy morning creating a mystical atmosphere,92.56777777777778
+I am trying out a new recipe for dinner tonight,46.947499999999984
+You are starting a new job at a reputable company,75.1275
+He is training for a marathon to challenge himself,67.92333333333332
+She is attending a mindfulness retreat for inner peace,86.35666666666668
+We are exploring historical landmarks in the city,98.66500000000002
+They are building a sandcastle on the beach,36.22749999999998
+It is a cozy evening sitting by the fireplace with a book,77.96916666666667
+I am going to the park to play with my dog,27.99227272727269
+You have a talent for playing the piano,36.22749999999998
+He enjoys watching movies on weekends,60.42750000000001
+She is studying for her final exams at the library,67.1275
+We are going on a road trip to explore new places,42.701363636363624
+They are having a picnic in the beautiful countryside,84.13444444444445
+It is a sunny day perfect for a bike ride,39.35749999999999
+I am learning to bake delicious cakes and cookies,70.14555555555556
+You are invited to the party at my place on Saturday,73.40136363636363
+He is practicing his basketball skills at the court,70.6011111111111
+She is painting a beautiful landscape with vibrant colors,77.46777777777778
+We are volunteering at the local community center,106.90250000000003
+They are organizing a charity event to support a cause,88.3075
+It is a rainy day so I will stay indoors and read,43.50249999999998
+I am excited to travel to new countries and experience different cultures,114.93583333333335
+You have a natural talent for photography,96.54357142857143
+He loves to swim in the ocean on hot summer days,48.6922727272727
+She is passionate about writing stories and poems,72.19
+We are planning a hiking trip to the mountains,45.501111111111086
+They are renovating their house to make it more comfortable,75.1275
+It is a peaceful evening watching the sunset by the lake,79.39227272727271
+I am practicing yoga to improve my flexibility and relaxation,123.66750000000003
+You are attending a concert of your favorite band tonight,82.7175
+He is fixing his bike in the garage,36.22749999999998
+She is participating in a dance competition next month,93.67888888888889
+We are hosting a family reunion at our beach house,61.53749999999999
+They are planting trees to contribute to the environment,84.13444444444445
+It is a snowy day perfect for building a snowman,52.53749999999998
+I am working on a new art project using acrylic paints,68.85590909090908
+You are learning to speak a new language fluently,46.6122222222222
+He enjoys playing soccer with his friends in the park,40.35749999999999
+She is passionate about helping others in need,72.19
+We are going to the beach to soak up the sun,27.083181818181778
+They are studying for their university entrance exams,88.66500000000002
+It is a windy day so be careful with your hat,54.146818181818155
+I am going to the gym to work out and stay fit,31.685833333333306
+You have a great sense of humor,26.614999999999952
+He loves to read science fiction novels,48.30071428571427
+She is learning to play the guitar in her free time,41.79227272727271
+We are planning a trip to visit historical landmarks,77.46777777777778
+They are organizing a charity drive to support the homeless,103.89750000000002
+It is a rainy day so stay indoors and watch a movie,43.50249999999999
+I am excited about starting a new job next week,62.537499999999994
+You are a talented artist with a unique style,60.60111111111109
+He enjoys hiking in the mountains and exploring nature,77.46777777777778
+She is passionate about environmental conservation,164.6608333333334
+We are going to the zoo to see exotic animals,68.5375
+They are practicing for their upcoming music recital,108.66500000000002
+It is a sunny day perfect for a picnic in the park,48.16083333333332
+I am learning to cook new recipes from around the world,61.95590909090907
+You have a beautiful singing voice,61.11083333333333
+He loves to play video games in his spare time,47.94749999999999
+She is training for a marathon and running every day,82.7175
+We are planning a camping trip to the national park,61.53749999999999
+They are volunteering at a local soup kitchen to help the needy,72.96916666666667
