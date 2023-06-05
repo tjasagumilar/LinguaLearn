@@ -75,6 +75,8 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
         if (isAnswerCorrect && exercise.resitev != null) {
           await updateCorrectSolved(uid, document)
           await updateYourWords(uid, exercise.sentence, exercise.resitev)
+        }else{
+          await updateYourMistakes(uid, exercise.sentence, selectedSentence)
         }
         setIsCorrect(isAnswerCorrect);
         setShowModal(true);
@@ -82,7 +84,25 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
    
   };
 
-
+  const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    const type = "stavek"
+      try {
+        const response = await fetch('http://localhost:4000/yourMistakes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+        });
+  
+  
+        if (!response.ok) {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error' + error)
+      }
+    }
 
   const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
     const type = "stavek"

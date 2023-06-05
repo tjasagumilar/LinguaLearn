@@ -12,6 +12,7 @@ export interface Word{
 
 const MojeBesede = () => {
   const [words, setWords] = useState<Word[]>([]);
+  const [mistakes, setMistakes] = useState<Word[]>([])
   const [uid, setUid] = useState('');
 
   const location = useLocation();
@@ -23,6 +24,7 @@ useEffect(() => {
         if (user) {
             setUid(user.uid);
             naloziBesede(user.uid)
+            naloziNapake(user.uid)
         }
     });
 }, []);
@@ -34,14 +36,33 @@ useEffect(() => {
       .catch(error => console.error(error));
   }
 
+  const naloziNapake = (uid: string) => {
+    fetch(`http://localhost:4000/getMistakes?uid=${uid}&language=${language}`) 
+      .then(response => response.json())
+      .then(data => setMistakes(data))
+      .catch(error => console.error(error));
+  }
+
 
 
   return (
     <Container>
-      <ListGroup>
+      <h3 className="mt-4">Vaš slovar besed:</h3>
+      <ListGroup className="mb-4">
         {words.map((item, index) => (
-          <ListGroup.Item key={index}>
-            {item.word} - {item.slovenskiPrevod}
+          <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+            <span>{item.word}</span>
+            <span className="text-secondary">{item.slovenskiPrevod}</span>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+
+      <h3 className="mt-4">Vaše napake:</h3>
+      <ListGroup>
+        {mistakes.map((item, index) => (
+          <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+            <span>{item.word}</span>
+            <span className="text-secondary">{item.slovenskiPrevod}</span>
           </ListGroup.Item>
         ))}
       </ListGroup>

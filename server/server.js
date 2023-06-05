@@ -92,7 +92,7 @@ app.post('/izbirajezika', (req, res) => {
   const tezavnost = 0;
   const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp , xpDummy: xp })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp , xpDummy: xp, mojeNapake: [] })
     .then(() => {
       res.sendStatus(200);
     })
@@ -853,6 +853,54 @@ app.get('/getWords', async (req, res) => {
     res.status(404).send('Dokument ne obstaja!');
   } else {
     const wordsData = docData.data().mojeBesede;
+    res.send(wordsData);
+  }
+});
+
+//dodaj besedo na seznam napačnih besed
+app.post('/yourMistakes', async (req, res) => {
+  const { uid, newWord, language, slovenskiPrevod, type } = req.body;
+
+
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  console.log(jezikDocSnapshot)
+
+  const docRef = jezikDocSnapshot.ref;
+
+  docRef.update({
+    mojeNapake: admin.firestore.FieldValue.arrayUnion({ word: newWord, slovenskiPrevod: slovenskiPrevod, type: type })
+  }).then(() => {
+    console.log("Dokument uspešno posodobljen!");
+    res.sendStatus(200);
+  })
+    .catch((error) => {
+      console.error("Error pri updejtanju dokumenta: ", error);
+      res.status(500).send('Napaka');
+    });
+});
+
+//pridobi napačne besede
+
+app.get('/getMistakes', async (req, res) => {
+  const { uid, language } = req.query;
+  console.log(uid)
+  console.log(language)
+
+  const userRef = dbFire.collection('users').doc(uid);
+  const jezikiRef = userRef.collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+
+  const docRef = jezikDocSnapshot.ref;
+  const docData = await docRef.get();
+
+  if (!docData.exists) {
+    res.status(404).send('Dokument ne obstaja!');
+  } else {
+    const wordsData = docData.data().mojeNapake;
     res.send(wordsData);
   }
 });

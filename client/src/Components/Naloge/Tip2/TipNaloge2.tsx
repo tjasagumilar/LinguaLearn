@@ -97,6 +97,26 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     }
   }
 
+  const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    const type = "beseda"
+      try {
+        const response = await fetch('http://localhost:4000/yourMistakes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+        });
+  
+  
+        if (!response.ok) {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error' + error)
+      }
+    }
+
   
 
 
@@ -139,8 +159,10 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
       if (isAnswerCorrect) {
         await updateCorrectSolved(uid, document)
         await updateYourWords(uid, exercise.sentence, slovenskiPrevod)
+      }else{
+        await updateYourMistakes(uid, exercise.sentence, selectedWord)
       }
-      setTranslation("i need a resitev here")
+    
       console.log(isAnswerCorrect)
       setIsCorrect(isAnswerCorrect);
       setShowModal(true);
