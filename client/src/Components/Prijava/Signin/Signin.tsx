@@ -8,7 +8,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import 'firebase/compat/analytics';
 
-
+import { Button } from "react-bootstrap";
 
 const Signin = () => {
     const [authenticating, setAuthenticating] = useState<boolean>(false);
@@ -60,13 +60,14 @@ const Signin = () => {
                     <input type="password" placeholder="Geslo" onChange={event => setPassword(event.target.value)} value={password} />
                 </div>
                 <div className="login-button">
-                    <button onClick={() => handleSubmit()}>Prijava</button>
+                    <Button onClick={() => handleSubmit()}>Prijava</Button>
                 </div>
                 <div className="login-button">
-                    <button onClick={signInWithGoogle}>Google Prijava</button>
+                    <Button onClick={signInWithGoogle}>Google Prijava</Button>
                 </div>
                 <div className="pozabljeno-button">
-                    <a href="/forgot">Pozabljeno geslo</a>
+                    <a href="/forgot">Pozabljeno geslo</a> <br/>
+                    <a href="/registracija" className="brez-racuna">Še nimaš računa?</a>
                 </div>
                 <ErrorText error={error} />
             </div>

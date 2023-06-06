@@ -4,12 +4,12 @@ import napredek from "../../../Assets/napredek.png"
 const Napredek = () => {
 
     return (
-        <Container className="homepage">
-            <Row>
-                <Col className="vsebina">
+        <div className="vsebina col-12">
+            <Row className="col-10">
+                <Col className=" col-12 col-lg-6 col-xl-5">
                     <img src={napredek}></img>
                 </Col>
-                <Col className="vsebina">
+                <Col className=" col-12 col-lg-6 col-xl-5">
                     <h3 className="naslov-vsebina">
                         Spremljanje napredka
                     </h3>
@@ -20,8 +20,9 @@ const Napredek = () => {
                     </div>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
+
 }
 
 export default Napredek;

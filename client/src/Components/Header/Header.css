@@ -1,50 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
 
-.glava {
-    width: 100%;
-    background-color: #6389FA;
-    padding: 0;
+.header-box {
     margin: 0;
-    display: flex;
-    flex-direction: row;
+    background-color: #6389FA;
     font-family: 'Outfit', sans-serif;
     color: white;
 }
 
 .head {
-    width: 100%;
-    background-color: #6389FA;
-    padding: 2% 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-
-.head h1 {
-    font-weight: 700;
-    font-size: 3vw;
-}
-
-.head p {
-    font-weight: 400;
-    font-size: 1.5vw;
-}
-
-.head img {
-    width: 100%;
-}
-
-.head Button {
-    border-radius: 30px;
-    width: 30%;
-    font-size: 1vw;
-    background: #2F5AED;
-}
-
-.head Button:hover {
-    background: rgba(47, 90, 237, 0.8);
+.header-box img {
+    width: 400px;
 }
 
 .pozdravljeni {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.pozdravljeni h1 {
+    font-weight: 600;
+
+}
+
+.pozdravljeni p {
+    font-size: 20px;
+}
+
+.pozdravljeni Button {
+    border-radius: 30px;
+    width: 150px;
+    background: #2F5AED;
+    margin: 0 0 10px 0;
+    border: none;
+}
+
+.pozdravljeni a {
+    text-decoration: none;
+}
+
+.pozdravljeni Button:hover {
+    background: rgba(47, 90, 237, 0.8);
+    transform: scale(1.05);
+}
+
+.head .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 992px) {
+
+    .pozdravljeni,
+    .image,
+    .pozdravljeni a {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pozdravljeni p {
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .head img {
+        width: 230px;
+    }
+
 }

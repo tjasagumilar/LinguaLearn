@@ -1,145 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
+
 .login-box {
-  margin: 0;
+  font-family: 'Outfit', sans-serif;
   background: #6389FA;
-  height: 650px;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.5s ease;
+  height: 450px;
+  margin: 10% 0;
+  animation: slideIn 1.0s ease;
+}
+
+.dobrodosli-div {
+  height: 100%;
 }
 
 .login {
-  margin: 0 15%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 75%;
-  width: 60%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .dobrodosli-div {
+    display: none;
+  }
+
+  .login {
+    border-radius: 20px;
+  }
 }
 
 .login-form {
-  background: white;
-  width: 50%;
-  height: 100%;
   border-radius: 20px 0 0 20px;
-}
-
-.dobrodosli-box {
-  width: 50%;
-  background: #86A4FD;
-  height: 100%;
-  border-radius: 0 20px 20px 0;
-  color: white;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 30px;
+  height: 100%;
+}
+
+.brez-racuna {
+  display: none;
+}
+
+.login-inputs,
+.vnosna-polja {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 .prijavise {
   text-align: center;
-  margin: 40px 0;
-  font-family: 'Outfit', sans-serif;
   font-weight: 600;
   font-size: 30px;
-}
-
-.login-inputs {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: 25px;
 }
 
 .vnosna-polja {
-  width: 70%;
   display: flex;
   flex-direction: column;
 }
 
 .vnosna-polja input {
+  width: 100%;
   height: 40px;
   margin-bottom: 25px;
   border: 2px solid rgba(99, 137, 250, 0.5);
   border-radius: 10px;
   padding-left: 10px;
+
 }
 
-.vnosna-polja input:focus {
-  padding-left: 10px;
-}
-
-.login-button,
-.ustvari-button {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.login-button button,
-.ustvari-button button {
-  width: 40%;
-  height: 40px;
+.login-form Button {
+  width: 150px;
   background: #2F5AED;
   border-radius: 30px;
   border: none;
-  color: white;
-  font-family: 'Outfits', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ustvari-button button,
-a {
-  width: 100%;
-}
-
-.pozabljeno-button a {
-  text-decoration: none;
-  color: black !important;
-}
-
-.pozabljeno-button a:hover {
-  text-decoration: underline;
-}
-
-.pozabljeno-button {
   margin: 5px;
 }
 
-.login-button button:hover,
-.ustvari-button button:hover {
+.login-form Button:hover {
   background: rgba(47, 90, 237, 0.8);
-  cursor: pointer;
+  transform: scale(1.05);
 }
 
-.pozabljeno {
-  margin-top: 10px;
-  font-weight: 300;
-}
-
-.dobrodosli {
-  font-size: 30px;
-  font-weight: 600;
+.pozabljeno-button {
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.pridruzitev {
-  font-size: 20px;
-  font-weight: 400;
+.pozabljeno-button a,
+.login-button a {
+  text-decoration: none;
   text-align: center;
-  margin: 0 30px;
+  color: black;
 }
 
-.racun {
-  font-size: 20px;
-  font-weight: 400;
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
+.pozabljeno-button a:hover,
+.login-button a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+
+  .login-form {
+    border-radius: 20px;
+  }
+
+  .brez-racuna {
+    display: block;
+    margin-top: 5px;
+  }
 }
