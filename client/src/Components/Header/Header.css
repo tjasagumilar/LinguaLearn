@@ -17,7 +17,6 @@
     padding: 2% 15%;
 }
 
-
 .head h1 {
     font-weight: 700;
     font-size: 3vw;
@@ -32,15 +31,34 @@
     width: 100%;
 }
 
+.head .zacni-button {
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
 .head Button {
     border-radius: 30px;
     width: 30%;
     font-size: 1vw;
     background: #2F5AED;
+    transition: all 0.3s ease;
 }
 
 .head Button:hover {
-    background: rgba(47, 90, 237, 0.8);
+    background: #fa9746d2;
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(45deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 .pozdravljeni {

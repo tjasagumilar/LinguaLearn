@@ -81,6 +81,29 @@
     margin-right: 10px;
 }
 
+/* makar brise */
+.App .chat-selection select {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    /* Add this line to center the text */
+    transition: transform 0.3s ease;
+}
+
+.App .chat-selection select:hover {
+    transform: scale(1.1);
+    /* Add this line to scale the select chat button on hover */
+}
+/* makar brise */
+
 .App select {
     font-size: 16px;
     padding: 8px;
