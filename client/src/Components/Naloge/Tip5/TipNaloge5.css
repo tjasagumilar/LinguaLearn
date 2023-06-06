@@ -3,76 +3,48 @@
   }
 
   .mic-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
     display: flex!important;
-    flex: 0 1 100%;
     justify-content: center!important;
     align-items: center!important;
-    align-content: stretch;
-    width: 120px!important;
-    height: 120px!important;
-    border-radius: 50%;
-    background-color: #7A89FF;
-    box-shadow: 0px 0px 80px #0084F9;
+    width: 100px!important;
+    height: 100px!important;
+    border-radius: 50px!important;
+    background-color: #6389fa !important;
     color: white !important;
     cursor: pointer !important;
     transition: background-color 0.5s ease !important;
-}
+  }
+  
+  .mic-button.active {
+    background-color: #6389fa !important;
+    animation: pulse-effect 1s infinite !important;
+  }
+  
+  @keyframes pulse-effect {
+    0% {
+      box-shadow: 0 0 0 20px rgb(255, 153, 0);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 153, 0, 0.562);
+    }
+    100% {
+      box-shadow: 0 0 0 5px rgba(253, 152, 0, 0.26);
+    }
+  }
 
-.mic-button:before, .mic-button:after {
-    content: "";
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
 
-    position: absolute;
-}
+  
 
-.mic-button.active {
-    background-color: #7A89FF !important;
-}
 
-.mic-button.active:before {
-    animation: pulse 3s;
-    animation-timing-function: ease-out;
-    animation-iteration-count: infinite;
-}
-
-.mic-button.active:after {
-    animation: pulse 3s;
-    animation-timing-function: ease-out;
-    animation-iteration-count: infinite;
+  
+  #delayed {
     animation-delay: 1.5s;
-}
+  }
+  
 
-@keyframes pulse {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-    border: 65px solid #0B3082;
+  
+  .mic-icon {
+    height: 60px;
+    position: absolute;
+    margin: 21px;
   }
-  50% {
-    border: solid #ffd106;     
-    opacity: 0.8;
-  }
-
-  90% {
-    transform: scale(3.2);
-    opacity: 0.2;
-    border: 3px solid #d4a710;
-  }
-  100% {
-    transform: scale(3.3);
-    opacity: 0;
-    border: 1px solid #ffd000;
-  }
-}
-
-#mic-button {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}

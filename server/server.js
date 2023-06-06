@@ -85,7 +85,14 @@ app.post('/signin', async (req, res) => {
 //IZBIRA JEZIKA 
 app.post('/izbirajezika', (req, res) => {
   const { jezik, naziv, nivo, uid, path } = req.body;
-  const tezavnost = 0;
+  let tezavnost = 0;
+  if (nivo === 'Raziskovalec') {
+    tezavnost = 30;
+  } else if (nivo === 'Pustolovec') {
+    tezavnost = 60;
+  } else if (nivo === 'Prvak') {
+    tezavnost = 90;
+  }
   const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
     .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp , xpDummy: xp, mojeNapake: [] })
