@@ -53,7 +53,7 @@ const Uredi = () => {
             opis: opis
         }
 
-        fetch(`http://localhost:4000/uredi`, {
+        fetch(`${BASE_URL}/uredi`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

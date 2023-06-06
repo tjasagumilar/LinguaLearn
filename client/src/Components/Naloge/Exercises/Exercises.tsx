@@ -477,7 +477,7 @@ const Exercises = () => {
     }
     if (currentExerciseIndex == exercises.length - 1) {
       await updateExercisesSolved(uid, document)
-      // napiši še kodo da redirecta 
+      navigate(`/lessoncomplete?uid=${uid}&document=${document}&language=${language}`);
     }
     setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
     setCurrentExercise(exercises[currentExerciseIndex + 1])

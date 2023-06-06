@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql')
 const cors = require('cors')
 const axios = require('axios');
 const fs = require('fs');
@@ -434,42 +433,6 @@ app.post('/solvedCorrect', async (req, res) => {
   });
 });
 
-/*
-app.post('/solvedCorrect', async (req, res) => {
-  const { uid, document, language } = req.body;
-
-  const userRef = dbFire.collection('users').doc(uid);
-  const jezikiRef = userRef.collection('jeziki');
-  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
-  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
-  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
-
-  docRef.get().then((doc) => {
-    if (doc.exists) {
-      let solvedRight = doc.data().solvedRight;
-      solvedRight = solvedRight + 1;
-      xp = solvedRight * 5; // za vsako pravilno rešeno nalogo dobi 5 xp-ja
-
-      docRef.update({
-        solvedRight: solvedRight,
-        xp: xp
-      }).then(() => {
-        console.log("Dokument uspešno posodobljen!");
-        res.sendStatus(200);
-      })
-        .catch((error) => {
-          console.error("Error pri updejtanju dokumenta: ", error);
-          res.status(500).send('Napaka');
-        });
-    } else {
-      console.log("No such document!");
-    }
-  }).catch((error) => {
-    console.log("Error getting document:", error);
-  });
-});
-
-*/
 
 // generiraj poved glede na težavnost 
 const { spawn } = require('child_process');
@@ -902,6 +865,26 @@ app.get('/getMistakes', async (req, res) => {
   }
 });
 
+//prikaz pridobljenega xp-ja in št. pravilno rešenih nalog po koncu reševanja
+
+app.get('/lessoncomplete', async (req, res) => {
+  const { uid, document, language } = req.query;
+
+  const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
+  const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
+  const jezikDocSnapshot = jezikQuerySnapshot.docs[0];
+  const docRef = jezikDocSnapshot.ref.collection('naloge').doc(document);
+
+  const docSnapshot = await docRef.get();
+  const xp = docSnapshot.data().xp;
+  const solvedRight = docSnapshot.data().solvedRight;
+
+  res.json({ xp, solvedRight });
+    
+
+});
+
+
 
 
 // -------------------------------------------------------------------------------------------
@@ -936,25 +919,9 @@ app.get('/getRank', async (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
 // -------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------
 
-
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: '',
-  database: 'lingualearn'
-})
 
 app.listen(4000, () => { console.log("Listening on port 4000") })
 

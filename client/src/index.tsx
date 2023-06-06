@@ -83,10 +83,6 @@ const router = createBrowserRouter([
       {
         path: '/mojebesede',
         element: <MojeBesede />
-      },
-      {
-        path: '/lessoncomplete',
-        element: <LessonComplete/>
       }
     ],
 
@@ -95,6 +91,10 @@ const router = createBrowserRouter([
     path: 'generirajNaloge',
     element: <Exercises />,
   },
+  {
+    path: '/lessoncomplete',
+    element: <LessonComplete />
+  }
 
 ]);
 
