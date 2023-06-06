@@ -62,7 +62,7 @@
 button.btn.first1 {
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
   border: 2px solid #6389fa !important;
-  padding: 0.5em 4em !important; 
+  padding: 0.8em 3em !important; 
   border-radius: 2em !important; 
   background-color: #6389fa;
   color:white;
@@ -77,7 +77,7 @@ button.btn.first1p:hover {
 button.btn.first1p {
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
   border: 2px solid #6389fa !important;
-  padding: 0.5em 4em !important; 
+  padding: 0.8em 3em !important; 
   border-radius: 2em !important; 
   background-color: rgb(255, 255, 255);
   color:#6389fa
@@ -108,9 +108,11 @@ button.btn.first1:hover {
 }
 
 .upper-line {
-  height: 1px;
+  height: 5px;
   background-color: #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  position: relative;
+    top: 20px; 
 }
 
 .fixed-bottom {
