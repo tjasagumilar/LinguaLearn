@@ -911,9 +911,12 @@ app.get('/lessoncomplete', async (req, res) => {
   const docSnapshot = await docRef.get();
   const xp = docSnapshot.data().xp;
   const solvedRight = docSnapshot.data().solvedRight;
+  const nivo = jezikDocSnapshot.data().nivo;
 
-  res.json({ xp, solvedRight });
+  res.json({ xp, solvedRight, nivo });
     
+
+  
 
 });
 
