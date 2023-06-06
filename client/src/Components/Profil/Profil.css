@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
 
-
 .profil-container {
     font-family: 'Outfit', sans-serif;
     padding: 0;
@@ -10,22 +9,43 @@
 
 .profil-container img {
     width: 130px;
+    animation: zoomIn 0.8s ease-in-out;
 }
 
-
-.col-md div, .col-md div a {
+.col-md div,
+.col-md div a {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     margin: 2px;
     text-decoration: none;
 }
 
-
 .profil-podatki {
     text-align: center;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.ime-priimek {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.opis {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 20px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .uredi-profil {
@@ -35,12 +55,52 @@
     border: none;
     margin-top: 0 !important;
     margin-bottom: 10px;
+    font-weight: bold;
+    animation: scaleIn 0.8s ease-in-out;
 }
 
 .uredi-profil:hover {
     background: rgba(47, 90, 237, 0.8) !important;
+    animation: pulse 0.8s infinite;
 }
 
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

@@ -12,6 +12,22 @@ import { BASE_URL } from "../../../api";
 const Vec = () => {
     const [show, setShow] = useState(false);
     const [xp, setXP] = useState(0); // State to store the xp value
+    const [jeziki, setJeziki] = useState([]);
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                fetch(`${BASE_URL}/mojijeziki?uid=${user.uid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setJeziki(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
+    }, []);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -52,16 +68,17 @@ const Vec = () => {
             case 'ru':
                 languageName = 'Ruščina';
                 break;
+            default:
+                languageName = '';
+                break;
         }
 
         return languageName;
     }
 
     const handleOdstrani = () => {
-
         auth.onAuthStateChanged(user => {
             if (user) {
-
                 const formData = {
                     jezik: language,
                     uid: user.uid,
@@ -84,18 +101,15 @@ const Vec = () => {
                     });
             }
         });
-
-
     }
 
     return (
         <div>
-
             <div className="podatki-container">
                 <Row>
                     <Col md>
                         <div>
-                            <img src={path} />
+                            <img src={path} alt="Language" />
                         </div>
                     </Col>
                 </Row>
@@ -111,7 +125,14 @@ const Vec = () => {
                 <Row>
                     <Col md>
                         <div>
-                            <Button className="odstrani-jezik" onClick={handleShow}>Odstrani</Button>
+                            <a href={`/generirajNaloge?language=${language}`}><Button className="odstrani-jezik">Naloge</Button></a>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md>
+                        <div>
+                            <a href={`/mojebesede?language=${language}`}><Button className="odstrani-jezik">Besede</Button></a>
                         </div>
                     </Col>
                 </Row>
@@ -127,12 +148,16 @@ const Vec = () => {
                         </div>
                     </Col>
                 </Row>
+                <Row>
+                    <Col md>
+                        <div>
+                            <Button className="odstrani-jezik" onClick={handleShow}>Odstrani</Button>
+                        </div>
+                    </Col>
+                </Row>
             </div>
             <div className="napredek-container">
-          
             </div>
-
-
             <Modal show={show} onHide={handleClose} animation={false} >
                 <Modal.Header closeButton>
                     <Modal.Title>Ali ste prepričani, da želite odstraniti jezik?</Modal.Title>
@@ -148,8 +173,6 @@ const Vec = () => {
                 </Modal.Footer>
             </Modal>
         </div>
-
-
     );
 }
 

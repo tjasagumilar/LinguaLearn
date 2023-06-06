@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
 
-
 .podatki-container {
     font-family: 'Outfit', sans-serif;
     padding: 0;
@@ -19,7 +18,6 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
 .col-md div {
     display: flex;
     flex-direction: column;
@@ -29,7 +27,6 @@
     margin: 2px;
 }
 
-
 .podatki-jezik {
     text-align: center;
 }
@@ -37,7 +34,7 @@
 .odstrani-jezik {
     width: 150px !important;
     border-radius: 30px;
-    background:#fa9746;
+    background: rgba(99, 137, 250, 0.8);
     border: none;
     margin-top: 0;
     margin-bottom: 10px;
@@ -55,7 +52,7 @@
 
 .modal-odstrani {
     border-radius: 20px;
-    background:#2F5AED;
+    background: #fa9746d2;
     border: none;
 }
 

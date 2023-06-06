@@ -2,19 +2,60 @@
 
 
 .complete-box {
-    margin: 5% 15%;
+    margin: 10% 15%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
+
 .complete-box img {
     width: 100%;
 }
 
-.bravo {
+@media (max-width: 350px) {
+    .complete-box img, .uspesno {
+      display: none;
+    }
+  }
+
+.complete-box Button {
+    margin: 20px 5px;
+    width: 100px;
+    border-radius: 20px;
+    background: #2F5AED;
+    border: none;
+
+}
+
+.complete-box Button:hover {
+    background: rgba(47, 90, 237, 0.8);
+}
+
+.bravo h3 {
     font-family: 'Outfits', sans-serif;
     font-weight: 700;
-    font-size: 30px;
+    text-align: center;
+}
+
+
+.complete-box .row {
+    justify-content: center;
+}
+
+.xp, .pravilne {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin: 5px;
+    background-color: #86A4FD;
+    border-radius: 20px;
+    height: 60px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 

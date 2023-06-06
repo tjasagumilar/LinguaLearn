@@ -54,7 +54,7 @@ const Exercises = () => {
   const handleConfirmation = async (confirmed: boolean) => {
     setShowConfirmation(false);
     if (confirmed) {
-      navigate('/naloge');
+      navigate('/jeziki');
       await updateExercisesSolved(uid, document)
     }
   };

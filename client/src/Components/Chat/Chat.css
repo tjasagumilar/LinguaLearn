@@ -116,6 +116,10 @@
     background-color: #6389fa; /* Set the background color of the bubble */
 }
 
+.chat-container{
+    margin-bottom: 50px;
+}
+
 
 /* Rest of the CSS remains the same */
 
@@ -147,6 +151,7 @@
     align-items: center;
     font-size: 1.5rem;
     border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.99); /* Set background color with opacity */
 
     /* Dynamic input island */
     position: fixed;
@@ -155,7 +160,6 @@
     transform: translateX(-50%);
     width: 80%;
     max-width: 500px;
-    background-color: white;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
