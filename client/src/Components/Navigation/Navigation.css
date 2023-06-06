@@ -44,3 +44,7 @@ nav .container {
 .navbar .dropdown-menu .dropdown-divider {
     border-color: rgba(255, 255, 255, 0.1);
 }
+
+.basic-navbar-nav {
+    float: right;
+}

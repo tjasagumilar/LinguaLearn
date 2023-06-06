@@ -1,5 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
 
+.vsebina {
+    font-family: 'Outfit', sans-serif;
+    text-align: justify;
+    margin: 15px 0 15px 0;
+}
+
+.vsebina .row .col h3 {
+    font-weight: 600;
+}
+
+.vsebina .row .col div {
+    font-size: 20px;
+
+}
+
+.vsebina .row .col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vsebina .row, .vsebina {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vsebina img {
+    width: 400px;
+}
+
+@media (max-width: 992px) {
+
+    .vsebina img {
+        display: none;
+    }
+
+    .vsebina {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .vsebina .row .col div {
+        font-size: 16px;
+    
+    }
+    .vsebina .row .col h3 {
+        font-size: 20px;
+    
+    }
+
+
+
+}
+
+/*
 .homepage {
     font-family: 'Outfit', sans-serif;
     padding-top: 3%;
@@ -35,4 +91,4 @@
     font-size: 20px;
     text-align: justify;
 }
-
+*/

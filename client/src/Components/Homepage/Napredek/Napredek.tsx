@@ -4,24 +4,25 @@ import napredek from "../../../Assets/napredek.png"
 const Napredek = () => {
 
     return (
-        <Container className="homepage">
-            <Row>
-                <Col className="vsebina">
+        <div className="vsebina col-12">
+            <Row className="col-10">
+                <Col className=" col-12 col-lg-6 col-xl-5">
                     <img src={napredek}></img>
                 </Col>
-                <Col className="vsebina">
+                <Col className=" col-12 col-lg-6 col-xl-5">
                     <h3 className="naslov-vsebina">
                         Spremljanje napredka
                     </h3>
                     <div className="opis-vsebina">
                         Z našo aplikacijo lahko enostavno spremljaš svoj
-                        napredek pri učenju jezika, da lahko vedno veš,
+                        napredek pri učenju jezika, <br/>da lahko vedno veš,
                         kako daleč si že prišel in kje se lahko še izboljšaš.
                     </div>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
+
 }
 
 export default Napredek;

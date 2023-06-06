@@ -21,7 +21,7 @@
 .pozdravljeni {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .pozdravljeni h1 {
@@ -52,7 +52,7 @@
 
 .image {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 @media (max-width: 990px) {
@@ -70,9 +70,6 @@
 
 @media (max-width: 400px) {
     .head img {
-
-        display: none;
-
-
+        width: 230px;
     }
 }
