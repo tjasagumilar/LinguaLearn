@@ -151,7 +151,7 @@
     align-items: center;
     font-size: 1.5rem;
     border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.7); /* Set background color with opacity */
+    background-color: rgba(255, 255, 255, 0.99); /* Set background color with opacity */
 
     /* Dynamic input island */
     position: fixed;

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
 .zunanji-container {
    display: flex;
    flex-direction: column;
@@ -6,7 +8,6 @@
 }
 
 .uredi-container {
-
    font-family: 'Outfit', sans-serif;
    background-color: #86A4FD;
    padding: 3%;
@@ -18,12 +19,12 @@
    width: 80px;
    border-radius: 50px;
    margin: 2px;
+   animation: zoomIn 0.8s ease-in-out;
 }
 
 .uredi-container h2 {
    font-weight: 600;
    text-align: center;
-
 }
 
 #avatar {
@@ -34,19 +35,54 @@
    margin: 15px;
 }
 
-.uredi-container Button {
+.uredi-container button {
    border-radius: 30px;
    width: 115px;
    background: #2F5AED;
    border: none;
    margin-bottom: 10px;
+   font-weight: bold;
+   animation: scaleIn 0.8s ease-in-out;
 }
 
-.uredi-container Button:hover {
+.uredi-container button:hover {
    background: rgba(47, 90, 237, 0.8);
+   animation: pulse 0.8s infinite;
 }
 
 .gumb-potrdi {
    display: flex;
    justify-content: center;
+}
+
+@keyframes zoomIn {
+   0% {
+      transform: scale(0);
+      opacity: 0;
+   }
+   100% {
+      transform: scale(1);
+      opacity: 1;
+   }
+}
+
+@keyframes scaleIn {
+   0% {
+      transform: scale(0);
+   }
+   100% {
+      transform: scale(1);
+   }
+}
+
+@keyframes pulse {
+   0% {
+      transform: scale(1);
+   }
+   50% {
+      transform: scale(1.05);
+   }
+   100% {
+      transform: scale(1);
+   }
 }
