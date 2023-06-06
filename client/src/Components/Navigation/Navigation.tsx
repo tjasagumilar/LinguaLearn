@@ -60,7 +60,6 @@ const Navigation = () => {
                 {/*<NavDropdown.Item href="/naloge">Naloge</NavDropdown.Item>*/}
                 <NavDropdown.Item href="/jeziki">Moji jeziki</NavDropdown.Item>
                 <NavDropdown.Item href="/chat">Klepet</NavDropdown.Item>
-                <NavDropdown.Item href="/leaderboard">Vodilna Lestvica</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}> Odjava</NavDropdown.Item>
               </NavDropdown>
