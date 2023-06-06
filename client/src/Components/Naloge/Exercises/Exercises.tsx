@@ -24,6 +24,20 @@ export interface Exercise {
 }
 
 
+const getRandomLetter = () => {
+  const arabicLetters = Array.from({ length: 28 }, (_, i) => String.fromCharCode(0x0621 + i));
+  const chineseLetters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(0x4E00 + i));
+  const russianLetters = Array.from({ length: 32 }, (_, i) => String.fromCharCode(0x0410 + i));
+  const europeanLetters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(0x0041 + i));
+
+  const letterSets = [arabicLetters, chineseLetters, russianLetters, europeanLetters];
+  const randomSetIndex = Math.floor(Math.random() * letterSets.length);
+  const randomSet = letterSets[randomSetIndex];
+
+  const randomLetterIndex = Math.floor(Math.random() * randomSet.length);
+  return randomSet[randomLetterIndex];
+};
+
 
 const Exercises = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -46,6 +60,10 @@ const Exercises = () => {
     console.log('exercise:', exercises[currentExerciseIndex]);
   }, [exercises, currentExerciseIndex]);
 
+  
+
+
+
 
   const redirectToPage = () => {
     setShowConfirmation(true);
@@ -54,10 +72,250 @@ const Exercises = () => {
   const handleConfirmation = async (confirmed: boolean) => {
     setShowConfirmation(false);
     if (confirmed) {
-      navigate('/jeziki');
+      navigate('/naloge');
       await updateExercisesSolved(uid, document)
     }
-  };
+      };
+
+      const fetchStavekExercise = async (uid: string) => {
+        console.log(uid)
+        const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch exercises');
+        }
+    
+        const data = await response.json();
+        const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
+        if (!wordsResponse.ok) {
+          throw new Error('Failed to fetch words');
+        }
+        const wordsData = await wordsResponse.json();
+    
+    
+    
+        const response1 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
+        if (!response1.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord1 = (await response1.json()).translation;
+    
+        const response2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
+        if (!response2.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord2 = (await response2.json()).translation;
+    
+        const response3 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
+        if (!response3.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord3 = (await response3.json()).translation;
+    
+        const besede = [generatedWord1, generatedWord2, generatedWord3];
+        const words = data.slovenianTranslation.split(' ');
+        const mix = [...words].sort(() => Math.random() - 0.5);
+    
+        const combined = [...besede, ...mix];
+    
+        const shuffled = combined.sort(() => Math.random() - 0.5);
+    
+        const dataNew = [...shuffled];
+    
+    
+        const exerciseData = {
+          type: 'stavek',
+          sentence: data.translation,
+          availableWords: dataNew,
+          resitev: data.slovenianTranslation
+        };
+    
+        return exerciseData;
+      };
+    
+      const fetchStavek2Exercise = async (uid: string) => {
+        const response = await fetch(`${BASE_URL}/generateWordOne?uid=${uid}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch exercises');
+        }
+    
+        const data = await response.json();
+    
+        const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
+        if (!wordsResponse.ok) {
+          throw new Error('Failed to fetch words');
+        }
+    
+        const prevodResponse = await fetch(`${BASE_URL}/prevedi/${language}/${data.randomWord}`);
+        if (!prevodResponse.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const prevod = await prevodResponse.json();
+    
+    
+        const prevodResponse2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${data.randomWord}`);
+        if (!prevodResponse.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+    
+        const prevodSlovenski = await prevodResponse2.json()
+    
+        const wordsData = await wordsResponse.json()
+    
+        const response1 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
+        if (!response1.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord1 = (await response1.json()).translation;
+    
+        const response2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
+        if (!response2.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord2 = (await response2.json()).translation;
+    
+        const response3 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
+        if (!response3.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+        const generatedWord3 = (await response3.json()).translation;
+    
+        const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevodSlovenski.translation];
+        const dataNewResitve = [wordsData.randomWord, wordsData.randomWord2, wordsData.randomWord3, data.randomWord]
+    
+    
+        const zipped = dataNew.map((value, i) => [value, dataNewResitve[i]]);
+    
+        for (let i = zipped.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [zipped[i], zipped[j]] = [zipped[j], zipped[i]];
+        }
+    
+    
+        const [shuffledDataNew, shuffledDataNewResitve] = zipped.reduce(
+          ([dataNewAcc, dataNewResitveAcc], [value1, value2]) => {
+            return [
+              [...dataNewAcc, value1],
+              [...dataNewResitveAcc, value2]
+            ];
+          },
+          [[], []]
+        );
+        console.log("XXXXXXXXXXXXX")
+        console.log(shuffledDataNew);
+        console.log(shuffledDataNewResitve);
+    
+        const exerciseData = {
+          type: 'beseda',
+          sentence: prevod.translation,
+          availableWords: shuffledDataNew,
+          resitve: shuffledDataNewResitve,
+          resitev: prevodSlovenski.translation
+        };
+    
+        return exerciseData;
+      };
+    
+      const fetchStavek3Exercise = async (uid: string) => {
+        const response = await fetch(`${BASE_URL}/slika?uid=${uid}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch exercises');
+        }
+        const data = await response.json();
+    
+        const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`);
+    
+        if (!wordsResponse.ok) {
+          throw new Error('Failed to fetch words');
+        }
+    
+        const prevodResponse = await fetch(`${BASE_URL}/prevedi/${language}/${data.beseda}`);
+        if (!prevodResponse.ok) {
+          throw new Error('Failed to fetch translation');
+        }
+    
+        const prevod = await prevodResponse.json();
+        const wordsData = await wordsResponse.json();
+        const generatedWord1 = wordsData.translation1;
+        const generatedWord2 = wordsData.translation2;
+        const generatedWord3 = wordsData.translation3;
+        const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevod.translation];
+        console.log(dataNew)
+    
+        for (let i = dataNew.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
+        }
+    
+    
+        const exerciseData = {
+          type: 'slika',
+          sentence: prevod.translation,
+          availableWords: dataNew,
+          pageURL: data.pageURL,
+          resitev: prevod.translation
+        };
+    
+        return exerciseData;
+      };
+    
+      const fetchStavek4Exercise = async (uid: string) => {
+    
+        const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch exercises');
+        }
+    
+        const data = await response.json();
+        const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
+        if (!wordsResponse.ok) {
+          throw new Error('Failed to fetch words');
+        }
+    
+        const wordsData = await wordsResponse.json();
+        const translation1 = wordsData.translation1;
+        const translation2 = wordsData.translation2;
+        const translation3 = wordsData.translation3;
+    
+        const words = data.translation.split(' ');
+        const mix = [...words].sort(() => Math.random() - 0.5);
+        const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
+        const dataNew = [...mix];
+        dataNew.splice(random[0], 0, translation1);
+        dataNew.splice(random[1], 0, translation2);
+        dataNew.splice(random[1], 0, translation3);
+    
+        const exerciseData = {
+          type: 'zvok',
+          sentence: data.translation,
+          availableWords: dataNew,
+          resitev: data.statement
+        };
+    
+        return exerciseData;
+      };
+    
+      const fetchStavek5Exercise = async (uid: string) => {
+        console.log(uid)
+        const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch exercises');
+        }
+    
+        const data = await response.json();
+    
+    
+        const exerciseData = {
+          type: 'speech',
+          sentence: data.translation,
+          availableWords: []
+        };
+    
+        return exerciseData;
+      };
+    
 
   const generateExercises = async (uid: string) => {
     try {
@@ -132,6 +390,7 @@ const Exercises = () => {
   };
 
   const loadExercises = async (uid: string) => {
+    setIsLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/loadExercises?uid=${uid}&language=${language}`);
       if (response.ok) {
@@ -158,7 +417,7 @@ const Exercises = () => {
     }
   }
 
-  const checkAuthState = () => {
+    const checkAuthState = () => {
     auth.onAuthStateChanged(user => {
       if (user) {
         setUid(user.uid);
@@ -167,252 +426,48 @@ const Exercises = () => {
     });
   }
 
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    checkAuthState()
+    checkAuthState();
   }, []);
 
-  const fetchStavekExercise = async (uid: string) => {
-    console.log(uid)
-    const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercises');
-    }
-
-    const data = await response.json();
-    const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
-    if (!wordsResponse.ok) {
-      throw new Error('Failed to fetch words');
-    }
-    const wordsData = await wordsResponse.json();
+ 
+  
 
 
+  const [letter, setLetter] = useState("");
 
-    const response1 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
-    if (!response1.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord1 = (await response1.json()).translation;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLetter(getRandomLetter());
+    }, 1000);
 
-    const response2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
-    if (!response2.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord2 = (await response2.json()).translation;
-
-    const response3 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
-    if (!response3.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord3 = (await response3.json()).translation;
-
-    const besede = [generatedWord1, generatedWord2, generatedWord3];
-    const words = data.slovenianTranslation.split(' ');
-    const mix = [...words].sort(() => Math.random() - 0.5);
-
-    const combined = [...besede, ...mix];
-
-    const shuffled = combined.sort(() => Math.random() - 0.5);
-
-    const dataNew = [...shuffled];
-
-
-    const exerciseData = {
-      type: 'stavek',
-      sentence: data.translation,
-      availableWords: dataNew,
-      resitev: data.slovenianTranslation
+    return () => {
+      clearInterval(interval);
     };
+  }, []);
 
-    return exerciseData;
-  };
-
-  const fetchStavek2Exercise = async (uid: string) => {
-    const response = await fetch(`${BASE_URL}/generateWordOne?uid=${uid}`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercises');
+  useEffect(() => {
+    if (!isLoading) {
+      setLetter("");
     }
+  }, [isLoading]);
 
-    const data = await response.json();
-
-    const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
-    if (!wordsResponse.ok) {
-      throw new Error('Failed to fetch words');
-    }
-
-    const prevodResponse = await fetch(`${BASE_URL}/prevedi/${language}/${data.randomWord}`);
-    if (!prevodResponse.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const prevod = await prevodResponse.json();
-
-
-    const prevodResponse2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${data.randomWord}`);
-    if (!prevodResponse.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-
-    const prevodSlovenski = await prevodResponse2.json()
-
-    const wordsData = await wordsResponse.json()
-
-    const response1 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord}`);
-    if (!response1.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord1 = (await response1.json()).translation;
-
-    const response2 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord2}`);
-    if (!response2.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord2 = (await response2.json()).translation;
-
-    const response3 = await fetch(`${BASE_URL}/prevedi/${"sl"}/${wordsData.randomWord3}`);
-    if (!response3.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-    const generatedWord3 = (await response3.json()).translation;
-
-    const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevodSlovenski.translation];
-    const dataNewResitve = [wordsData.randomWord, wordsData.randomWord2, wordsData.randomWord3, data.randomWord]
-
-
-    const zipped = dataNew.map((value, i) => [value, dataNewResitve[i]]);
-
-    for (let i = zipped.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [zipped[i], zipped[j]] = [zipped[j], zipped[i]];
-    }
-
-
-    const [shuffledDataNew, shuffledDataNewResitve] = zipped.reduce(
-      ([dataNewAcc, dataNewResitveAcc], [value1, value2]) => {
-        return [
-          [...dataNewAcc, value1],
-          [...dataNewResitveAcc, value2]
-        ];
-      },
-      [[], []]
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+         <p className="letter flicker-animation">{letter}</p>
+ 
+        
+      </div>
     );
-    console.log("XXXXXXXXXXXXX")
-    console.log(shuffledDataNew);
-    console.log(shuffledDataNewResitve);
+  }
 
-    const exerciseData = {
-      type: 'beseda',
-      sentence: prevod.translation,
-      availableWords: shuffledDataNew,
-      resitve: shuffledDataNewResitve,
-      resitev: prevodSlovenski.translation
-    };
-
-    return exerciseData;
-  };
-
-  const fetchStavek3Exercise = async (uid: string) => {
-    const response = await fetch(`${BASE_URL}/slika?uid=${uid}`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercises');
-    }
-    const data = await response.json();
-
-    const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`);
-
-    if (!wordsResponse.ok) {
-      throw new Error('Failed to fetch words');
-    }
-
-    const prevodResponse = await fetch(`${BASE_URL}/prevedi/${language}/${data.beseda}`);
-    if (!prevodResponse.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-
-    const prevod = await prevodResponse.json();
-    const wordsData = await wordsResponse.json();
-    const generatedWord1 = wordsData.translation1;
-    const generatedWord2 = wordsData.translation2;
-    const generatedWord3 = wordsData.translation3;
-    const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevod.translation];
-    console.log(dataNew)
-
-    for (let i = dataNew.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [dataNew[i], dataNew[j]] = [dataNew[j], dataNew[i]];
-    }
-
-
-    const exerciseData = {
-      type: 'slika',
-      sentence: prevod.translation,
-      availableWords: dataNew,
-      pageURL: data.pageURL,
-    };
-
-    return exerciseData;
-  };
-
-  const fetchStavek4Exercise = async (uid: string) => {
-
-    const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercises');
-    }
-
-    const data = await response.json();
-    const wordsResponse = await fetch(`${BASE_URL}/generateWord?uid=${uid}&language=${language}`)
-    if (!wordsResponse.ok) {
-      throw new Error('Failed to fetch words');
-    }
-
-    const wordsData = await wordsResponse.json();
-    const translation1 = wordsData.translation1;
-    const translation2 = wordsData.translation2;
-    const translation3 = wordsData.translation3;
-
-    const words = data.translation.split(' ');
-    const mix = [...words].sort(() => Math.random() - 0.5);
-    const random = Array.from({ length: 2 }, () => Math.floor(Math.random() * mix.length));
-    const dataNew = [...mix];
-    dataNew.splice(random[0], 0, translation1);
-    dataNew.splice(random[1], 0, translation2);
-    dataNew.splice(random[1], 0, translation3);
-
-    const exerciseData = {
-      type: 'zvok',
-      sentence: data.translation,
-      availableWords: dataNew,
-      resitev: data.statement
-    };
-
-    return exerciseData;
-  };
-
-  const fetchStavek5Exercise = async (uid: string) => {
-    console.log(uid)
-    const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercises');
-    }
-
-    const data = await response.json();
-
-
-    const exerciseData = {
-      type: 'speech',
-      sentence: data.translation,
-      availableWords: []
-    };
-
-    return exerciseData;
-  };
-
+  
   const updateExerciseSolved = async (uid: string, exerciseId: number, document: string) => {
     try {
       const response = await fetch(`${BASE_URL}/trueExercise`, {
@@ -477,7 +532,7 @@ const Exercises = () => {
     }
     if (currentExerciseIndex == exercises.length - 1) {
       await updateExercisesSolved(uid, document)
-      navigate(`/lessoncomplete?uid=${uid}&document=${document}&language=${language}`);
+      // napiši še kodo da redirecta 
     }
     setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
     setCurrentExercise(exercises[currentExerciseIndex + 1])
@@ -487,22 +542,15 @@ const Exercises = () => {
 
 
 
+ 
 
-
-
-  if (isLoading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-      </div>
-    );
-  }
 
 
 
 
   return (
     <div>
+   
       <Container>
         <br />
         <Row className="align-items-center justify-content-center">

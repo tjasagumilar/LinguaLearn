@@ -1,0 +1,51 @@
+.container {
+    margin-top: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .styled-button {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .list-group {
+    margin-bottom: 20px;
+  }
+  
+  .heading {
+    margin-top: 20px;
+  }
+
+  .styled-button {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #007bff;
+    background-color: transparent;
+    color: #6389fa;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .styled-button.active {
+    background-color: #6389fa;
+    color: #fff;
+  }
+  
+  .styled-button:hover {
+    background-color: transparent;
+    color: #6389fa;
+  }
+
+  .volume-button {
+    margin-right: 10px;
+  }
