@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
 .jeziki-container {
     padding: 0;
     margin: 3% 15%;
@@ -6,25 +8,27 @@
 
 .dodaj-jezik {
     border-radius: 20px;
-    width: 115px !important;	
+    width: 115px !important;
     background: #2F5AED !important;
     border: none;
     margin-bottom: 10px;
+    animation: scaleIn 0.8s ease-in-out;
 }
 
-.dodaj-jezik:hover, .gumbi Button:hover {
+.dodaj-jezik:hover, .gumbi button:hover {
     background: rgba(47, 90, 237, 0.8) !important;
- }
+    animation: pulse 0.8s infinite;
+}
 
- .gumbi Button {
+.gumbi button {
     border-radius: 20px;
     width: 80px;
     background: #2F5AED;
     border: none;
     margin: 5px;
- }
+}
 
- .kartica {
+.kartica {
     background-color: #86A4FD;
     color: white;
     padding: 10px;
@@ -33,33 +37,66 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
- }
+    animation: slideIn 0.8s ease-in-out;
+}
 
- .kartica img  {
+.kartica img {
     width: 100%;
     border-radius: 10px;
- }
+}
 
- .zastava {
+.zastava {
     display: flex;
     justify-content: center;
- }
+}
 
- .podrobnosti {
+.podrobnosti {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
- }
+}
 
- .podrobnosti div {
+.podrobnosti div {
     font-weight: 600;
- }
+}
 
- .kartice-jezikov {
+.kartice-jezikov {
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
- }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
