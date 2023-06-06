@@ -9,6 +9,7 @@ import { BASE_URL } from "../../../api";
 const LessonComplete = () => {
   const [xp, setXp] = useState(0);
   const [pravilne, setPravilne] = useState(0);
+  const [nivo, setNivo] = useState('');
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -27,6 +28,7 @@ const LessonComplete = () => {
           .then(data => {
             setXp(data.xp);
             setPravilne(data.solvedRight);
+            setNivo(data.nivo);
 
           })
           .catch(error => {
@@ -53,7 +55,7 @@ const LessonComplete = () => {
       </Row>
       <Row>
         <Col>
-          <a href="/jeziki"><Button>Nadaljuj</Button></a>
+          <a href={`/vec?language=${lang}&nivo=${nivo}`}><Button>Nadaljuj</Button></a>
         </Col>
       </Row>
     </div>
