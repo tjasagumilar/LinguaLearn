@@ -16,44 +16,46 @@ const LessonComplete = () => {
   const document = queryParams.get('document');
   const lang = queryParams.get('language');
 
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
-        if (user) {
-            //setUid(user.uid);
-            
-            fetch(`${BASE_URL}/lessoncomplete?uid=${uid}&document=${document}&language=${lang}`)
-                .then(response => response.json())
-                .then(data => {
-                  setXp(data.xp);
-                  setPravilne(data.solvedRight);
-                  
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
+      if (user) {
+        //setUid(user.uid);
+
+        fetch(`${BASE_URL}/lessoncomplete?uid=${uid}&document=${document}&language=${lang}`)
+          .then(response => response.json())
+          .then(data => {
+            setXp(data.xp);
+            setPravilne(data.solvedRight);
+
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     });
-}, []);
+  }, []);
+
 
   return (
     <div className="complete-box">
       <Row className="col-12 col-sm-10 col-md-8 col-lg-5">
         <Col>
-        <img src={slika}></img>
+          <img src={slika}></img>
         </Col>
       </Row>
       <Row>
-        <Col className="bravo">Bravo!</Col>
+        <Col className="bravo col-12"><h3>Bravo!<span className="uspesno"> Uspešno ste rešili nalogo!</span></h3> </Col>
       </Row>
-      <Row >
-        <Col>{xp} xp</Col>
-        <Col>{pravilne} / 10</Col>
+      <Row className="col-12">
+        <Col className="xp col-12 col-sm-3">{xp} xp</Col>
+        <Col className="pravilne col-12 col-sm-3">{pravilne} / 10</Col>
       </Row>
-     <Row>
-      <Col>
-      <a href="/jeziki"><Button>Nadaljuj</Button></a>
-      </Col>
-     </Row>
+      <Row>
+        <Col>
+          <a href="/jeziki"><Button>Nadaljuj</Button></a>
+        </Col>
+      </Row>
     </div>
 
   );
