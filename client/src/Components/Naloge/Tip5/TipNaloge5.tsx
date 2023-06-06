@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Exercise } from '../Exercises/Exercises';
 import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap';
-import jsonIcon from '../Tip1/female-avatar.json';
+import jsonIcon from './110053-man-talking.json';
 import Lottie from 'lottie-react';
 import { useLocation } from 'react-router-dom';
 import { BsFillVolumeUpFill } from 'react-icons/bs';
 import { BASE_URL } from '../../../api';
 import './TipNaloge5.css'
+import { FaMicrophone } from 'react-icons/fa'
+import { FaCheckCircle } from 'react-icons/fa';
+import { FaTimesCircle } from 'react-icons/fa';
 
 
 interface TipNaloge5Props {
@@ -211,16 +214,16 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
     const handleClickActive = () => {
         if (!active) {
-            startListening(); 
+            startListening();
         } else {
-            SpeechRecognition.stopListening(); 
+            SpeechRecognition.stopListening();
         }
-        setActive(!active); 
+        setActive(!active);
     };
-    
+
     return (
         <form onSubmit={(e) => e.preventDefault()}>
-         
+
             <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
                 <Row className="align-items-center">
                     <Col md={6}>
@@ -248,9 +251,14 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
                     </Col>
                 </Row>
 
-        
+                <Row className="mt-10 align-items-center">
+                    <Col xs={6} md={3} lg={3} xl={3}>
+                        <div id="mic-button" className={`mic-button ${active ? 'active' : ''}`} onClick={handleClickActive}>
+                            {active ? <FaMicrophone style={{ fontSize: '64px', color: 'orange' }} /> : <FaMicrophone style={{ fontSize: '64px', color: 'orange' }} />}
+                        </div>
 
-
+                    </Col>
+                </Row>
 
                 <audio ref={audioRef} style={{ display: 'none' }}>
                     <source src={audioSource} type="audio/mpeg" />
@@ -260,8 +268,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
 
 
-
-             {/*   <Row className="mt-2">
+                {/*   <Row className="mt-2">
                     <button onClick={startListening}>Start</button>
                     <button onClick={SpeechRecognition.stopListening}>Stop</button>
                     <br></br>  <br></br>
@@ -272,24 +279,25 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
 
 
-                  
-
 
             </Container>
 
-            <div className="fixed-bottom">
+
+         
+            <div className="fixed-bottom pb-3">
                 <div className="container-fluid">
-                    <div className="upper-line"></div>
+                <div className="upper-line"></div>
                     <Row className="align-items-center">
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
-                            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
+                            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center mb-2">
                                 <span className="btn-text">Preskoči</span>
                             </Button>
                         </Col>
-                        <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-                            <Button onClick={handleCheck} className="btn first1 w-60 d-flex align-items-center justify-content-center">
+                        <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-2 "></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2">
+                            <Button onClick={handleCheck} className="btn first1 w-40 d-flex align-items-center justify-content-center"
+                                disabled={correctIndexes.length === 0}>
                                 <span className="btn-text">Preveri</span>
                             </Button>
                         </Col>
@@ -302,9 +310,6 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
 
 
 
-            <div className={`mic-button ${active ? 'active' : ''}`} onClick={handleClickActive}>
-      {active ? 'Listening...' : 'Press to Talk'}
-    </div>
 
 
 
@@ -315,12 +320,22 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
                 dialogClassName="custom-modal-dialog"
                 contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+                <Modal.Header closeButton style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                    <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačna izgovorjava! '}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
-                </Modal.Body>
+                <Modal.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+  {isCorrect ? (
+    <>
+      <FaCheckCircle size={70} color="green" /> <br/><br/>
+      <span>Izgovorjava pravilna</span>
+    </>
+  ) : (
+    <>
+     <FaTimesCircle size={70} color="red" /> <br/><br/>
+    <span>Izgovorjava ni bila pravilna</span>
+  </>
+  )}
+</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Zapri
