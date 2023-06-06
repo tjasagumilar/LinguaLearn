@@ -49,3 +49,7 @@ nav .container {
 .navbar a  {
     width: 100%;
 }
+
+nav {
+    animation: slideIn 1.0s ease;
+}

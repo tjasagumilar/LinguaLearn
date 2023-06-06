@@ -5,6 +5,7 @@
     background-color: #6389FA;
     font-family: 'Outfit', sans-serif;
     color: white;
+    animation: slideIn 1.0s ease;
 }
 
 .head {
