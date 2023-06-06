@@ -93,3 +93,7 @@
 .modal-odstrani:hover {
     background-color: rgba(47, 90, 237, 0.8);
 }
+.progress-container2 {
+    width: 10%; 
+    margin: auto;
+}

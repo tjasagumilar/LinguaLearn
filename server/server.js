@@ -214,6 +214,32 @@ app.get('/pridobiXp', (req, res) => {
     });
 });
 
+// pridobi dummy xp in tezavnost
+app.get('/pridobiXpDummy', (req, res) => {
+  const uid = req.query.uid;
+  const language = req.query.language;
+
+  const userRef = dbFire.collection('users').doc(uid);
+
+  userRef.collection("jeziki")
+    .where("jezik", "==", language)
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const xpDummy = doc.data().xpDummy;
+        const tezavnost = doc.data().tezavnost;
+        res.json({xpDummy: xpDummy, tezavnost: tezavnost});
+      } else {
+        console.log("No document found with the specified language.");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+});
+
 //PRIDOBITEV LESTVICE IZ DB
 app.get('/leaderboard', (req, res) => {
   const language = req.query.language;

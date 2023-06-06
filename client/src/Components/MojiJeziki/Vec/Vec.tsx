@@ -7,12 +7,17 @@ import Progress from "../Progress/Progress";
 import LeaderBoard from "../../LeaderBoard/LeaderBoard";
 import { Routes, Route } from 'react-router-dom';
 import { BASE_URL } from "../../../api";
+import { FaFlag } from 'react-icons/fa';
+import { ProgressBar } from 'react-bootstrap';
 
 
 const Vec = () => {
     const [show, setShow] = useState(false);
     const [xp, setXP] = useState(0); // State to store the xp value
     const [jeziki, setJeziki] = useState([]);
+    const [xpDummy, setXpDummy] = useState<number>(0);
+    const [difficulty, setDifficulty] = useState<string>()
+ 
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -28,6 +33,25 @@ const Vec = () => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                fetch(`${BASE_URL}/pridobiXpDummy?uid=${user.uid}&language=${language}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setXpDummy(data.xpDummy);
+                        setDifficulty(data.tezavnost)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
+    }, [xpDummy, difficulty])
+
+  
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -105,7 +129,9 @@ const Vec = () => {
 
     return (
         <div>
+       
             <div className="podatki-container">
+                
                 <Row>
                     <Col md>
                         <div>
@@ -116,16 +142,24 @@ const Vec = () => {
                 <Row>
                     <Col md>
                         <div className="podatki-jezik">
-                            <div> {getLanguageName(language)} <br /> {nivo}
+                            <div> {getLanguageName(language)} <br /> {nivo} 
                                 <Progress />
+                                Stopnja: {difficulty}
                             </div>
+                            
                         </div>
+                        
                     </Col>
                 </Row>
+                <div className="progress-container2">
+            
+    <ProgressBar striped animated now={xpDummy} max={300} />
+    <br></br>
+</div>
                 <Row>
                     <Col md>
                         <div>
-                            <a href={`/generirajNaloge?language=${language}`}><Button className="odstrani-jezik">Naloge</Button></a>
+                            <a href={`/generirajNaloge?language=${language}`}><Button className="odstrani-jezik">Naloge </Button></a>
                         </div>
                     </Col>
                 </Row>
@@ -155,8 +189,15 @@ const Vec = () => {
                         </div>
                     </Col>
                 </Row>
+           
+
             </div>
+         
+
             <div className="napredek-container">
+            
+
+
             </div>
             <Modal show={show} onHide={handleClose} animation={false} >
                 <Modal.Header closeButton>
@@ -172,6 +213,7 @@ const Vec = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+           
         </div>
     );
 }
