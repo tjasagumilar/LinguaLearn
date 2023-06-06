@@ -1,21 +1,29 @@
-Ime Projekta
+LinguaLearn
 
-Kratek plot v eni vrstici, ki povzame bistvo rešitve
+LinguaLearn je spletna aplikacija za učenje jezikov, ki uporabnikom z interaktivnimi vajami in viri pomaga izboljšati znanje jezikov.
 
 Leto izdelave: 2022
 
-Avtor1 Priimek1
-Avtor2 Priimek2
-Avtor3 Priimek3
-Avtor4 Priimek4
+Tjaša Gumilar
+Miha Plemenitaš
+Teodor Vrhovnik
 
-Domača stran: https://url.si/
-Vir podatkov: https://url.si/
-...
-Koda: https://git.com/projekt
+Domača stran: https://url.si/ (dopolni*)
+Vir podatkov: https://url.si/ (dopolni*)
 
-Kategorizacija: celovita informacijska rešitev, mobilna aplikacija, namizna aplikacija, spletna aplikacija, predstavitvena spletna stran
+Koda: https://github.com/tjasagumilar/LinguaLearn.git
 
-Oznake: OdprtiPodatki, ReactJS, MongoDB, NodeJS, Python, Scrum, AgilenRazvoj, GitHub, UporabaAI, Express, Docker, Nginx, REST...
+Kategorizacija: Spletna aplikacija
 
-Opis projekta v nekaj odstavkih / vrsticah (cca 150 besed)
+Oznake: OdprtiPodatki, ReactJS, ReactTS, NodeJS, Python, AgilenRazvoj, GitHub, UporabaAI, Express, Docker, REST...
+
+Opis projekta:
+LinguaLearn je inovativna spletna aplikacija, ki je zasnovana z namenom pomagati uporabnikom izboljšati svoje jezikovne spretnosti. S pomočjo široke palete interaktivnih vaj in virov omogoča uporabnikom učinkovito učenje jezikov na enostaven, zabaven in prilagodljiv način.
+Aplikacija LinguaLearn ponuja bogato zbirko vaj, ki pokrivajo različne jezikovne vidike, kot so besedišče, slovnica, poslušanje, govorjenje in pisanje. Vsaka vaja je interaktivna in prilagojena uporabnikovemu jezikovnemu nivoju, kar omogoča individualizirano učenje in napredovanje.
+Poleg vaj aplikacija LinguaLearn nudi tudi različne vire, kot so učni materiali, jezikovni priročniki, avdio posnetki in video lekcije, ki dodatno podpirajo uporabnike pri njihovem jezikovnem napredku.
+Zahvaljujoč uporabniku prijaznemu vmesniku in naprednim funkcionalnostim, LinguaLearn omogoča prilagajanje učnih načrtov in sledenje napredku, kar omogoča uporabnikom, da dosežejo svoje jezikovne cilje na učinkovit in motivacijski način.
+Ne glede na raven jezikovnega znanja in cilje uporabnika, LinguaLearn je zanesljiv partner pri njihovem učenju jezikov ter zagotavlja odlično izkušnjo in napredek v jezikovni kompetenci.
+
+
+
+
