@@ -135,22 +135,22 @@ return (
         Your browser does not support the audio element.
       </audio>
 
-<Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
+<Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '1200px', minHeight: '70vh' }}>
   <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
-    <Col md={6} xl={12} className="text-center">
+    <Col md={8} xl={12} sm={8} lg={8} className="text-center">
       <div className="myHeading2">Kaj je na sliki?</div>
     </Col>
   </Row>
 
   <Row className="justify-content-center w-100 mb-4">
-    <Col md={12} xl={12} sm={12} lg={12} className="text-center">
+    <Col md={12} xl={9} sm={12} lg={9} className="text-center">
       <Image src={url} alt="Generated Image" fluid className="image-styled" />
     </Col>
   </Row>
 
       {availableWords.map((word, index) => (
         <Row className="justify-content-center w-100 mb-4 mt-3" key={index}>
-          <Col md={8} xl={8} className="text-center">
+          <Col md={5} xl={5} sm={5} lg={5} className="text-center">
             <span
               onClick={() => handleWordClickAvailable(index)}
               className={`btnfirst3  ${selectedWordIndex === index ? 'isSelected' : ''}`}
@@ -163,7 +163,7 @@ return (
         </Row>
       ))}
     </Container>
-
+<br></br><br></br><br></br><br></br>
 
 
       <div className="fixed-bottom">
@@ -171,14 +171,14 @@ return (
           <div className="upper-line"></div>
           <Row className="align-items-center">
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
               <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
                 <span className="btn-text">Preskoči</span>
               </Button>
             </Col>
             <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-              <Button type="submit" className="btn first w-60 d-flex align-items-center justify-content-center"
+              <Button type="submit" className="btn first1 w-60 d-flex align-items-center justify-content-center"
               disabled={selectedWordIndex == null}>
                 <span className="btn-text">Preveri</span>
               </Button>
@@ -190,23 +190,23 @@ return (
 
 
       <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        dialogClassName="custom-modal-dialog"
-        contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.sentence}"`}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Zapri
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      show={showModal}
+      onHide={handleCloseModal}
+      dialogClassName="custom-modal-dialog1"
+      contentClassName={isCorrect ? "custom-modal-content-correct1" : "custom-modal-content-wrong1"}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.sentence}"`}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Zapri
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
     </form>
   );

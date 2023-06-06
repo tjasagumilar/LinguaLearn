@@ -307,7 +307,8 @@ const Exercises = () => {
       type: 'beseda',
       sentence: prevod.translation,
       availableWords: shuffledDataNew,
-      resitve: shuffledDataNewResitve
+      resitve: shuffledDataNewResitve,
+      resitev: prevodSlovenski.translation
     };
 
     return exerciseData;
@@ -349,7 +350,7 @@ const Exercises = () => {
       type: 'slika',
       sentence: prevod.translation,
       availableWords: dataNew,
-      pageURL: data.pageURL
+      pageURL: data.pageURL,
     };
 
     return exerciseData;
@@ -558,19 +559,20 @@ const Exercises = () => {
       <Modal
         show={showConfirmation}
         onHide={() => handleConfirmation(false)}
-        dialogClassName="modal-footer-sticky"
+        dialogClassName="custom-modal-dialog"
       >
         <Modal.Header closeButton>
           <Modal.Title>Ali ste prepričani, da želite zapustiti stran?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Ves napredek v tej seji bo izgubljen.</Modal.Body>
+        <Modal.Body>Vaš napredek bo izgubljen.</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleConfirmation(false)}>
-            Ne
-          </Button>
-          <Button variant="primary" onClick={() => handleConfirmation(true)}>
-            Da
-          </Button>
+        <Button onClick={() => handleConfirmation(false)} className="btnEx btn-sm">
+  Ne
+</Button>
+<Button onClick={() => handleConfirmation(true)} className="btnEx btn-sm">
+  Da
+</Button>
+
         </Modal.Footer>
       </Modal>
     </div>

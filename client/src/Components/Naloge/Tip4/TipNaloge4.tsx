@@ -124,6 +124,10 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
         }
     };
 
+    const handleSkip = () => {
+        setShowModal(true);
+      };
+
 
 
 
@@ -136,26 +140,27 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                     </Col>
                 </Row>
                 <Row className="mt-3 align-items-center">
-                    <Col xs={6} md={3} lg={3} xl={3}>
-                        <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
-                    </Col>
-                    <Col xs={6} md={9} lg={9} xl={9}>
-                        <div className="bubble d-flex justify-content-between">
-                            <Button
-                                onClick={() => audioRef.current && audioRef.current.play()}
-                                className="buttonZvok mb-3 custom-button"
-                            >
-                                <BsFillVolumeUpFill style={{ fontSize: '66px', color: 'blue' }} />
-                            </Button>
-                            <Button
-                                onClick={handleHalfSpeed}
-                                className="buttonZvok mb-3 custom-button"
-                            >
-                                <GiSeaTurtle size={66} color="blue" />
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
+    <Col xs={5} md={3} lg={3} xl={3}>
+        <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
+    </Col>
+    <Col xs={7} md={6} lg={6} xl={6}>
+        <div className="bubble d-flex justify-content-between">
+            <Button
+                onClick={() => audioRef.current && audioRef.current.play()}
+                className={`buttonZvok mb-3 custom-button ${window.innerWidth <= 768 ? 'icon-small' : 'icon-large'}`}
+            >
+                <BsFillVolumeUpFill style={{ color: 'blue' }} />
+            </Button>
+            <Button
+                onClick={handleHalfSpeed}
+                className={`buttonZvok mb-3 custom-button ${window.innerWidth <= 768 ? 'icon-small' : 'icon-large'}`}
+            >
+                <GiSeaTurtle color="blue" />
+            </Button>
+        </div>
+    </Col>
+</Row>
+
 
 
 
@@ -209,14 +214,14 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                     <div className="upper-line"></div>
                     <Row className="align-items-center">
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-                            <Button className="btn first w-60 d-flex align-items-center justify-content-center">
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+                            <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
                                 <span className="btn-text">Preskoči</span>
                             </Button>
                         </Col>
                         <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-                            <Button onClick={handleCheck} className="btn first w-60 d-flex align-items-center justify-content-center"
+                            <Button onClick={handleCheck} className="btn first1 w-60 d-flex align-items-center justify-content-center"
                             disabled={selectedWords.length === 0}>
                                 <span className="btn-text">Preveri</span>
                             </Button>
@@ -235,23 +240,23 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
 
             <Modal
-                show={showModal}
-                onHide={handleCloseModal}
-                dialogClassName="custom-modal-dialog"
-                contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Zapri
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+      show={showModal}
+      onHide={handleCloseModal}
+      dialogClassName="custom-modal-dialog1"
+      contentClassName={isCorrect ? "custom-modal-content-correct1" : "custom-modal-content-wrong1"}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.sentence}"`}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Zapri
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
 
 

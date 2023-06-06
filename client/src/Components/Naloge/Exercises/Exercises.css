@@ -46,3 +46,17 @@
   .text-gray {
     color: gray;
   }
+  .btnEx {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    width: auto; 
+  }
+  
+  .btnEx:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  

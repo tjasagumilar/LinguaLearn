@@ -26,27 +26,8 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-  const [audioSource, setAudioSource] = useState<string>(`${BASE_URL}/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
-  const audioRef = useRef<HTMLAudioElement>(null);
 
 
-  const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.load();
-      audioRef.current.play();
-    }
-  }
-
-  useEffect(() => {
-    if (selectedWordIndex === null || !availableWords[selectedWordIndex]) return;
-
-    const word = availableWords[selectedWordIndex];
-    const newAudioSource = `${BASE_URL}/tts?tts=${encodeURIComponent(word)}&language=${language}`;
-
-    setAudioSource(newAudioSource);
-    playAudio();
-  }, [selectedWordIndex, language, availableWords]);
   
   
 
@@ -187,10 +168,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     <form onSubmit={handleSubmit}>
 
       
-<audio ref={audioRef} style={{ display: 'none' }}>
-        <source src={audioSource} type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
+
 
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
 
@@ -228,7 +206,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
           <div className="upper-line"></div>
           <Row className="align-items-center">
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
               <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
                 <span className="btn-text">Preskoči</span>
               </Button>
@@ -248,25 +226,24 @@ type="submit"
         </div>
       </div>
 
-
       <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        dialogClassName="custom-modal-dialog"
-        contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {isCorrect ? 'Pravilno!' : `Poizkusite znova`}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Zapri
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      show={showModal}
+      onHide={handleCloseModal}
+      dialogClassName="custom-modal-dialog1"
+      contentClassName={isCorrect ? "custom-modal-content-correct1" : "custom-modal-content-wrong1"}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.resitev}"`}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Zapri
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
     </form>
   );

@@ -65,7 +65,8 @@ button.btn.first1 {
   padding: 0.5em 4em !important; 
   border-radius: 2em !important; 
   background-color: #6389fa;
-  color:white
+  color:white;
+  
 }
 
 button.btn.first1p:hover {
@@ -95,7 +96,7 @@ button.btn.first1:hover {
   font-size: 1.3em;  
   transition: transform 0.2s;
   border: 3px solid #d6d1d1;
-  background-color: white !important;
+  background-color: rgb(255, 255, 255) !important;
   color: black;
   border-radius: 15px; 
   font-weight: normal !important;
@@ -128,7 +129,7 @@ button.btn.first1:hover {
   height: 100%;
 }
 
-.custom-modal-dialog {
+.custom-modal-dialog1 {
   width: 100%;
   max-width: none !important;
   margin: auto;
@@ -137,13 +138,16 @@ button.btn.first1:hover {
 }
 
 
-.custom-modal-content-correct {
-  background-color: rgb(255, 255, 255);
-  border: 2px solid rgb(0, 38, 255);
+.custom-modal-content-correct1 {
+  background-color: #6389fa;
+  border: 2px solid orange;
+  color: white;
+
 }
 
-.custom-modal-content-wrong {
-  background-color: rgb(255, 255, 255);
-  border: 2px solid rgb(255, 3, 3);
+.custom-modal-content-wrong1 {
+  background-color: #fc0000;
+  border: 2px solid orange;
+  color: white;
 
 }

@@ -70,19 +70,24 @@
     box-shadow: 0 0 40px 40px #6389fa inset !important;
     color:white
   }
-  
-  
+  @media (max-width: 768px) {
+    .my-badge-tip-naloge1_1 {
+      font-size: 15px !important;
+    }
+  }
+
+
   
   .my-badge-tip-naloge1_1 {
     cursor: pointer;
     margin: 3px;
-    font-size: 1.1em; 
-    padding: 8px 12px; 
+    font-size: 1.3em;  
     transition: transform 0.2s;
-    border: 2px solid gray;
-    background-color: white !important;
+    border: 3px solid #d6d1d1;
+    background-color: rgb(255, 255, 255) !important;
     color: black;
     border-radius: 15px; 
+    font-weight: normal !important;
   }
   
   
@@ -132,4 +137,14 @@
     border: 2px solid rgb(255, 3, 3);
   
   }
+  .icon-large {
+    font-size: 66px;
+  }
   
+  .icon-medium {
+    font-size: 50px;
+  }
+  
+  .icon-small {
+    font-size: 40px;
+  }

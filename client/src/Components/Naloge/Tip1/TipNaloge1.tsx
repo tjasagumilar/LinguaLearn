@@ -171,7 +171,7 @@ return (
               onClick={() => audioRef.current && audioRef.current.play()}
               className="buttonZvok mb-3 custom-button"
             >
-              <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'orange' }} />
+              <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'blue' }} />
             </Button>
             <div className="text-container">
               <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
@@ -217,31 +217,30 @@ return (
 
 
     </Container>
-
     <div className="fixed-bottom">
-      <div className="container-fluid">
-        <div className="upper-line"></div>
-        <Row className="align-items-center">
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
-              <span className="btn-text">Preskoči</span>
-            </Button>
-          </Col>
-          <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
-          <Button 
-  onClick={handleCheck} 
-  className="btn first1 w-60 d-flex align-items-center justify-content-center"
-  disabled={selectedWords.length === 0}
->
-  <span className="btn-text">Preveri</span>
-</Button>
-          </Col>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
-        </Row>
-      </div>
-    </div>
+  <div className="container-fluid">
+    <div className="upper-line"></div>
+    <Row className="align-items-center">
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+  <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+    <span className="btn-text">Preskoči</span>
+  </Button>
+</Col>
+      <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0"></Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2">
+        <Button 
+          onClick={handleCheck} 
+          className="btn first1 w-60 d-flex align-items-center justify-content-center py-2 px-1"
+          disabled={selectedWords.length === 0}
+        >
+          <span className="btn-text">Preveri</span>
+        </Button>
+      </Col>
+      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0"></Col>
+    </Row>
+  </div>
+</div>
 
 
 
@@ -254,8 +253,8 @@ return (
     <Modal
       show={showModal}
       onHide={handleCloseModal}
-      dialogClassName="custom-modal-dialog"
-      contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
+      dialogClassName="custom-modal-dialog1"
+      contentClassName={isCorrect ? "custom-modal-content-correct1" : "custom-modal-content-wrong1"}
     >
       <Modal.Header closeButton>
         <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
