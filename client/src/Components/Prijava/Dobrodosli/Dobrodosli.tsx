@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import './Dobrodosli.css';
+import { Button } from "react-bootstrap";
 
 const Dobrodosli = () => {
 
@@ -16,7 +18,7 @@ const Dobrodosli = () => {
                 <div className="racun">
                     <div>Še nimate računa?</div>
                     <div className="ustvari-button">
-                        <Link to="/registracija"><button>Ustvarite račun</button></Link>
+                        <Link to="/registracija"><Button>Ustvarite račun</Button></Link>
                     </div>
                 </div>
             </div>
@@ -25,20 +27,19 @@ const Dobrodosli = () => {
     } else {
         return (
             <div className="dobrodosli-box">
-            <div className="dobrodosli">
-                Dobrodošli na LinguaLearn!
-            </div>
-            <div className="pridruzitev">
-                Pridružite se naši skupnosti in začnite svojo pot v večjezični svet.
-            </div>
-            <div className="racun">
-
-                <div>Že imate račun?</div>
-                <div className="ustvari-button">
-                    <Link to="/prijava"><button>Prijavite se</button></Link>
+                <div className="dobrodosli">
+                    Dobrodošli na LinguaLearn!
+                </div>
+                <div className="pridruzitev">
+                    Pridružite se naši skupnosti in začnite svojo pot v večjezični svet.
+                </div>
+                <div className="racun">
+                    <div>Že imate račun?</div>
+                    <div className="ustvari-button">
+                        <Link to="/prijava"><Button>Prijavite se</Button></Link>
+                    </div>
                 </div>
             </div>
-        </div>
 
         );
     }

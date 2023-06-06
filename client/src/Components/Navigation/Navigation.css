@@ -12,6 +12,7 @@
     font-family: "Outfit", sans-serif;
     white-space: nowrap;
     transition: color 0.3s ease; /* Add transition effect */
+    
 }
 
 .nav-link:hover {
@@ -45,6 +46,6 @@ nav .container {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-.basic-navbar-nav {
-    float: right;
+.navbar a  {
+    width: 100%;
 }

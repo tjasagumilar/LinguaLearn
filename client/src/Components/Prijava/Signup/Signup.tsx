@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorText from "../../ErrorText/ErrorText";
-import "./Signup.css";
 import { BASE_URL } from '../../../api';
+import { Button } from 'react-bootstrap';
 
 const Signup = () => {
     const [username, setUsername] = useState<string>('');
@@ -74,7 +74,7 @@ const Signup = () => {
     return (
         <div className="login-form">
             <div className="prijavise">
-                Ustvarite račun
+                Registracija
             </div>
             <div className="login-inputs">
                 <div className="vnosna-polja">
@@ -88,7 +88,8 @@ const Signup = () => {
                     {errors.confirm && <span className="error">{errors.confirm}</span>}
                 </div>
                 <div className="login-button">
-                    <button onClick={() => handleSubmit()}>Ustvari</button>
+                    <Button onClick={() => handleSubmit()}>Ustvari</Button>
+                    <a href="/prijava" className="brez-racuna">Že imaš račun?</a>
                 </div>
                 <ErrorText error={errors.main} />
             </div>
