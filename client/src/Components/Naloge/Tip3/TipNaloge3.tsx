@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { Container, Row, Col, Button, Modal, Badge, Image } from 'react-bootstrap';
 import './TipNaloge3.css';
 import { BASE_URL } from '../../../api';
+import { FaCheckCircle } from 'react-icons/fa';
+import { FaTimesCircle } from 'react-icons/fa';
 
 interface TipNaloge3Props {
   exercise: Exercise;
@@ -143,10 +145,10 @@ return (
   </Row>
 
   <Row className="justify-content-center w-100 mb-4">
-    <Col md={12} xl={9} sm={12} lg={9} className="text-center">
-      <Image src={url} alt="Generated Image" fluid className="image-styled" />
-    </Col>
-  </Row>
+  <Col md={12} xl={7} sm={9} lg={9} className="text-center">
+    <Image src={url} alt="Generated Image" className="image-styled" style={{ width: '60%', maxWidth: '400px' }} />
+  </Col>
+</Row>
 
       {availableWords.map((word, index) => (
         <Row className="justify-content-center w-100 mb-4 mt-3" key={index}>
@@ -166,18 +168,18 @@ return (
 <br></br><br></br><br></br><br></br>
 
 
-      <div className="fixed-bottom">
+<div className="fixed-bottom pb-3">
         <div className="container-fluid">
           <div className="upper-line"></div>
           <Row className="align-items-center">
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
             <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
-              <Button onClick={handleSkip} className="btn first w-60 d-flex align-items-center justify-content-center">
+              <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
                 <span className="btn-text">Preskoči</span>
               </Button>
             </Col>
-            <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-0 "></Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center">
+            <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-2 "></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2">
               <Button type="submit" className="btn first1 w-60 d-flex align-items-center justify-content-center"
               disabled={selectedWordIndex == null}>
                 <span className="btn-text">Preveri</span>
@@ -190,23 +192,34 @@ return (
 
 
       <Modal
-      show={showModal}
-      onHide={handleCloseModal}
-      dialogClassName="custom-modal-dialog1"
-      contentClassName={isCorrect ? "custom-modal-content-correct1" : "custom-modal-content-wrong1"}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {isCorrect ? 'Pravilno!' : `Pravilen odgovor je "${exercise.sentence}"`}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
-          Zapri
-        </Button>
-      </Modal.Footer>
-    </Modal>
+                show={showModal}
+                onHide={handleCloseModal}
+                dialogClassName="custom-modal-dialog"
+                contentClassName={isCorrect ? "custom-modal-content-correct" : "custom-modal-content-wrong"}
+            >
+                <Modal.Header closeButton style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                    <Modal.Title>{isCorrect ? 'Pravilen odgovor!' : 'Napačen odgovor! '}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+  {isCorrect ? (
+    <>
+      <FaCheckCircle size={70} color="green" /> <br/><br/>
+      <span>Čestitke za pravilen odgovor</span>
+    </>
+  ) : (
+    <>
+     <FaTimesCircle size={70} color="red" /> <br/><br/>
+     <span>Pravilen odgovor je "{exercise.sentence}"</span>
+
+  </>
+  )}
+</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Zapri
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
     </form>
   );

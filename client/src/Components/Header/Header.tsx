@@ -59,7 +59,7 @@ const Header = () => {
                         <Col className="pozdravljeni col-12 col-lg-5">
                             <h1>Vstopi v svet večjezičnosti!</h1>
                             <p>Pridruži se naši skupnosti učenja jezikov!</p>
-                            <a href="/registracija"><Button>Začni</Button></a>
+                            <a className="zacni-button" href="/registracija"><Button>Začni</Button></a>
                         </Col>
                         <Col className="image col-12 col-lg-5">
                             <img src={slika}></img>

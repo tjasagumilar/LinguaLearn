@@ -5,6 +5,18 @@
     padding: 0;
     margin: 5% 15%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.541);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .napredek-container {
@@ -38,10 +50,32 @@
     border: none;
     margin-top: 0;
     margin-bottom: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .odstrani-jezik:hover {
     background: #fa9746d2;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .modal-zapri {
