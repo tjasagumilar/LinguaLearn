@@ -34,37 +34,43 @@ const Header = () => {
         });
     }, []);
 
-
     if (uporabnik) {
         return (
-            <div className="head">
-                <Container className="glava">
-                    <Row>
-                        <Col className="pozdravljeni">
+            <div className="header-box col-12">
+                <div className="head col-12">
+                    <Row className="col-10">
+                        <Col className="pozdravljeni col-12 col-lg-5">
                             <h1>Pozdravljeni, {displayName}</h1>
                             <p> Nadaljujte svoje jezikovno potovanje!</p>
                         </Col>
-                        <Col><img src={slika}></img></Col>
+                        <Col className="image col-12 col-lg-5">
+                            <img src={slika}></img>
+                        </Col>
                     </Row>
-                </Container>
+                </div>
             </div>
         );
     } else {
+
         return (
-            <div className="head">
-                <Container className="glava">
-                    <Row>
-                        <Col className="pozdravljeni">
-                            <h1>Vstopi v svet <br /> večjezičnosti!</h1>
+            <div className="header-box col-12">
+                <div className="head col-12">
+                    <Row className="col-10">
+                        <Col className="pozdravljeni col-12 col-lg-5">
+                            <h1>Vstopi v svet večjezičnosti!</h1>
                             <p>Pridruži se naši skupnosti učenja jezikov!</p>
                             <a href="/registracija"><Button>Začni</Button></a>
                         </Col>
-                        <Col><img src={slika}></img></Col>
+                        <Col className="image col-12 col-lg-5">
+                            <img src={slika}></img>
+                        </Col>
                     </Row>
-                </Container>
+                </div>
             </div>
         );
+
     }
+
 };
 
 
