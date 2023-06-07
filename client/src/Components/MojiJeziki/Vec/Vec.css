@@ -35,7 +35,6 @@
     text-align: center;
 }
 
-
 .gumb-naloge,
 .gumb-besede {
     width: 100px !important;
@@ -57,15 +56,7 @@
 .gumbi-col-naloge,
 .gumbi-col-besede {
     display: flex;
-}
-
-.gumbi-col-naloge {
-    justify-content: flex-end;
-    padding: 0;
-}
-
-.gumbi-col-besede {
-    justify-content: flex-start;
+    justify-content: center;
     padding: 0;
 }
 
@@ -81,20 +72,27 @@
     transform: scale(1.1);
 }
 
+.odstrani-jezik {
+    font-family: 'Outfit', sans-serif;
+}
+
 .modal-zapri {
+    width: 100px;
     border-radius: 20px;
-    background-color: gray;
+    background-color: #86A4FD;
     border: none;
 }
 
+
 .modal-odstrani {
+    width: 100px;
     border-radius: 20px;
     background: #fa9746d2;
     border: none;
 }
 
 .modal-odstrani:hover {
-    background-color: rgba(47, 90, 237, 0.8);
+    background-color: #fa9746;
 }
 
 .progress-container2 {
@@ -105,10 +103,8 @@
 }
 
 @media (max-width: 320px) {
-
     .gumbi-col-naloge,
     .gumbi-col-besede {
         justify-content: center;
     }
-
 }

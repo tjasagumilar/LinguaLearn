@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './LeaderBoard.css';
-import { Button, Col, Modal, Row } from "react-bootstrap";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { auth, firestore } from "../../Config/firebase";
-import Progress from "../MojiJeziki/Progress/Progress";
 import { BASE_URL } from '../../api';
 
 interface LeaderboardEntry {
@@ -11,10 +9,9 @@ interface LeaderboardEntry {
     xp: number;
 }
 
-
 const LeaderBoard = () => {
     const [xp, setXP] = useState(0);
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState<any>(null);
     const [photoURL, setPhotoURL] = useState('');
     const [username, setUsername] = useState('');
     const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
@@ -23,7 +20,57 @@ const LeaderBoard = () => {
     const queryParams = new URLSearchParams(location.search);
     const language = queryParams.get('language');
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setCurrentUser(user);
+                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setPhotoURL(require(`../../Assets/${data.slika}`));
+                        setUsername(data.username);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                fetch(`${BASE_URL}/pridobiXpDummy?uid=${user.uid}&language=${language}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setXP(data.xpDummy);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
+    }, [language]);
+
+    useEffect(() => {
+        if (language) {
+            const leaderboardRef = firestore.collection(`leaderboard${language}`);
+
+            leaderboardRef.orderBy('xp', 'desc')
+                .get()
+                .then(snapshot => {
+                    const data: LeaderboardEntry[] = [];
+                    snapshot.forEach(doc => {
+                        const entry = doc.data() as LeaderboardEntry;
+                        data.push(entry);
+                    });
+                    setLeaderboardData(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [language]);
 
     function getLanguageName(shortName: string | null) {
         let languageName;
@@ -58,62 +105,53 @@ const LeaderBoard = () => {
         return languageName;
     }
 
-
     useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // Fetch leaderboard data from the server for the specific language
-                fetch(`${BASE_URL}/leaderboard?language=${language}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        setLeaderboardData(data);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+        if (currentUser && language) {
+            const leaderboardRef = firestore.collection(`leaderboard${language}`);
 
-                fetch(`${BASE_URL}/uporabnik?uid=${user.uid}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        setUsername(data.username);
-                        setPhotoURL(require(`../../Assets/${data.slika}`));
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-
-                fetch(`${BASE_URL}/pridobiXp?uid=${user.uid}&language=${language}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        setXP(data.xp);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        });
-    }, [language]);
-
+            leaderboardRef
+                .doc(currentUser.uid)
+                .set({
+                    username: username,
+                    xp: xp
+                })
+                .then(() => {
+                    console.log("User data added to leaderboard collection.");
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [currentUser, username, xp, language]);
 
     return (
         <div className="leaderboard-container">
             <h1 className="leaderboard">Vodilna Lestvica</h1>
-            {/* Render leaderboard */}
             <div>
                 <h2>Vodilna lestvica: {getLanguageName(language)}</h2>
                 {Array.isArray(leaderboardData) && leaderboardData.length > 0 ? (
-                    <ul>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Uporabnik</th>
+                            <th>XP</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {leaderboardData.map((item, index) => (
-                            <li key={index}>
-                                {item.username} - XP: {item.xp}
-                            </li>
+                            <tr key={index}>
+                                <td>{item.username}</td>
+                                <td>{item.xp}</td>
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 ) : (
-                    <p>No leaderboard data available.</p>
+                    <p className="no-data">No leaderboard data available.</p>
                 )}
             </div>
         </div>
     );
 }
+
 export default LeaderBoard;

@@ -49,7 +49,7 @@
 
 .uredi-container button {
    border-radius: 30px;
-   width: 115px;
+   width: 115px !important;
    background: #2F5AED !important;
    border: none;
    margin-bottom: 10px;
