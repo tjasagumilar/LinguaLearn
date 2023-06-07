@@ -5,6 +5,7 @@
    flex-direction: column;
    align-items: center;
    margin: 3%;
+   animation: slideIn 1.0s ease;
 }
 
 .uredi-container {
@@ -19,7 +20,6 @@
    width: 80px;
    border-radius: 50px;
    margin: 2px;
-   animation: zoomIn 0.8s ease-in-out;
 }
 
 .uredi-container h2 {
@@ -38,22 +38,21 @@
 .uredi-container button {
    border-radius: 30px;
    width: 115px;
-   background: #2F5AED;
+   background: #2F5AED !important;
    border: none;
    margin-bottom: 10px;
-   font-weight: bold;
-   animation: scaleIn 0.8s ease-in-out;
 }
 
 .uredi-container button:hover {
-   background: rgba(47, 90, 237, 0.8);
-   animation: pulse 0.8s infinite;
+   background: rgba(47, 90, 237, 0.8) !important;
+   transform: scale(1.05);
 }
 
 .gumb-potrdi {
    display: flex;
    justify-content: center;
 }
+/*
 
 @keyframes zoomIn {
    0% {
@@ -86,3 +85,4 @@
       transform: scale(1);
    }
 }
+*/

@@ -5,11 +5,11 @@
     padding: 0;
     margin: 5% 15%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.541);
+    animation: slideIn 1.0s ease;
 }
 
 .profil-container img {
     width: 130px;
-    animation: zoomIn 0.8s ease-in-out;
 }
 
 .col-md div,
@@ -28,24 +28,21 @@
 
 .username {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 5px;
-    animation: fadeIn 0.8s ease-in-out;
+
 }
 
 .ime-priimek {
     font-size: 18px;
-    font-weight: bold;
     margin-bottom: 10px;
-    animation: fadeIn 0.8s ease-in-out;
+
 }
 
 .opis {
     font-size: 16px;
-    font-weight: bold;
-    color: #555;
     margin-bottom: 20px;
-    animation: fadeIn 0.8s ease-in-out;
+
 }
 
 .uredi-profil {
@@ -55,14 +52,15 @@
     border: none;
     margin-top: 0 !important;
     margin-bottom: 10px;
-    font-weight: bold;
-    animation: scaleIn 0.8s ease-in-out;
 }
 
 .uredi-profil:hover {
     background: rgba(47, 90, 237, 0.8) !important;
-    animation: pulse 0.8s infinite;
+    transform: scale(1.05);
+
 }
+
+/*
 
 @keyframes zoomIn {
     0% {
@@ -104,3 +102,4 @@
         transform: scale(1);
     }
 }
+*/

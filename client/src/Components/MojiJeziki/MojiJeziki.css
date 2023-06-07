@@ -4,6 +4,7 @@
     padding: 0;
     margin: 3% 15%;
     font-family: 'Outfit', sans-serif;
+    animation: slideIn 1.0s ease;
 }
 
 .dodaj-jezik {
@@ -12,17 +13,19 @@
     background: #2F5AED !important;
     border: none;
     margin-bottom: 10px;
-    animation: scaleIn 0.8s ease-in-out;
+
 }
 
 .dodaj-jezik:hover, .gumbi button:hover {
     background: rgba(47, 90, 237, 0.8) !important;
-    animation: pulse 0.8s infinite;
+    transform: scale(1.05);
+
 }
+
 
 .gumbi button {
     border-radius: 20px;
-    width: 80px;
+    width: 90px;
     background: #2F5AED;
     border: none;
     margin: 5px;
@@ -37,7 +40,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    animation: slideIn 0.8s ease-in-out;
 }
 
 .kartica img {
@@ -68,6 +70,8 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+/*
 
 @keyframes scaleIn {
     0% {
@@ -100,3 +104,4 @@
         opacity: 1;
     }
 }
+*/

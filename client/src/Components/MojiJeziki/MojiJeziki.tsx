@@ -38,9 +38,9 @@ const MojiJeziki = () => {
                                 <div className="podrobnosti col-12 col-sm-6 col-lg-7">
                                     <div> {item.naziv} - {item.nivo} </div>
                                     <div className="gumbi">
-                                        <a href={`/generirajNaloge?language=${item.jezik}`}><Button>Naloge</Button></a>
+                                        
                                         <a href={`/vec?language=${item.jezik}&nivo=${item.nivo}`}><Button>Več</Button></a>
-                                        <a href={`/mojebesede?language=${item.jezik}`}><Button>Besede</Button></a>
+                                        
                                     </div>
                                 </div>
                             </div>
