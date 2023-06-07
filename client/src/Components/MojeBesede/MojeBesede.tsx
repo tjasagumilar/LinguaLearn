@@ -161,19 +161,19 @@ const MojeBesede = () => {
                   <h3 className="heading">Vaše slovar:</h3>
                 </div>
                 <ListGroup className="list-group">
-                {filteredWords.length > 0 ? filteredWords.map((item, index) => (
-  <ListGroup.Item key={index}>
-    <div className="d-flex align-items-center">
-      <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
-        <BsFillVolumeUpFill style={{ color: 'orange' }} />
-      </button>
-      <div className="ml-3">
-        <div className="word">{item.word}</div>
-        <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
-      </div>
-    </div>
-  </ListGroup.Item>
-)) : <p>Ni novih besed.</p>}
+                  {filteredWords.length > 0 ? filteredWords.map((item, index) => (
+                    <ListGroup.Item key={index}>
+                      <div className="d-flex align-items-center">
+                        <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
+                          <BsFillVolumeUpFill style={{ color: 'orange' }} />
+                        </button>
+                        <div className="ml-3">
+                          <div className="word">{item.word}</div>
+                          <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
+                        </div>
+                      </div>
+                    </ListGroup.Item>
+                  )) : <p>Ni novih besed.</p>}
                 </ListGroup>
               </>
             )}
@@ -183,20 +183,20 @@ const MojeBesede = () => {
               <>
                 <h3 className="heading">Vaše napake:</h3>
                 <ListGroup className="list-group">
-                {filteredMistakes.length > 0 ? filteredMistakes.map((item, index) => (
-  <ListGroup.Item key={index}>
-    <div className="d-flex align-items-center">
-      <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
-        <BsFillVolumeUpFill style={{ color: 'orange' }} />
-      </button>
-      <div className="ml-3">
-      <div className="word">{item.word}</div>
+                  {filteredMistakes.length > 0 ? filteredMistakes.map((item, index) => (
+                    <ListGroup.Item key={index}>
+                      <div className="d-flex align-items-center">
+                        <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
+                          <BsFillVolumeUpFill style={{ color: 'orange' }} />
+                        </button>
+                        <div className="ml-3">
+                          <div className="word">{item.word}</div>
 
-        <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
-      </div>
-    </div>
-  </ListGroup.Item>
-)) : <p>Ni napak.</p>}
+                          <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
+                        </div>
+                      </div>
+                    </ListGroup.Item>
+                  )) : <p>Ni napak.</p>}
 
                 </ListGroup>
 

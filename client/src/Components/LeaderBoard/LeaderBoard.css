@@ -1,5 +1,6 @@
 .leaderboard-container {
     background-color: #ffffff;
+    margin: 2% 15%;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -124,5 +125,11 @@ tr:nth-child(even) {
     100% {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+@media (max-width: 520px) {
+    .leaderboard-container {
+        margin: 2% 0;   
     }
 }
