@@ -138,7 +138,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
             <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
                 <Row className="align-items-center">
                     <Col md={6}>
-                        <h4 className="mb-0 font-weight-bold">Dotakni se tega, kar slišiš.</h4>
+                        <h4 className="mb-0 font-weight-bold">Dotakni se besed, ki jih slišiš.</h4>
                     </Col>
                 </Row>
                 <Row className="mt-3 align-items-center">
@@ -146,7 +146,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
         <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
     </Col>
     <Col xs={7} md={6} lg={6} xl={6}>
-        <div className="bubble d-flex justify-content-between">
+        <div className="bubble11 d-flex justify-content-between">
             <Button
                 onClick={() => audioRef.current && audioRef.current.play()}
                 className={`buttonZvok mb-3 custom-button ${window.innerWidth <= 768 ? 'icon-small' : 'icon-large'}`}
@@ -180,33 +180,46 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
     <source src={audioSource2} type="audio/mpeg" />
     Your browser does not support the audio element.
 </audio>
-                <div className="border-bottom my-3"></div>
+<div className="border-bottom my-3"></div>
 
-                <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
-                    <Col md={8}>
-                        {selectedWords.map((word, index) => (
-                            <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-                                {word}
-                            </Badge>
-                        ))}
-                    </Col>
-                </Row>
+<Row className="mt-2 justify-content-left min-height-div">
+  <Col >
+    <div className="d-flex flex-wrap">
+      {selectedWords.map((word, index) => (
+        <Badge
+          pill
+          key={index}
+          onClick={() => handleWordClickSelected(word)}
+          className="my-badge-tip-naloge1Ts"
+        >
+          <h5 className="mb-0"> {word}</h5>
+        </Badge>
+      ))}
+    </div>
+  </Col>
+</Row>
 
+<div className="border-bottom my-3"></div>
 
-                <div className="border-bottom my-3"></div>
-
-                <Row className="mt-2">
-                    <h5 className="mb-0 font-weight-bold">Razpoložljive besede:</h5>
-                    <br></br>  <br></br>
-                    <Col md={8}>
-
-                        {availableWords.map((word, index) => (
-                            <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1_1 m-1 p-1 rounded">
-                                {word}
-                            </Badge>
-                        ))}
-                    </Col>
-                </Row>
+<Row className="mt-2">
+  <h5 className="mb-0">Razpoložljive besede:</h5>
+  <br /><br />
+  <Col >
+    <div className="d-flex flex-wrap">
+      {availableWords.map((word, index) => (
+        <Badge
+          pill
+          key={index}
+          onClick={() => handleWordClickAvailable(word)}
+          className="my-badge-tip-naloge1Ts"
+        >
+          <h5 className="mb-0"> {word}</h5>
+        </Badge>
+      ))}
+    </div>
+  </Col>
+ 
+</Row>
 
 
             </Container>
@@ -215,8 +228,8 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                 <div className="container-fluid">
                     <div className="upper-line"></div>
                     <Row className="align-items-center">
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+                    <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
                             <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
                                 <span className="btn-text">Preskoči</span>
                             </Button>

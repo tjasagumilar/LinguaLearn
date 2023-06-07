@@ -230,7 +230,8 @@ app.get('/pridobiXpDummy', (req, res) => {
         const doc = querySnapshot.docs[0];
         const xpDummy = doc.data().xpDummy;
         const tezavnost = doc.data().tezavnost;
-        res.json({xpDummy: xpDummy, tezavnost: tezavnost});
+        const nivo = doc.data().nivo;
+        res.json({xpDummy: xpDummy, tezavnost: tezavnost, nivo:nivo});
       } else {
         console.log("No document found with the specified language.");
       }

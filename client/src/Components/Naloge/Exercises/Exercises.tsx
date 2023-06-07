@@ -55,11 +55,15 @@ const Exercises = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const language = queryParams.get('language');
+  const [nivo, setNivo] = useState('');
 
   useEffect(() => {
     console.log('exercise:', exercises[currentExerciseIndex]);
   }, [exercises, currentExerciseIndex]);
 
+  
+
+ 
   
 
 
@@ -72,7 +76,7 @@ const Exercises = () => {
   const handleConfirmation = async (confirmed: boolean) => {
     setShowConfirmation(false);
     if (confirmed) {
-      navigate('/naloge');
+      navigate(`/vec?language=${language}&nivo=${nivo}`);
       await updateExercisesSolved(uid, document)
     }
       };
@@ -422,9 +426,21 @@ const Exercises = () => {
       if (user) {
         setUid(user.uid);
         loadExercises(user.uid)
-      }
-    });
-  }
+        fetch(`${BASE_URL}/pridobiXpDummy?uid=${user.uid}&language=${language}`)
+        .then(response => response.json())
+        .then(data => {
+          setNivo(data.nivo);
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  });
+    }
+
+    console.log(nivo)
+    
 
 
   useEffect(() => {
@@ -567,6 +583,7 @@ const Exercises = () => {
 
               <ProgressBar
                 striped
+                animated
                 variant="warning"
                 now={(currentExerciseIndex) * (100 / exercises.length)}
                 className="custom-progress-bar ml-3 w-100"
@@ -604,25 +621,31 @@ const Exercises = () => {
         ) : null
       }
 
-      <Modal
-        show={showConfirmation}
-        onHide={() => handleConfirmation(false)}
-        dialogClassName="custom-modal-dialog"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Ali ste prepričani, da želite zapustiti stran?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Vaš napredek bo izgubljen.</Modal.Body>
-        <Modal.Footer>
-        <Button onClick={() => handleConfirmation(false)} className="btnEx btn-sm">
-  Ne
-</Button>
-<Button onClick={() => handleConfirmation(true)} className="btnEx btn-sm">
-  Da
-</Button>
+<Modal
+  show={showConfirmation}
+  onHide={() => handleConfirmation(false)}
+  dialogClassName="custom-modal-dialog"
+  contentClassName="custom-modal-content"
+>
+  <Modal.Body className="text-center align-middle">
+    <Modal.Header closeButton className="modal-header">
+      <Modal.Title className="w-100">Ali ste prepričani, da želite zapustiti stran?</Modal.Title>
+    </Modal.Header>
+    <p className="mb-0">Vaš napredek bo izgubljen.</p>
+  </Modal.Body>
+  <Modal.Footer className="justify-content-center">
+    <Button onClick={() => handleConfirmation(false)} className="btnEx btn-sm">
+      Ne
+    </Button>
+    <Button onClick={() => handleConfirmation(true)} className="btnEx btn-sm">
+      Da
+    </Button>
+  </Modal.Footer>
+</Modal>
 
-        </Modal.Footer>
-      </Modal>
+
+
+
     </div>
 
   );
