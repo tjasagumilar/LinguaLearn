@@ -3,7 +3,19 @@
     background-color: #86A4FD;
     padding: 5%;
     border-radius: 30px;
+    animation: slideIn 1.0s ease;
 
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .form-izbira {
@@ -33,8 +45,11 @@
     border-radius: 20px;
     width: 30%;
     align-self: center;
+    border: none;
 }
 
 .izbira-jezika Button:hover {
     background: rgba(47, 90, 237, 0.8);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

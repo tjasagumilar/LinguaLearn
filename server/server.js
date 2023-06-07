@@ -109,8 +109,28 @@ app.post('/izbirajezika', (req, res) => {
 app.post('/uredi', (req, res) => {
   const { uid, username, ime, priimek, slika, opis } = req.body;
 
-  dbFire.collection('users').doc(uid)
-    .set({ username: username, ime: ime, priimek: priimek, slika: slika, opis: opis }, { merge: true })
+  const updateData = {username, ime, priimek, slika, opis};
+
+  if (username == null) {
+    updateData.username = '';
+  }
+  if (ime == null) {
+    updateData.ime = '';
+  }
+  if (priimek == null) {
+    updateData.priimek = '';
+  }
+  if (slika == null) {
+    updateData.slika = '';
+  }
+  if (opis == null) {
+    updateData.opis = '';
+  }
+
+  dbFire
+    .collection('users')
+    .doc(uid)
+    .set(updateData, {merge: true})
     .then(() => {
       res.sendStatus(200);
     })
@@ -119,6 +139,7 @@ app.post('/uredi', (req, res) => {
       res.status(500).send('Napaka');
     });
 });
+
 
 //PRIDOBITEV PODATKOV DOLOČENEGA UPORABNIKA
 app.get('/uporabnik', (req, res) => {

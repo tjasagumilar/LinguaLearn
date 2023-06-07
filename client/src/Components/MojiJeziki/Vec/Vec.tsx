@@ -9,6 +9,8 @@ import { Routes, Route } from 'react-router-dom';
 import { BASE_URL } from "../../../api";
 import { FaFlag } from 'react-icons/fa';
 import { ProgressBar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 
 const Vec = () => {
@@ -17,7 +19,7 @@ const Vec = () => {
     const [jeziki, setJeziki] = useState([]);
     const [xpDummy, setXpDummy] = useState<number>(0);
     const [difficulty, setDifficulty] = useState<string>()
- 
+
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -49,8 +51,6 @@ const Vec = () => {
             }
         });
     }, [xpDummy, difficulty])
-
-  
 
 
     const handleClose = () => setShow(false);
@@ -129,9 +129,7 @@ const Vec = () => {
 
     return (
         <div>
-       
             <div className="podatki-container">
-                
                 <Row>
                     <Col md>
                         <div>
@@ -142,61 +140,34 @@ const Vec = () => {
                 <Row>
                     <Col md>
                         <div className="podatki-jezik">
-                            <div> {getLanguageName(language)} <br /> {nivo} 
+                            <div> {getLanguageName(language)} <br /> {nivo}
                                 <Progress />
                                 Stopnja: {difficulty}
                             </div>
-                            
                         </div>
-                        
                     </Col>
                 </Row>
                 <div className="progress-container2">
-            
-    <ProgressBar striped animated now={xpDummy} max={300} />
-    <br></br>
-</div>
-                <Row>
-                    <Col md>
-                        <div>
-                            <a href={`/generirajNaloge?language=${language}`}><Button className="odstrani-jezik">Naloge </Button></a>
-                        </div>
+                    <ProgressBar striped animated now={xpDummy} max={300} className="col-12 col-sm-6 col-md-4 col-lg-2" />
+                    <br></br>
+                </div>
+                <Row className="gumbi-jeziki">
+                    <Col className="gumbi-col-naloge">
+                        <a href={`/generirajNaloge?language=${language}`}><Button className="gumb-naloge">Naloge </Button></a>
+                    </Col>
+                    <Col className="gumbi-col-besede">
+                        <a href={`/mojebesede?language=${language}`}><Button className="gumb-besede">Besede</Button></a>
                     </Col>
                 </Row>
-                <Row>
-                    <Col md>
-                        <div>
-                            <a href={`/mojebesede?language=${language}`}><Button className="odstrani-jezik">Besede</Button></a>
-                        </div>
+                <Row >
+                    <Col md className="odstrani-ikona">
+                        <FontAwesomeIcon className="ikona-odstrani" icon={faTrashCan} size="lg" style={{ color: "#fa9746", }} onClick={handleShow} />
                     </Col>
                 </Row>
-                <Row>
-                    <Col md>
-                        <div>
-                            <Button
-                                className="odstrani-jezik"
-                                onClick={() => navigate(`/leaderboard?language=${language}`)}
-                            >
-                                Vodilna Lestvica
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md>
-                        <div>
-                            <Button className="odstrani-jezik" onClick={handleShow}>Odstrani</Button>
-                        </div>
-                    </Col>
-                </Row>
-           
-
             </div>
-         
+
 
             <div className="napredek-container">
-            
-
 
             </div>
             <Modal show={show} onHide={handleClose} animation={false} >
@@ -213,7 +184,7 @@ const Vec = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-           
+
         </div>
     );
 }

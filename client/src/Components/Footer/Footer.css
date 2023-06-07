@@ -12,6 +12,9 @@
     height: 63px;
     display: flex;
     align-items: center;
+    animation: slideIn 1.0s ease;
+    padding-bottom: 50px;
+    padding-top: 30px;
 }
 
 .footer Container {
@@ -19,4 +22,15 @@
     bottom: 0;
     left: 0;
     width: 100%;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

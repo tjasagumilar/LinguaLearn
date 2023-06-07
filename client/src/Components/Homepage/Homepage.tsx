@@ -4,9 +4,14 @@ import Ucenje from "./Ucenje/Ucenje";
 import Header from "../Header/Header";
 import "./Homepage.css"
 import Footer from "../Footer/Footer";
+import { useEffect } from "react";
 
 
 const Homepage = () => {
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#FFFFFF';
+      }, []);
 
     return (
         <div>

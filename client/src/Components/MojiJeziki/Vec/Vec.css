@@ -5,7 +5,7 @@
     padding: 0;
     margin: 5% 15%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.541);
-    animation: slideIn 0.5s ease;
+    animation: slideIn 1.0s ease;
 }
 
 @keyframes slideIn {
@@ -30,52 +30,51 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.col-md div {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    margin: 2px;
-}
-
 .podatki-jezik {
     text-align: center;
 }
 
-.odstrani-jezik {
-    width: 150px !important;
+
+.gumb-naloge, .gumb-besede {
+    width: 100px !important;
     border-radius: 30px;
-    background: rgba(99, 137, 250, 0.8);
+    background: #2F5AED;
     border: none;
     margin-top: 0;
     margin-bottom: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.odstrani-jezik:hover {
-    background: #fa9746d2;
-    transform: scale(1.1);
+.gumb-naloge:hover, .gumb-besede:hover {
+    background: rgba(47, 90, 237, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation: shake 0.5s ease-in-out;
+    transform: scale(1.05);
 }
 
-@keyframes shake {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    50% {
-        transform: translateX(5px);
-    }
-    75% {
-        transform: translateX(-5px);
-    }
-    100% {
-        transform: translateX(0);
-    }
+.gumbi-col-naloge, .gumbi-col-besede {
+    display: flex;
+}
+
+.gumbi-col-naloge{
+    justify-content: flex-end;
+    padding: 0;
+}
+
+.gumbi-col-besede {
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.odstrani-ikona {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+}
+
+.ikona-odstrani:hover {
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 .modal-zapri {
@@ -93,7 +92,17 @@
 .modal-odstrani:hover {
     background-color: rgba(47, 90, 237, 0.8);
 }
+
 .progress-container2 {
-    width: 10%; 
-    margin: auto;
+    width: 100%; 
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 320px) {
+    .gumbi-col-naloge, .gumbi-col-besede {
+        justify-content: center;
+    }
+
 }
