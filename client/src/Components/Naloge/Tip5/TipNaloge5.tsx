@@ -11,6 +11,7 @@ import './TipNaloge5.css'
 import { FaMicrophone } from 'react-icons/fa'
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaTimesCircle } from 'react-icons/fa';
+import { Word } from '../../MojeBesede/MojeBesede';
 
 
 interface TipNaloge5Props {
@@ -132,16 +133,32 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [showModal, setShowModal] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
-
+    const [showTranslation, setShowTranslation] = useState(false);
     const { transcript, resetTranscript } = useSpeechRecognition();
     const [active, setActive] = useState(false);
+    const [isSentenceInWords, setIsSentenceInWords] = useState(false);
 
+    const [words, setWords] = useState<Word[]>([]);
+
+   
 
     useEffect(() => {
+        naloziBesede(uid);
         const words = exercise.sentence.toLowerCase();
         const cleanedSentence = words.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
         setSentence(cleanedSentence.split(' '));
+      
       }, [exercise.sentence]);
+
+      const naloziBesede = (uid: string) => {
+        fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setWords(data);
+            setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+          })
+          .catch((error) => console.error(error));
+      };
 
       
     useEffect(() => {
@@ -231,13 +248,18 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
         }
         setActive(!active);
     };
-
+  
     return (
         <form onSubmit={(e) => e.preventDefault()}>
 
             <Container className="myContainer p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
                 <Row className="align-items-center">
                     <Col md={6}>
+                    {isSentenceInWords ? (
+      <div></div>
+    ) : (
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
+    )}
                         <h4 className="mb-0 font-weight-bold">Posnemajte glas</h4>
                     </Col>
                 </Row>

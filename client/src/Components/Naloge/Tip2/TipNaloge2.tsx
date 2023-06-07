@@ -44,6 +44,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
 
   useEffect(() => {
     setAvailableWords(exercise.availableWords);
+    naloziBesede(uid)
   }, [exercise.availableWords]);
 
   const handleWordClickAvailable = (index: number) => {

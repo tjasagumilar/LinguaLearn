@@ -93,6 +93,7 @@ app.post('/izbirajezika', (req, res) => {
   } else if (nivo === 'Prvak') {
     tezavnost = 90;
   }
+  console.log(tezavnost)
   const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
     .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp, xpDummy: xp, mojeNapake: [] })
@@ -581,7 +582,7 @@ app.get('/generateWord', async (req, res) => {
 
   }
   const difficulty = jezikiData
-
+  console.log(difficulty)
   const words = [];
   fs.createReadStream('words.csv')
     .pipe(csvParser())

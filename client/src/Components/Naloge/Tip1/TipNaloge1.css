@@ -103,7 +103,7 @@ button.btn.first1:hover {
 
 .my-badge-tip-naloge1Ts {
   cursor: pointer;
-  margin: 5px;
+  margin: 3px;
   font-size: 1.5em;
   transition: transform 0.7s;
   border: 3px solid #d6d1d1;
@@ -115,7 +115,7 @@ button.btn.first1:hover {
 
 @media (max-width: 576px) {
   .my-badge-tip-naloge1Ts {
-    font-size: 0.3em  !important; 
+    font-size: 0.5em  !important; 
     margin: 2px !important; 
     border-width: 2px!important; 
     border-radius: 10px!important; 
@@ -123,7 +123,7 @@ button.btn.first1:hover {
   }
 }
 .my-badge-tip-naloge1Ts:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   border-color: blue;
 }
 .fixed-bottom-container {

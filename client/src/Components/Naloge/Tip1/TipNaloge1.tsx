@@ -45,7 +45,8 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
       .then((response) => response.json())
       .then((data) => {
         setWords(data);
-        setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+        setIsSentenceInWords(data.every((word: string) => word === exercise.sentence));
+
       })
       .catch((error) => console.error(error));
   };
@@ -178,7 +179,7 @@ return (
         {isSentenceInWords ? (
       <div></div>
     ) : (
-      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nov stavek!</i>
     )}
           <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
         </Col>
