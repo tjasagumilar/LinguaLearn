@@ -95,7 +95,7 @@ app.post('/izbirajezika', (req, res) => {
   }
   const xp = 0;
   dbFire.collection('users').doc(uid).collection('jeziki')
-    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp , xpDummy: xp, mojeNapake: [] })
+    .add({ jezik: jezik, naziv: naziv, nivo: nivo, tezavnost: tezavnost, path: path, mojeBesede: [], xpSkupen: xp, xpDummy: xp, mojeNapake: [] })
     .then(() => {
       res.sendStatus(200);
     })
@@ -109,7 +109,7 @@ app.post('/izbirajezika', (req, res) => {
 app.post('/uredi', (req, res) => {
   const { uid, username, ime, priimek, slika, opis } = req.body;
 
-  const updateData = {username, ime, priimek, slika, opis};
+  const updateData = { username, ime, priimek, slika, opis };
 
   if (username == null) {
     updateData.username = '';
@@ -130,7 +130,7 @@ app.post('/uredi', (req, res) => {
   dbFire
     .collection('users')
     .doc(uid)
-    .set(updateData, {merge: true})
+    .set(updateData, { merge: true })
     .then(() => {
       res.sendStatus(200);
     })
@@ -225,7 +225,7 @@ app.get('/pridobiXp', (req, res) => {
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
         const xp = doc.data().xpSkupen;
-        res.json({xp: xp});
+        res.json({ xp: xp });
       } else {
         console.log("No document found with the specified language.");
       }
@@ -252,7 +252,7 @@ app.get('/pridobiXpDummy', (req, res) => {
         const xpDummy = doc.data().xpDummy;
         const tezavnost = doc.data().tezavnost;
         const nivo = doc.data().nivo;
-        res.json({xpDummy: xpDummy, tezavnost: tezavnost, nivo:nivo});
+        res.json({ xpDummy: xpDummy, tezavnost: tezavnost, nivo: nivo });
       } else {
         console.log("No document found with the specified language.");
       }
@@ -270,21 +270,21 @@ app.get('/leaderboard', (req, res) => {
   const leaderboardData = [];
 
   leaderboardRef.where('language', '==', language)
-      .orderBy('xp', 'desc')
-      .limit(10)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const username = doc.data().username;
-          const xp = doc.data().xp;
-          leaderboardData.push({ username, xp });
-        });
-        res.json(leaderboardData);
-      })
-      .catch((error) => {
-        console.log('Error getting leaderboard data:', error);
-        res.status(500).json({ error: 'Failed to retrieve leaderboard data' });
+    .orderBy('xp', 'desc')
+    .limit(10)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const username = doc.data().username;
+        const xp = doc.data().xp;
+        leaderboardData.push({ username, xp });
       });
+      res.json(leaderboardData);
+    })
+    .catch((error) => {
+      console.log('Error getting leaderboard data:', error);
+      res.status(500).json({ error: 'Failed to retrieve leaderboard data' });
+    });
 });
 
 // -------------------------------------------------------------------------------------------
@@ -436,7 +436,7 @@ app.post('/solvedCorrect', async (req, res) => {
         solvedRight: solvedRight,
         xp: xp
       }).then(() => {
-        console.log("Dokument uspešno posodobljen!"); 
+        console.log("Dokument uspešno posodobljen!");
 
         jezikDocSnapshot.ref.get().then((jezikDoc) => {
           if (jezikDoc.exists) {
@@ -445,18 +445,18 @@ app.post('/solvedCorrect', async (req, res) => {
             let tezavnost = jezikDoc.data().tezavnost;
             let nivo = jezikDoc.data().nivo;
             if (xpDummy >= 300) {
-              tezavnost = tezavnost +1 ;
+              tezavnost = tezavnost + 1;
               xpDummy = xpDummy - 300;
               console.log(tezavnost)
             }
-              if (tezavnost >= 90) {
-                nivo = "Prvak";
-              } else if (tezavnost >= 60) {
-                nivo = "Pustolovec";
-              } else if (tezavnost >= 30) {
-                nivo = "Raziskovalec";
-              }
-            
+            if (tezavnost >= 90) {
+              nivo = "Prvak";
+            } else if (tezavnost >= 60) {
+              nivo = "Pustolovec";
+            } else if (tezavnost >= 30) {
+              nivo = "Raziskovalec";
+            }
+
             jezikDocSnapshot.ref.update({
               xpSkupen: xpSkupen,
               xpDummy: xpDummy,
@@ -497,16 +497,18 @@ const { SourceTextModule } = require('vm');
 app.get('/generate', async (req, res) => {
   const uid = req.query.uid;
   const language = req.query.language;
+
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
-  const querySnapshot = await jezikiRef.get();
+  const querySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
   let jezikiData;
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    if (data.tezavnost !== undefined) {
-      jezikiData = data.tezavnost;
-    }
-  });
+  const doc = querySnapshot.docs[0];
+  const data = doc.data();
+
+  if (data.tezavnost !== undefined) {
+    jezikiData = data.tezavnost;
+
+  }
 
   const difficulty = jezikiData
   let selectedStatement = null;
@@ -568,16 +570,16 @@ app.get('/generateWord', async (req, res) => {
   const language = req.query.language;
 
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
-  const querySnapshot = await jezikiRef.get();
+  const querySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
   let jezikiData;
 
+  const doc = querySnapshot.docs[0];
+  const data = doc.data();
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    if (data.tezavnost !== undefined) {
-      jezikiData = data.tezavnost;
-    }
-  });
+  if (data.tezavnost !== undefined) {
+    jezikiData = data.tezavnost;
+
+  }
   const difficulty = jezikiData
 
   const words = [];
@@ -652,16 +654,20 @@ app.get('/generateWord', async (req, res) => {
 // generiraj 1 besedo 
 app.get('/generateWordOne', async (req, res) => {
   const uid = req.query.uid;
+  const language = req.query.language;
+
   const jezikiRef = dbFire.collection('users').doc(uid).collection('jeziki');
-  const querySnapshot = await jezikiRef.get();
+  const querySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
   let jezikiData;
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    if (data.tezavnost !== undefined) {
-      jezikiData = data.tezavnost;
-    }
-  });
+  const doc = querySnapshot.docs[0];
+  const data = doc.data();
+
+  if (data.tezavnost !== undefined) {
+    jezikiData = data.tezavnost;
+
+  }
+
   const difficulty = jezikiData
   const words = [];
 
@@ -936,9 +942,9 @@ app.get('/lessoncomplete', async (req, res) => {
   const nivo = jezikDocSnapshot.data().nivo;
 
   res.json({ xp, solvedRight, nivo });
-    
 
-  
+
+
 
 });
 
@@ -957,7 +963,7 @@ app.get('/getRank', async (req, res) => {
   const { uid, language } = req.query;
   console.log(uid)
   console.log(language)
-  
+
   const userRef = dbFire.collection('users').doc(uid);
   const jezikiRef = userRef.collection('jeziki');
   const jezikQuerySnapshot = await jezikiRef.where('jezik', '==', language).limit(1).get();
@@ -972,7 +978,7 @@ app.get('/getRank', async (req, res) => {
   } else {
     const wordsData = docData.data().nivo;
     console.log(wordsData)
-    res.json({rank: wordsData});
+    res.json({ rank: wordsData });
   }
 });
 

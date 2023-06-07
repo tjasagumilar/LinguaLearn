@@ -138,7 +138,7 @@ const Exercises = () => {
       };
     
       const fetchStavek2Exercise = async (uid: string) => {
-        const response = await fetch(`${BASE_URL}/generateWordOne?uid=${uid}`)
+        const response = await fetch(`${BASE_URL}/generateWordOne?uid=${uid}&language=${language}`)
         if (!response.ok) {
           throw new Error('Failed to fetch exercises');
         }
