@@ -3,6 +3,18 @@
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    animation: leaderboard-container-anim 1s ease-in-out;
+}
+
+@keyframes leaderboard-container-anim {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .leaderboard {
@@ -10,26 +22,89 @@
     color: #6389fa;
     text-align: center;
     margin-bottom: 20px;
+    font-weight: bold;
+    animation: leaderboard-anim 0.5s ease-in-out;
+}
+
+@keyframes leaderboard-anim {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    text-align: center;
+    animation: table-anim 0.8s ease-in-out;
+}
+
+@keyframes table-anim {
+    0% {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 th,
 td {
     text-align: left;
     padding: 10px;
+    animation: row-anim 0.3s ease-in-out;
+}
+
+@keyframes row-anim {
+    0% {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 th {
     background-color: #6389fa;
     color: #ffffff;
+    font-weight: bold;
+    animation: th-anim 0.5s ease-in-out;
+}
+
+@keyframes th-anim {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+    animation: even-row-anim 0.4s ease-in-out;
+}
+
+@keyframes even-row-anim {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .no-data {
@@ -37,4 +112,17 @@ tr:nth-child(even) {
     color: #333333;
     font-style: italic;
     margin-top: 20px;
+    font-weight: bold;
+    animation: no-data-anim 0.5s ease-in-out;
+}
+
+@keyframes no-data-anim {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

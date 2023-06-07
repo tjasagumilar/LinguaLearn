@@ -133,7 +133,7 @@ const LeaderBoard = () => {
                     <table>
                         <thead>
                         <tr>
-                            <th>Username</th>
+                            <th>Uporabnik</th>
                             <th>XP</th>
                         </tr>
                         </thead>
