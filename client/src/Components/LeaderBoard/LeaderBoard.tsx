@@ -130,15 +130,24 @@ const LeaderBoard = () => {
             <div>
                 <h2>Vodilna lestvica: {getLanguageName(language)}</h2>
                 {Array.isArray(leaderboardData) && leaderboardData.length > 0 ? (
-                    <ul>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>XP</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {leaderboardData.map((item, index) => (
-                            <li key={index}>
-                                {item.username} - XP: {item.xp}
-                            </li>
+                            <tr key={index}>
+                                <td>{item.username}</td>
+                                <td>{item.xp}</td>
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 ) : (
-                    <p>No leaderboard data available.</p>
+                    <p className="no-data">No leaderboard data available.</p>
                 )}
             </div>
         </div>
