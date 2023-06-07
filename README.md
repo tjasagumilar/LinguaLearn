@@ -15,7 +15,7 @@ Pridruži se skupnosti ljudi, ki so enako zagnani do učenja jezikov kot ti!
 
 ## Demo
 
-Preveri živi demo LinguaLearn [tukaj](https://your-lingualearn-demo-url.com).
+Preveri živi demo LinguaLearn [tukaj](http://83.212.82.78:3002/).
 
 ## Kazalo vsebine
 
@@ -29,7 +29,7 @@ Preveri živi demo LinguaLearn [tukaj](https://your-lingualearn-demo-url.com).
 1. Kloniraj repozitorij:
 
    ```sh
-   https://github.com/tjasagumilar/LinguaLearn.git
+   git clone https://github.com/tjasagumilar/LinguaLearn.git
 
 2. Namesti odvisnosti:
 
@@ -63,8 +63,8 @@ Prosimo, upoštevaj Pravila obnašanja pri sodelovanju.
 
 ## Domača stran in vir podatkov
 
-- Domača stran: https://url.si/ (dopolni*)
-- Vir podatkov: https://url.si/ (dopolni*)
+- Domača stran: http://83.212.82.78:3002/
+
 
 
 
