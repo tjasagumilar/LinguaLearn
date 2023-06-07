@@ -34,10 +34,8 @@ Preveri živi demo LinguaLearn [tukaj](http://83.212.82.78:3002/).
 2. Namesti odvisnosti:
 
 - cd LinguaLearn
-
 - cd client
 - npm install
-
 - cd server
 - npm install
 
@@ -61,7 +59,7 @@ Prispevanja so dobrodošla! Če želiš prispevati k LinguaLearn, sledi tem kora
 
 Prosimo, upoštevaj Pravila obnašanja pri sodelovanju.
 
-## Domača stran in vir podatkov
+## Domača stran 
 
 - Domača stran: http://83.212.82.78:3002/
 
