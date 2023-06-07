@@ -8,7 +8,16 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Add this line to hide the overflow when scaling */
 }
+
+.kartica:hover,
+.dodaj-jezik:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Add box-shadow effect */
+}
+
 
 .jeziki-container div {
     display: flex;
@@ -31,7 +40,7 @@
 .dodaj-jezik {
     border-radius: 20px;
     width: 115px !important;
-    background: #2F5AED !important;
+    background: #6389fa !important;
     border: none;
     margin-bottom: 10px;
 
@@ -65,6 +74,7 @@
     align-items: center;
     margin: 10px;
     width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
 }
 
 .kartica img {
@@ -122,6 +132,25 @@
     }
 
 }
+
+.kartica.dodaj-jezik {
+    /* Copy the styles from .kartica class */
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px;
+    width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kartica.dodaj-jezik:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
 
 /*
 

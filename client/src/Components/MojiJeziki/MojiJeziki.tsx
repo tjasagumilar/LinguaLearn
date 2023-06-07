@@ -71,11 +71,10 @@ const MojiJeziki = () => {
                 ))}
                 <Col sm={6} md={5} lg={5} xl={4}>
                     <a href="/izberijezik">
-                        <div className="kartica">
+                        <div className="kartica dodaj-jezik">
                             <div className="zastava">
                                 <img src={plus} alt="zastava" />
                             </div>
-
                         </div>
                     </a>
                 </Col>
