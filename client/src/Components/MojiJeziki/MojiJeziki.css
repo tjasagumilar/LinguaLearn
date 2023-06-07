@@ -74,6 +74,7 @@
     align-items: center;
     margin: 10px;
     width: 200px;
+    height: 160px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
 }
 
@@ -133,7 +134,7 @@
 
 }
 
-.kartica.dodaj-jezik {
+.kartica .dodaj {
     /* Copy the styles from .kartica class */
     padding: 20px;
     border-radius: 20px;
@@ -146,43 +147,8 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.kartica.dodaj-jezik:hover {
+.kartica.dodaj:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-
-/*
-
-@keyframes scaleIn {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-*/
