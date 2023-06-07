@@ -12,6 +12,7 @@
         transform: translateY(-50px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -19,7 +20,7 @@
 }
 
 .form-izbira {
-    margin:  8% 30%;
+    margin: 8% 30%;
     font-family: 'Outfit', sans-serif;
 }
 
@@ -29,7 +30,8 @@
     flex-direction: column;
 }
 
-.select-jezik, .select-nivo  {
+.select-jezik,
+.select-nivo {
     width: 100%;
     font-weight: 300;
 }

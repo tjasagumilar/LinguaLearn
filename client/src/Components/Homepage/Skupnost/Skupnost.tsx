@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import {  Row, Col } from "react-bootstrap";
 import skupnost from "../../../Assets/skupnost.png"
 
 const Skupnost = () => {
@@ -17,7 +17,7 @@ const Skupnost = () => {
                     </div>
                 </Col>
                 <Col className=" col-12 col-lg-6 col-xl-5">
-                    <img src={skupnost}></img>
+                    <img src={skupnost} alt="skupnost"></img>
                 </Col>
             </Row>
         </div>

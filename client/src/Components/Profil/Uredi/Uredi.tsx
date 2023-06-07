@@ -81,7 +81,7 @@ const Uredi = () => {
                 <Form>
                     <Form.Group className="mb-4" id="avatar">
                         <label>
-                            <img src={avatar1}></img>
+                            <img src={avatar1} alt="avatar"></img>
                             <Form.Check
                                 inline
                                 name="group1"
@@ -92,7 +92,7 @@ const Uredi = () => {
                             />
                         </label>
                         <label>
-                            <img src={avatar2} ></img>
+                            <img src={avatar2} alt="avatar" ></img>
                             <Form.Check
                                 inline
                                 name="group1"
@@ -103,7 +103,7 @@ const Uredi = () => {
                             />
                         </label>
                         <label>
-                            <img src={avatar3}></img>
+                            <img src={avatar3} alt="avatar"></img>
                             <Form.Check
                                 inline
                                 name="group1"
@@ -114,7 +114,7 @@ const Uredi = () => {
                             />
                         </label>
                         <label>
-                            <img src={avatar4}></img>
+                            <img src={avatar4} alt="avatar"></img>
                             <Form.Check
                                 inline
                                 name="group1"
@@ -125,7 +125,7 @@ const Uredi = () => {
                             />
                         </label>
                         <label>
-                            <img src={avatar5}></img>
+                            <img src={avatar5} alt="avatar"></img>
                             <Form.Check
                                 inline
                                 name="group1"
@@ -136,7 +136,7 @@ const Uredi = () => {
                             />
                         </label>
                         <label>
-                            <img src={avatar6}></img>
+                            <img src={avatar6} alt="avatar"></img>
                             <Form.Check
                                 inline
                                 name="group1"
