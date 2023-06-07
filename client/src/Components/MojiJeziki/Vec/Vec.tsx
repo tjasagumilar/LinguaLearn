@@ -155,6 +155,9 @@ const Vec = () => {
                     <Col className="gumbi-col-besede">
                         <a href={`/mojebesede?language=${language}`}><Button className="gumb-besede">Besede</Button></a>
                     </Col>
+                    <Col className="gumbi-col-besede">
+                        <a href={`/leaderboard?language=${language}`}><Button className="gumb-besede">Lestvica</Button></a>
+                    </Col>
                 </Row>
                 <Row >
                     <Col md className="odstrani-ikona">
