@@ -44,6 +44,7 @@
     padding: 12px 24px; 
   }
   
+  
   .text-gray {
     color: gray;
   }
@@ -97,5 +98,16 @@
   
   .modal-header {
     border-bottom: none !important;
+  }
+
+
+    
+  
+  @media (max-width: 576px) {
+    .myCustomContainer {
+      position: fixed;
+      top: -100px; 
+      padding-top: 50px;
+    }
   }
   

@@ -18,8 +18,8 @@
 
 @media (max-width: 600px) {
   .mic-button {
-    width: 80px!important;
-    height: 80px!important;
+    width: 100px!important;
+    height: 100px!important;
     margin-top: -30px!important;  
   }
 }
@@ -50,7 +50,7 @@
       box-shadow: 0 0 0 5px rgba(0, 238, 255, 0.397);
     }
     100% {
-      box-shadow: 0 0 0 2px rgba(0, 238, 255, 0);
+      box-shadow: 0 0 0 2px rgba(0, 238, 255, 0.842);
     }
   }
 

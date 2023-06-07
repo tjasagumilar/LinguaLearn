@@ -235,7 +235,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     return (
         <form onSubmit={(e) => e.preventDefault()}>
 
-            <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
+            <Container className="myContainer p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
                 <Row className="align-items-center">
                     <Col md={6}>
                         <h4 className="mb-0 font-weight-bold">Posnemajte glas</h4>
