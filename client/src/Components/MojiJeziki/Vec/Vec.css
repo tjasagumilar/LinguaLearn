@@ -81,20 +81,27 @@
     transform: scale(1.1);
 }
 
+.odstrani-jezik {
+    font-family: 'Outfit', sans-serif;
+}
+
 .modal-zapri {
+    width: 100px;
     border-radius: 20px;
-    background-color: gray;
+    background-color: #86A4FD;
     border: none;
 }
 
+
 .modal-odstrani {
+    width: 100px;
     border-radius: 20px;
     background: #fa9746d2;
     border: none;
 }
 
 .modal-odstrani:hover {
-    background-color: rgba(47, 90, 237, 0.8);
+    background-color: #fa9746;
 }
 
 .progress-container2 {

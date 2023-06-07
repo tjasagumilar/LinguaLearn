@@ -167,7 +167,7 @@ const Vec = () => {
             <div className="napredek-container">
 
             </div>
-            <Modal show={show} onHide={handleClose} animation={false} >
+            <Modal show={show} onHide={handleClose} animation={false} className="odstrani-jezik">
                 <Modal.Header closeButton>
                     <Modal.Title>Ali ste prepričani, da želite odstraniti jezik?</Modal.Title>
                 </Modal.Header>

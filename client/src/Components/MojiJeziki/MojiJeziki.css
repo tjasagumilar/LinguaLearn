@@ -2,9 +2,18 @@
 
 .jeziki-container {
     padding: 0;
-    margin: 3% 15%;
+    margin: 5% 15%;
     font-family: 'Outfit', sans-serif;
     animation: slideIn 1.0s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.jeziki-container div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 @keyframes slideIn {
@@ -48,18 +57,22 @@
 .kartica {
     background-color: #86A4FD;
     color: white;
-    padding: 10px;
+    padding: 20px;
     border-radius: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
+    margin: 10px;
+    width: 200px;
 }
 
 .kartica img {
     width: 100%;
     border-radius: 10px;
 }
+
+
 
 .zastava {
     display: flex;
@@ -75,6 +88,13 @@
 
 .podrobnosti div {
     font-weight: 600;
+    font-size: 20px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.jeziki-container a {
+    text-decoration: none;
 }
 
 .kartice-jezikov {
@@ -83,6 +103,24 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+}
+
+.kartice-jezikov .col  {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 300px) {
+
+    .podrobnosti {
+        display: none;
+    }
+
+    .kartica {
+        padding: 10px;
+    }
+
 }
 
 /*
