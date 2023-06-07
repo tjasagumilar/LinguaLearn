@@ -45,12 +45,11 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
       .then((response) => response.json())
       .then((data) => {
         setWords(data);
-        setIsSentenceInWords(data.every((word: string) => word === exercise.sentence));
-
+        setIsSentenceInWords(data.some((wordObj: any) => wordObj.word === exercise.sentence));
       })
       .catch((error) => console.error(error));
   };
-
+  
  
 
   useEffect(() => {
@@ -80,13 +79,10 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
   const handleCheck = async () => {
     const selectedSentence = selectedWords.join(' ');
-    console.log(selectedSentence)
-
-
+ 
 
         setSelectedWords([]);
 
-        console.log(exercise.sentence)
         const isAnswerCorrect = exercise.resitev === selectedSentence;
 
         if (isAnswerCorrect && exercise.resitev != null) {
@@ -176,10 +172,11 @@ return (
 
     <Row className="align-items-center mt-3 mb-4">
         <Col md={6}>
-        {isSentenceInWords ? (
-      <div></div>
-    ) : (
+        {!isSentenceInWords ? (
+     
       <i style={{ fontSize: '19px', color: 'purple' }}>Nov stavek!</i>
+    ) : (
+      <div></div>
     )}
           <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
         </Col>
@@ -200,7 +197,7 @@ return (
             <div className="text-container">
     
             <div
-      className={`tooltip-container ${isSentenceInWords ? 'hoverable' : ''}`}
+      className={`tooltip-container ${!isSentenceInWords ? 'hoverable' : ''}`}
       onMouseEnter={() => setShowTranslation(true)}
       onMouseLeave={() => setShowTranslation(false)}
     >

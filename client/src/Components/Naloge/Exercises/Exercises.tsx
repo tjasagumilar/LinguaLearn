@@ -57,14 +57,6 @@ const Exercises = () => {
   const language = queryParams.get('language');
   const [nivo, setNivo] = useState('');
 
-  useEffect(() => {
-    console.log('exercise:', exercises[currentExerciseIndex]);
-  }, [exercises, currentExerciseIndex]);
-
-  
-
- 
-  
 
 
 
@@ -82,7 +74,7 @@ const Exercises = () => {
       };
 
       const fetchStavekExercise = async (uid: string) => {
-        console.log(uid)
+       
         const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
     
         if (!response.ok) {
@@ -205,9 +197,7 @@ const Exercises = () => {
           },
           [[], []]
         );
-        console.log("XXXXXXXXXXXXX")
-        console.log(shuffledDataNew);
-        console.log(shuffledDataNewResitve);
+      
     
         const exerciseData = {
           type: 'beseda',
@@ -244,7 +234,7 @@ const Exercises = () => {
         const generatedWord2 = wordsData.translation2;
         const generatedWord3 = wordsData.translation3;
         const dataNew = [generatedWord1, generatedWord2, generatedWord3, prevod.translation];
-        console.log(dataNew)
+
     
         for (let i = dataNew.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -301,7 +291,7 @@ const Exercises = () => {
       };
     
       const fetchStavek5Exercise = async (uid: string) => {
-        console.log(uid)
+     
         const response = await fetch(`${BASE_URL}/generate?uid=${uid}&language=${language}`)
     
         if (!response.ok) {
@@ -382,9 +372,9 @@ const Exercises = () => {
 
       if (response.ok) {
         const docId = await response.text()
-        console.log(docId)
+     
         setDocument(docId)
-        console.log('Exercises saved successfully');
+      
       } else {
         throw new Error('Error: ' + response.status);
       }
@@ -398,19 +388,19 @@ const Exercises = () => {
     try {
       const response = await fetch(`${BASE_URL}/loadExercises?uid=${uid}&language=${language}`);
       if (response.ok) {
-        console.log(response)
+        
         const text = await response.text();
         if (text.trim().length === 0) {
           generateExercises(uid)
         } else {
           const exercises = JSON.parse(text);
-          console.log(exercises)
+          
           const exerciseFalse = exercises.exercises.find((exercise: Exercise) => exercise.solved === false);
           setDocument(exercises.id)
           setExercises(exercises.exercises);
           setCurrentExerciseIndex(exerciseFalse.index)
           setCurrentExercise(exerciseFalse)
-          console.log(exercises.exercises[0])
+      
           setIsLoading(false);
         }
       } else {

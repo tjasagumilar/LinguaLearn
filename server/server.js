@@ -514,6 +514,7 @@ app.get('/generate', async (req, res) => {
   const difficulty = jezikiData
   let selectedStatement = null;
   let count = 0;
+  console.log(difficulty)
 
   const stream = fs.createReadStream('output.csv')
     .pipe(csvParser())
@@ -549,9 +550,6 @@ app.get('/prevedi/:language/:statement', (req, res) => {
   const statement = req.params.statement;
   const language = req.params.language;
 
-  console.log(statement)
-  console.log(language)
-
   translatte(statement, { to: language })
     .then(translationResult => {
       const translation = translationResult.text;
@@ -559,8 +557,12 @@ app.get('/prevedi/:language/:statement', (req, res) => {
       res.json({ translation });
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).send('Napaka v prevodu');
+      console.error(err); // log the entire error object
+      if (err.message.includes('Could not get token from google')) {
+        res.status(503).send('Translation service temporarily unavailable, please try again later');
+      } else {
+        res.status(500).send('Napaka v prevodu');
+      }
     });
 });
 

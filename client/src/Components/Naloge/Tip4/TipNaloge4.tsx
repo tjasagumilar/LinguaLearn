@@ -94,7 +94,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
     const handleCheck = async () => {
         const selectedSentence = selectedWords.join(' ');
-        console.log(selectedSentence)
+   
         setSelectedWords([]);
         const isAnswerCorrect = exercise.sentence === selectedSentence;
         if (isAnswerCorrect) {
@@ -153,11 +153,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             <Container className="myContainer p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
-            {isSentenceInWords ? (
-      <div></div>
-    ) : (
-      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
-    )}
+       
                 <Row className="align-items-center">
                     <Col md={6}>
                         <h4 className="mb-0 font-weight-bold">Dotakni se besed, ki jih slišiš.</h4>
