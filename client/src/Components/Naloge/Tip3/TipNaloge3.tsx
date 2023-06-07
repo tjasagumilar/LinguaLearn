@@ -62,6 +62,45 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
     setSelectedWordIndex(index);
   };
 
+  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    const type = "beseda"
+      try {
+        const response = await fetch(`${BASE_URL}/yourWords`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+        });
+  
+  
+        if (!response.ok) {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error' + error)
+      }
+    }
+  
+    const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+      const type = "beseda"
+        try {
+          const response = await fetch(`${BASE_URL}/yourMistakes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+          });
+    
+    
+          if (!response.ok) {
+            throw new Error('Error: ' + response.status);
+          }
+        } catch (error) {
+          console.error('Error' + error)
+        }
+      }
   
 
 
@@ -87,35 +126,42 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
 
 
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  if(selectedWordIndex == null){
-    return null;
-  }
-
-
-  const selectedWord = availableWords[selectedWordIndex]
-
-  fetch(`${BASE_URL}/prevedi/${language}/${selectedWord}`)
-    .then(response => response.json())
-    .then(async data => {
-      const translation = data.translation;
-
-      const isAnswerCorrect = exercise.sentence === translation;
-      setSelectedWordIndex(null)
-
-      if (isAnswerCorrect) {
-        await updateCorrectSolved(uid, document)
-      }
-      console.log(isAnswerCorrect)
-      setIsCorrect(isAnswerCorrect);
-      setShowModal(true);
-
-    })
-    .catch(error => {
-      console.error(error);
-    });
-};
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(selectedWordIndex == null){
+      return null;
+    }
+  
+    const selectedWord = availableWords[selectedWordIndex]
+  
+    fetch(`${BASE_URL}/prevedi/${language}/${selectedWord}`)
+      .then(response => response.json())
+      .then(async data => {
+        const translation = data.translation;
+  
+        const isAnswerCorrect = exercise.sentence === translation;
+        setSelectedWordIndex(null)
+  
+        if (isAnswerCorrect) {
+      
+          const slovenianTranslationResponse = await fetch(`${BASE_URL}/prevedi/sl/${exercise.sentence}`);
+          const slovenianData = await slovenianTranslationResponse.json();
+          const slovenianTranslation = slovenianData.translation;
+          await updateCorrectSolved(uid, document)
+          await updateYourWords(uid, exercise.sentence, slovenianTranslation)
+        } else{
+          await updateYourMistakes(uid, exercise.sentence, selectedWord)
+        }
+        console.log(isAnswerCorrect)
+        setIsCorrect(isAnswerCorrect);
+        setShowModal(true);
+  
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
 
 
   const handleSkip = () => {

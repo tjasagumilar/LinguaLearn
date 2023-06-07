@@ -137,7 +137,13 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     const [active, setActive] = useState(false);
 
 
+    useEffect(() => {
+        const words = exercise.sentence.toLowerCase();
+        const cleanedSentence = words.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        setSentence(cleanedSentence.split(' '));
+      }, [exercise.sentence]);
 
+      
     useEffect(() => {
         if (transcript !== '') {
             const lastWord = transcript.toLowerCase().split(' ').pop() || '';
@@ -149,13 +155,13 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
             } else {
                 console.log("Word match failed!")
             }
-            resetTranscript();
+            setTimeout(resetTranscript, 2000);
         }
     }, [transcript]);
 
     useEffect(() => {
         setAudioSource(prevAudioSource => {
-            const newAudioSource = `${BASE_URL}/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}}`;
+            const newAudioSource = `${BASE_URL}/tts?tts=${encodeURIComponent(exercise.sentence)}&language=${language}`;
             if (prevAudioSource !== newAudioSource) {
                 if (audioRef.current) {
                     audioRef.current.load();
@@ -188,13 +194,16 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     const handleCloseModal = () => {
         setShowModal(false);
         onCheck();
+        setTimeout(() => {
+            setIsCorrect(false);
+          }, 1000);
     };
 
     const handleSkip = () => {
         setShowModal(true);
     };
     const languageSpeech = getLocaleCode(language);
-    console.log(languageSpeech)
+
     const startListening = (): void => SpeechRecognition.startListening({ continuous: true, language: languageSpeech });
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -203,12 +212,14 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
     }
 
     const handleCheck = async () => {
-        if (correctIndexes.length == sentence.length) {
+        const isAnswerCorrect = correctIndexes.length == sentence.length;
+        console.log(isAnswerCorrect)
+        if (isAnswerCorrect) {
             await updateCorrectSolved(uid, document)
-            setIsCorrect(true);
-            setShowModal(true);
-
         }
+        setCorrectIndexes([])
+        setIsCorrect(isAnswerCorrect);
+        setShowModal(true);
 
     };
 
@@ -252,7 +263,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
                 </Row>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '45vh' }}>
   <Row className="mt-10 align-items-center">
-    <Col xs={6} md={3} lg={3} xl={3}>
+    <Col xs={3} sm={3} md={3} lg={3} xl={3}>
       <div className={`mic-button ${active ? 'active' : ''}`} onClick={handleClickActive}>
         {active ? (
           <FaMicrophone style={{ fontSize: '64px', color: 'orange' }} />
@@ -302,7 +313,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
                         <Col xs={2} sm={2} md={4} lg={4} xl={4} className="text-center mb-2 mb-sm-2 "></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2">
                             <Button onClick={handleCheck} className="btn first1 w-40 d-flex align-items-center justify-content-center"
-                                disabled={correctIndexes.length === 0}>
+                             >
                                 <span className="btn-text">Preveri</span>
                             </Button>
                         </Col>

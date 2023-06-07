@@ -89,6 +89,8 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
         setShowModal(true);
     };
 
+    
+
     const updateCorrectSolved = async (uid: string, document: string) => {
         try {
             const response = await fetch(`${BASE_URL}/solvedCorrect`, {

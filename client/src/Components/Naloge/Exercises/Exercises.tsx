@@ -323,32 +323,11 @@ const Exercises = () => {
 
   const generateExercises = async (uid: string) => {
     try {
-      const numExercises = 10;
-      const exercisePromises = [
-        fetchStavekExercise(uid),
-        fetchStavek2Exercise(uid),
-        fetchStavek3Exercise(uid),
-        fetchStavek4Exercise(uid),
-        fetchStavek5Exercise(uid),
-      ];
+      const numExercises = 5;
+      const exercisePromises = [];
   
-      for (let i = 5; i < numExercises; i++) {
-        const random = Math.random();
-        let exercisePromise;
-        
-        if (random < 0.2) {
-          exercisePromise = fetchStavekExercise(uid);
-        } else if (random < 0.4) {
-          exercisePromise = fetchStavek2Exercise(uid);
-        } else if (random < 0.6) {
-          exercisePromise = fetchStavek3Exercise(uid);
-        } else if (random < 0.8) {
-          exercisePromise = fetchStavek4Exercise(uid);
-        } else {
-          exercisePromise = fetchStavek5Exercise(uid);
-        }
-        
-        exercisePromises.push(exercisePromise);
+      for (let i = 0; i < numExercises; i++) {
+        exercisePromises.push(fetchStavek5Exercise(uid));
       }
   
       const generatedExercises = await Promise.all(
@@ -439,7 +418,7 @@ const Exercises = () => {
   });
     }
 
-    console.log(nivo)
+
     
 
 
