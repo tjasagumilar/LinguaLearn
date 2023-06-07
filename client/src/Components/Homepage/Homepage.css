@@ -12,6 +12,7 @@
         transform: translateY(-50px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -34,7 +35,8 @@
     justify-content: center;
 }
 
-.vsebina .row, .vsebina {
+.vsebina .row,
+.vsebina {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,10 +59,11 @@
 
     .vsebina .row .col div {
         font-size: 16px;
-    
+
     }
+
     .vsebina .row .col h3 {
         font-size: 20px;
-    
+
     }
 }

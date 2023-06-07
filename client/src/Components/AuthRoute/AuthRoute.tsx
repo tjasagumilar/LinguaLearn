@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { auth } from '../../Config/firebase';
 import logging from '../../Config/logging';
 import { Navigate } from 'react-router';

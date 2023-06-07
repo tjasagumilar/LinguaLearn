@@ -66,7 +66,7 @@ const Signin = () => {
                     <Button onClick={signInWithGoogle}>Google Prijava</Button>
                 </div>
                 <div className="pozabljeno-button">
-                    <a href="/forgot">Pozabljeno geslo</a> <br/>
+                    <a href="/forgot">Pozabljeno geslo</a> <br />
                     <a href="/registracija" className="brez-racuna">Še nimaš računa?</a>
                 </div>
                 <ErrorText error={error} />

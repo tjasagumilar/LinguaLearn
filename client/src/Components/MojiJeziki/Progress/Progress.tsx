@@ -6,7 +6,7 @@ import { BASE_URL } from "../../../api";
 
 const Progress = () => {
     const [xp, setXp] = useState(0);
-    
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const language = queryParams.get('language');
@@ -18,7 +18,7 @@ const Progress = () => {
                     .then(response => response.json())
                     .then(data => {
                         setXp(data.xp);
-                        
+
                     })
                     .catch(error => {
                         console.log(error);
@@ -26,11 +26,11 @@ const Progress = () => {
             }
         });
     }, []);
-    
+
     return (
-    <div className="xp-box">
-        {xp} XP
-    </div>);
+        <div className="xp-box">
+            {xp} XP
+        </div>);
 }
 
 export default Progress;
