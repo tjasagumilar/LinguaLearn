@@ -166,7 +166,7 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
         } else{
           await updateYourMistakes(uid, exercise.sentence, selectedWord)
         }
-        console.log(isAnswerCorrect)
+        
         setIsCorrect(isAnswerCorrect);
         setShowModal(true);
   
@@ -200,11 +200,7 @@ return (
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '1200px', minHeight: '70vh' }}>
   <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
     <Col md={8} xl={12} sm={8} lg={8} className="text-center">
-    {isSentenceInWords ? (
-      <div></div>
-    ) : (
-      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
-    )}
+   
       <h4>Kaj je na sliki?</h4>
     </Col>
   </Row>

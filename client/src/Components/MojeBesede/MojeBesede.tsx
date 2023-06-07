@@ -158,7 +158,7 @@ const MojeBesede = () => {
             {selectedOption === 'slovar' && (
               <>
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h3 className="heading">Vaše slovar:</h3>
+                  <h3 className="heading">Vaš slovar:</h3>
                 </div>
                 <ListGroup className="list-group">
                 {filteredWords.length > 0 ? filteredWords.map((item, index) => (

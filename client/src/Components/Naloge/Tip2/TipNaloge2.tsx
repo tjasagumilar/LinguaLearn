@@ -36,10 +36,12 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
       .then((response) => response.json())
       .then((data) => {
         setWords(data);
-        setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+        console.log(data)
+        setIsSentenceInWords(data.some((wordObj: any) => wordObj.word === exercise.sentence));
       })
       .catch((error) => console.error(error));
   };
+  
 
 
   useEffect(() => {
@@ -143,8 +145,6 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     .then((response) => response.json())
     .then(async (data) => {
       const translation = data.translation;
-      console.log(translation)
-      console.log(exercise.sentence)
   
       const isAnswerCorrect = exercise.sentence === translation;
       setSelectedWordIndex(null)
@@ -156,7 +156,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
         await updateYourMistakes(uid, exercise.sentence, selectedWord)
       }
     
-      console.log(isAnswerCorrect)
+   
       setIsCorrect(isAnswerCorrect);
       setShowModal(true);
     })
