@@ -1,12 +1,11 @@
-import { Container } from "react-bootstrap";
 import "./Footer.css"
 
 const Footer = () => {
     return (
         <div className="footer">
-            <Container>
+            <div>
                 2023 LinguaLearn. Vse pravice pridržane.
-            </Container>
+            </div>
         </div>
 
     );
