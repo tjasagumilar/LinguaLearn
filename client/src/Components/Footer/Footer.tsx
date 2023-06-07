@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <div className="footer">
             <Container>
-                LinguaLearn, 2023
+                2023 LinguaLearn. Vse pravice pridržane.
             </Container>
         </div>
 
