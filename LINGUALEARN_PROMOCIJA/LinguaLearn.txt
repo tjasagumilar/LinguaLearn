@@ -2,14 +2,14 @@ LinguaLearn
 
 LinguaLearn je spletna aplikacija za učenje jezikov, ki uporabnikom z interaktivnimi vajami in viri pomaga izboljšati znanje jezikov.
 
-Leto izdelave: 2022
+Leto izdelave: 2023
 
 Tjaša Gumilar
 Miha Plemenitaš
-Teodor Vrhovnik
+Teodor Verhovnik
 
-Domača stran: https://url.si/ (dopolni*)
-Vir podatkov: https://url.si/ (dopolni*)
+Domača stran: http://83.212.82.78:3002/
+Vir podatkov: http://83.212.82.78:4000/
 
 Koda: https://github.com/tjasagumilar/LinguaLearn.git
 
