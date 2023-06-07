@@ -235,7 +235,7 @@ const TipNaloge5 = ({ exercise, uid, document, onCheck }: TipNaloge5Props) => {
                         <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
                     </Col>
                     <Col xs={6} md={9} lg={9} xl={9}>
-                        <div className="bubble">
+                        <div className="bubble11">
                             <Button
                                 onClick={() => audioRef.current && audioRef.current.play()}
                                 className="buttonZvok mb-3 custom-button"

@@ -1,18 +1,29 @@
-.bubble {
+.bubble11 {
   position: relative;
   background: linear-gradient(8deg, #ffffff 50%, #ffffff 52%);
   color: #000000;
   font-family: Arial;
-  font-size: 15px;
+  font-size: 22px !important;
   text-align: center;
-  max-width: 90%;
   border-radius: 16px;
   padding: 10px;
   border: #d6d1d1 solid 2px;
   word-wrap: break-word;
 }
 
-.bubble::after {
+@media screen and (max-width: 600px) {
+  .bubble11 {
+    font-size: 222px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .bubble11 {
+    font-size: 22px !important;
+  }
+}
+
+.bubble11::after {
   content: '';
   position: absolute;
   display: block;
@@ -25,7 +36,7 @@
   left: -10px;
 }
 
-.bubble::before {
+.bubble11::before {
   content: '';
   position: absolute;
   width: 0;
@@ -90,19 +101,31 @@ button.btn.first1:hover {
 
 
 
-.my-badge-tip-naloge1T {
+.my-badge-tip-naloge1Ts {
   cursor: pointer;
-  margin: 3px;
-  font-size: 1.3em;  
-  transition: transform 0.2s;
+  margin: 5px;
+  font-size: 1.5em;
+  transition: transform 0.7s;
   border: 3px solid #d6d1d1;
   background-color: rgb(255, 255, 255) !important;
   color: black;
-  border-radius: 15px; 
+  border-radius: 1px;
   font-weight: normal !important;
 }
 
-
+@media (max-width: 576px) {
+  .my-badge-tip-naloge1Ts {
+    font-size: 0.3em  !important; 
+    margin: 2px !important; 
+    border-width: 2px!important; 
+    border-radius: 10px!important; 
+    font-weight: normal !important;
+  }
+}
+.my-badge-tip-naloge1Ts:hover {
+  transform: scale(1.1);
+  border-color: blue;
+}
 .fixed-bottom-container {
   position: relative;
 }
@@ -140,16 +163,54 @@ button.btn.first1:hover {
 }
 
 
-.custom-modal-content-correct1 {
-  background-color: #6389fa;
-  border: 2px solid orange;
-  color: white;
 
+.selected-words-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.my-6 {
+  margin-top: 3.5rem !important;
+  margin-bottom: 3.5rem !important;
+}
+.min-height-div {
+  min-height: 70px; 
+}
+.pb-100 {
+  padding-bottom: 100px !important;
+}.hoverable {
+  cursor: pointer;
+}.tooltip-container {
+  position: relative;
+  display: inline-block;
 }
 
-.custom-modal-content-wrong1 {
-  background-color: #fc0000;
-  border: 2px solid orange;
-  color: white;
+.hoverable {
+  cursor: pointer;
+}
 
+.custom-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: purple;
+  color: white;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 8px;
+  z-index: 1;
+  width: max-content;
+}.purple-text {
+  color: purple;
+}
+
+.custom-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-style: solid;
+  border-width: 8px;
+  border-color: purple transparent transparent transparent;
 }

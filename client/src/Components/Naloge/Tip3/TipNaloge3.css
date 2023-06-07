@@ -11,10 +11,16 @@
     border-radius: 0.5em !important; 
     background-color: white;
     color:#6389fa;
-    font-family: 'PT Sans Caption', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 1.25em
   }
-  
+  @media (max-width: 600px) {
+
+    .btnfirst3 {
+      font-size: 1em; 
+      padding: 0.3em 3em !important; 
+      border-radius: 0.5em !important; 
+    }
+  }
   .btnfirst3:hover {
     box-shadow: 0 0 40px 40px #6389fa inset !important;
     color:white

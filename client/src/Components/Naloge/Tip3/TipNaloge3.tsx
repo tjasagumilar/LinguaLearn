@@ -146,7 +146,7 @@ return (
 
   <Row className="justify-content-center w-100 mb-4">
   <Col md={12} xl={7} sm={9} lg={9} className="text-center">
-    <Image src={url} alt="Generated Image" className="image-styled" style={{ width: '60%', maxWidth: '400px' }} />
+    <Image src={url} alt="Generated Image" className="image-styled" style={{ width: '35%', maxWidth: '300px' }} />
   </Col>
 </Row>
 
@@ -172,8 +172,8 @@ return (
         <div className="container-fluid">
           <div className="upper-line"></div>
           <Row className="align-items-center">
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
               <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
                 <span className="btn-text">Preskoči</span>
               </Button>

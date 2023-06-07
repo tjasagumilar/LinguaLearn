@@ -67,7 +67,7 @@ const MojeBesede = () => {
   const naloziBesede = (uid: string) => {
     fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
       .then((response) => response.json())
-      .then((data) => setWords(data))
+      .then((data) => setWords(data.word))
       .catch((error) => console.error(error));
   };
 

@@ -202,12 +202,12 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
 
 
 
-<div className="fixed-bottom pb-3">
+<div className="fixed-bottom my-padding-sm">
         <div className="container-fluid">
           <div className="upper-line"></div>
           <Row className="align-items-center">
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
               <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
                 <span className="btn-text">Preskoči</span>
               </Button>

@@ -1,42 +1,4 @@
-.bubble {
-    position: relative;
-    background: linear-gradient(8deg, #ffffff 50%, #ffffff 52%);
-    color: #000000;
-    font-family: Arial;
-    font-size: 15px;
-    text-align: center;
-    max-width: 90%;
-    border-radius: 16px;
-    padding: 10px;
-    border: #d6d1d1 solid 2px;
-    word-wrap: break-word;
-  }
-  
-  .bubble::after {
-    content: '';
-    position: absolute;
-    display: block;
-    width: 0;
-    z-index: 1;
-    border-style: solid;
-    border-color: transparent #ffffff;
-    border-width: 6px 10px 6px 0;
-    top: calc(50% - 6px);
-    left: -10px;
-  }
-  
-  .bubble::before {
-    content: '';
-    position: absolute;
-    width: 0;
-    z-index: 0;
-    border-style: solid;
-    border-color: transparent #d6d1d1;
-    border-width: 8px 12px 8px 0;
-    top: calc(50% - 8px);
-    left: -12px;
-  }
-  
+
   .mask {
     position: absolute;
     width: 2px;

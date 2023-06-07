@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { BASE_URL } from '../../../api';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaTimesCircle } from 'react-icons/fa';
+import { Word } from '../../MojeBesede/MojeBesede';
 
 interface TipNaloge1Props {
   exercise: Exercise;
@@ -29,15 +30,27 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
   const [audioSource, setAudioSource] = useState<string>(`${BASE_URL}/tts?tts=${exercise.sentence}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
+  const [isSentenceInWords, setIsSentenceInWords] = useState(false);
 
-
-
+  const [words, setWords] = useState<Word[]>([]);
 
 
   useEffect(() => {
     setAvailableWords(exercise.availableWords)
+    naloziBesede(uid);
   }, [exercise.sentence])
 
+  const naloziBesede = (uid: string) => {
+    fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+        setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+      })
+      .catch((error) => console.error(error));
+  };
+
+  console.log(words)
 
   useEffect(() => {
     setAudioSource(prevAudioSource => {
@@ -154,21 +167,27 @@ const handleCloseModal = () => {
 const handleSkip = () => {
   setShowModal(true);
 };
-
+const [showTranslation, setShowTranslation] = useState(false);
 return (
   <form onSubmit={(e) => e.preventDefault()}>
-    <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
-      <Row className="align-items-center">
+    <div>
+   <Container className="p-3 pb-100 rounded text-dark col-sm-md-lg-6" style={{ maxWidth: '900px', maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+    <Row className="align-items-center mt-3 mb-4">
         <Col md={6}>
+        {isSentenceInWords ? (
+      <div></div>
+    ) : (
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
+    )}
           <h4 className="mb-0 font-weight-bold">Napiši poved v Slovenščini</h4>
         </Col>
       </Row>
-      <Row className="mt-3 align-items-center">
+      <Row className="align-items-center">
         <Col xs={5} md={3} lg={3} xl={3}>
           <Lottie animationData={jsonIcon} loop={true} autoplay={true} style={{ width: "100%", height: "100%" }} />
         </Col>
         <Col xs={7} md={9} lg={9} xl={9}>
-          <div className="bubble">
+        <div className="bubble11">
             <Button
               onClick={() => audioRef.current && audioRef.current.play()}
               className="buttonZvok mb-3 custom-button"
@@ -176,7 +195,21 @@ return (
               <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'blue' }} />
             </Button>
             <div className="text-container">
-              <h4 className="mb-0 font-weight-bold">{exercise.sentence}</h4>
+    
+            <div
+      className={`tooltip-container ${isSentenceInWords ? 'hoverable' : ''}`}
+      onMouseEnter={() => setShowTranslation(true)}
+      onMouseLeave={() => setShowTranslation(false)}
+    >
+      <h4 className={`mb-0 font-weight-bold ${!isSentenceInWords ? 'purple-text' : ''}`}>
+        {exercise.sentence}
+      </h4>
+      {!isSentenceInWords && showTranslation && (
+        <div className="custom-tooltip">
+          Prevod: {exercise.resitev}
+        </div>
+      )}
+    </div>
             </div>
           </div>
         </Col>
@@ -191,31 +224,46 @@ return (
       </audio>
       <div className="border-bottom my-3"></div>
 
-      <Row style={{ height: '50px', overflow: 'auto' }} className="mt-2 justify-content-left">
-        <Col md={8}>
-          {selectedWords.map((word, index) => (
-            <Badge pill key={index} onClick={() => handleWordClickSelected(word)} className="my-badge-tip-naloge1T m-1 p-1 rounded">
-              <h5 className="mb-0"> {word}</h5>
-            </Badge>
-          ))}
-        </Col>
-      </Row>
+<Row className="mt-2 justify-content-left min-height-div">
+  <Col >
+    <div className="d-flex flex-wrap">
+      {selectedWords.map((word, index) => (
+        <Badge
+          pill
+          key={index}
+          onClick={() => handleWordClickSelected(word)}
+          className="my-badge-tip-naloge1Ts"
+        >
+          <h5 className="mb-0"> {word}</h5>
+        </Badge>
+      ))}
+    </div>
+  </Col>
+</Row>
+
+<div className="border-bottom my-3"></div>
 
 
-      <div className="border-bottom my-3"></div>
 
       <Row className="mt-2">
-        <h5 className="mb-0">Razpoložljive besede:</h5>
-        <br></br>  <br></br>
-        <Col md={8}>
-
-          {availableWords.map((word, index) => (
-            <Badge pill key={index} onClick={() => handleWordClickAvailable(word)} className="my-badge-tip-naloge1T m-1 p-1 rounded">
-              <h5 className="mb-0"> {word}</h5>
-            </Badge>
-          ))}
-        </Col>
-      </Row>
+  <h5 className="mb-0">Razpoložljive besede:</h5>
+  <br /><br />
+  <Col >
+    <div className="d-flex flex-wrap">
+      {availableWords.map((word, index) => (
+        <Badge
+          pill
+          key={index}
+          onClick={() => handleWordClickAvailable(word)}
+          className="my-badge-tip-naloge1Ts"
+        >
+          <h5 className="mb-0"> {word}</h5>
+        </Badge>
+      ))}
+    </div>
+  </Col>
+ 
+</Row>
 
 
     </Container>
@@ -224,8 +272,8 @@ return (
        <div className="container-fluid">
     <div className="upper-line"></div>
     <Row className="align-items-center">
-      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
-      <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2 d-none d-sm-block">
+    <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
   <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
     <span className="btn-text">Preskoči</span>
   </Button>
@@ -245,7 +293,7 @@ return (
   </div>
 </div>
 
-
+</div>
 
 <Modal
                 show={showModal}
