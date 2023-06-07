@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, ListGroup } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { auth } from '../../Config/firebase';
@@ -36,15 +36,15 @@ const MojeBesede = () => {
     });
   }, []);
 
-  
   const playAudio = () => {
-    if (audioRef.current) {
+    if (audioRef && audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
       audioRef.current.play();
     }
   }
-  
+
+
 
   useEffect(() => {
     if (!selectedWord) return;
@@ -64,12 +64,18 @@ const MojeBesede = () => {
     setSelectedWord(word.word)
   };
 
-  const naloziBesede = (uid: string) => {
-    fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
-      .then((response) => response.json())
-      .then((data) => setWords(data.word))
-      .catch((error) => console.error(error));
+  const naloziBesede = async (uid: string) => {
+    try {
+      const response = await fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`);
+      const data = await response.json();
+
+      setWords(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+
 
   const naloziNapake = (uid: string) => {
     fetch(`${BASE_URL}/getMistakes?uid=${uid}&language=${language}`)
@@ -110,91 +116,97 @@ const MojeBesede = () => {
     filteredWords = filterWordsBySearchQuery(words, searchQuery);
     filteredMistakes = filterMistakesBySearchQuery(mistakes, searchQuery);
 
-    
+
   }
 
   return (
-  
+
     <Container className="container-fluid">
-      
+
       <audio ref={audioRef} style={{ display: 'none' }}>
         <source src={audioSource} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-  <div className="row">
-  <div className="col-12 col-sm-10 col-md-8 col-lg-10 col-xl-8 offset-sm-1 offset-md-2 offset-lg-1 offset-xl-2">
-      <div className="button-group">
-        <button
-          className={`styled-button ${selectedOption === 'slovar' ? 'active' : ''}`}
-          onClick={() => handleOptionClick('slovar')}
-        >
-          Slovar
-        </button>
-        <button
-          className={`styled-button ${selectedOption === 'napake' ? 'active' : ''}`}
-          onClick={() => handleOptionClick('napake')}
-        >
-          Napake
-        </button>
-      </div>
-
-      <div className="search-bar">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Išči..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </div>
-
-      <div>
-      {selectedOption === 'slovar' && (
-  <>
-    <div className="d-flex justify-content-between align-items-center mb-3">
-      <h3 className="heading">Vaše besede:</h3>
-      <button className="btn btn-sm btn-primary" >
-        Custom Button
-      </button>
-    </div>
-    <ListGroup className="list-group">
-      {filteredWords.map((item, index) => (
-        <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
-          <span>
-            <button onClick={() => handleWordClickAvailable(item)}>
-              <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'orange' }} />
+      <div className="row">
+        <div className="col-12 col-sm-10 col-md-8 col-lg-10 col-xl-8 offset-sm-1 offset-md-2 offset-lg-1 offset-xl-2">
+          <div className="button-group">
+            <button
+              className={`styled-button ${selectedOption === 'slovar' ? 'active' : ''}`}
+              onClick={() => handleOptionClick('slovar')}
+            >
+              Slovar
             </button>
-            {item.word}
-          </span>
-          <span className="text-secondary">{item.slovenskiPrevod}</span>
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
-  </>
-)}
+            <button
+              className={`styled-button ${selectedOption === 'napake' ? 'active' : ''}`}
+              onClick={() => handleOptionClick('napake')}
+            >
+              Napake
+            </button>
+          </div>
 
+          <div className="search-bar">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Išči..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
 
-        {selectedOption === 'napake' && (
-          <>
-            <h3 className="heading">Vaše napake:</h3>
-            <ListGroup className="list-group">
-  {filteredMistakes.map((item, index) => (
-    <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
-      <button onClick={() => handleWordClickAvailable(item)} className="volume-button">
-        <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'orange' }} />
+          <div>
+            {selectedOption === 'slovar' && (
+              <>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h3 className="heading">Vaše besede:</h3>
+                </div>
+                <ListGroup className="list-group">
+                {filteredWords.length > 0 ? filteredWords.map((item, index) => (
+  <ListGroup.Item key={index}>
+    <div className="d-flex align-items-center">
+      <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
+        <BsFillVolumeUpFill style={{ color: 'orange' }} />
       </button>
-      <span>{item.word}</span>
-      <span className="text-secondary">{item.slovenskiPrevod}</span>
-    </ListGroup.Item>
-  ))}
-</ListGroup>
-
-          </>
-        )}
+      <div className="ml-3">
+        <div className="word">{item.word}</div>
+        <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
       </div>
     </div>
-  </div>
-</Container>
+  </ListGroup.Item>
+)) : <p>Ni novih besed.</p>}
+                </ListGroup>
+              </>
+            )}
+
+
+            {selectedOption === 'napake' && (
+              <>
+                <h3 className="heading">Vaše napake:</h3>
+                <ListGroup className="list-group">
+                {filteredMistakes.length > 0 ? filteredMistakes.map((item, index) => (
+  <ListGroup.Item key={index}>
+    <div className="d-flex align-items-center">
+      <button onClick={() => handleWordClickAvailable(item)} className="volume-button2">
+        <BsFillVolumeUpFill style={{ color: 'orange' }} />
+      </button>
+      <div className="ml-3">
+      <div className="word">{item.word}</div>
+
+        <div className="text-secondary slovenskiPrevod">{item.slovenskiPrevod}</div>
+      </div>
+    </div>
+  </ListGroup.Item>
+)) : <p>Ni napak.</p>}
+
+                </ListGroup>
+
+
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </Container>
 
 
   );
