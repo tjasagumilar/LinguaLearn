@@ -1,13 +1,10 @@
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./Vec.css";
-import { auth, firestore } from "../../../Config/firebase";
+import { auth } from "../../../Config/firebase";
 import { useState, useEffect } from "react";
 import Progress from "../Progress/Progress";
-import LeaderBoard from "../../LeaderBoard/LeaderBoard";
-import { Routes, Route } from 'react-router-dom';
 import { BASE_URL } from "../../../api";
-import { FaFlag } from 'react-icons/fa';
 import { ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'

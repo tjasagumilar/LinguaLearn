@@ -48,6 +48,21 @@ const IzberiJezik = () => {
             case 'ru':
                 languageName = 'Ruščina';
                 break;
+            case 'hu':
+                languageName = 'Madžarščina';
+                break;
+            case 'ja':
+                languageName = 'Japonščina';
+                break;
+            case 'sv':
+                languageName = 'Švedščina';
+                break;
+            case 'no':
+                languageName = 'Norveščina';
+                break;
+            case 'pt':
+                languageName = 'Portugalščina';
+                break;
         }
 
         return languageName;
@@ -98,9 +113,14 @@ const IzberiJezik = () => {
                             <option value='fr'>Francoščina</option>
                             <option value='hr'>Hrvaščina</option>
                             <option value='it'>Italijanščina</option>
+                            <option value='ja'>Japonščina</option>
+                            <option value='hu'>Madžarščina</option>
                             <option value='de'>Nemščina</option>
+                            <option value='no'>Norveščina</option>
+                            <option value='pt'>Portugalščina</option>
                             <option value='ru'>Ruščina</option>
                             <option value='es'>Španščina</option>
+                            <option value='sv'>Švedščina</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-4">

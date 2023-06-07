@@ -1,14 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
 .App {
     text-align: center;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 15%;
     padding: 20px;
+    font-family: 'Outfit', sans-serif;
+    animation: slideIn 1.0s ease;
 }
 
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
 .App header {
-    height: 10vh;
+    background-color: #86A4FD;
+    height: 80px;
     min-height: 50px;
-    color: black;
     position: sticky;
     top: 0;
     display: flex;
@@ -17,14 +34,12 @@
     z-index: 100;
     padding: 10px;
     box-sizing: border-box;
-    background: #6389fa;
     border-radius: 10px;
 }
 
 .App header h1 {
-    font-family: "Arial", sans-serif;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 600;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     color: white;
     display: flex;
@@ -35,6 +50,7 @@
     margin-left: 10px;
 }
 
+/*
 .App header h1 span::after {
     content: "";
     display: inline-block;
@@ -50,13 +66,16 @@
     0% {
         transform: scale(0.8);
     }
+
     50% {
         transform: scale(1.2);
     }
+
     100% {
         transform: scale(0.8);
     }
 }
+*/
 
 .App section {
     display: flex;
@@ -81,70 +100,18 @@
     margin-right: 10px;
 }
 
-/* makar brise */
-.App .chat-selection select {
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    appearance: none;
-    background-color: transparent;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    /* Add this line to center the text */
-    transition: transform 0.3s ease;
+
+#chat-select {
+    border-radius: 5px;
+    height: 30px;
+    width: 150px;
+    font-weight: 300;
 }
 
-.App .chat-selection select:hover {
-    transform: scale(1.1);
-    /* Add this line to scale the select chat button on hover */
-}
-/* makar brise */
-
-.App select {
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    appearance: none;
-    background-color: transparent;
-    position: relative;
-    z-index: 1;
-    text-align: center; /* Add this line to center the text */
-}
-
-.App select::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 5px 5px 0 5px;
-    pointer-events: none;
-}
-
-.App select option {
-    font-size: 16px;
-}
-
-#chat-select{
-    background-color: #6389fa; /* Set the background color of the bubble */
-}
-
-.chat-container{
+.chat-container {
     margin-bottom: 50px;
 }
 
-
-/* Rest of the CSS remains the same */
 
 .App main {
     flex: 1;
@@ -174,7 +141,8 @@
     align-items: center;
     font-size: 1.5rem;
     border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.99); /* Set background color with opacity */
+    background-color: rgba(255, 255, 255, 0.99);
+    /* Set background color with opacity */
 
     /* Dynamic input island */
     position: fixed;
@@ -205,8 +173,8 @@
 
 .App input {
     flex: 1;
+    font-size: 16px;
     line-height: 1.5;
-    font-size: 1.5rem;
     background: transparent;
     color: black;
     outline: none;
@@ -257,6 +225,7 @@ li {
         transform: scale(0.5);
         opacity: 0;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -288,4 +257,15 @@ li {
     height: 40px;
     border-radius: 50%;
     margin: 2px 7px 13px;
+}
+
+.poslji {
+    background-color: #86A4FD !important;
+}
+
+@media (max-width: 800px) {
+
+    .App {
+        margin: 0;
+    }
 }

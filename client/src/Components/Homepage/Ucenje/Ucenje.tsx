@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import ucenje from "../../../Assets/ucenje.png"
 
 const Ucenje = () => {
@@ -7,7 +7,7 @@ const Ucenje = () => {
         <div className="vsebina col-12">
             <Row className="col-10">
                 <Col className=" col-12 col-lg-6 col-xl-5">
-                    <img src={ucenje}></img>
+                    <img src={ucenje} alt="ucenje"></img>
                 </Col>
                 <Col className=" col-12 col-lg-6 col-xl-5">
                     <h3 className="naslov-vsebina">

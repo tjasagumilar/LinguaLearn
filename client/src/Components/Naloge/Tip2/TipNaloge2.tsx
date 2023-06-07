@@ -10,6 +10,7 @@ import { BsFillVolumeUpFill } from 'react-icons/bs';
 import { BASE_URL } from '../../../api';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaTimesCircle } from 'react-icons/fa';
+import { Word } from '../../MojeBesede/MojeBesede';
 interface TipNaloge2Props {
   exercise: Exercise;
   uid: string;
@@ -27,10 +28,18 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [translation, setTranslation] = useState<string>();
   const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
-
-
+  const [words, setWords] = useState<Word[]>([]);
+  const [isSentenceInWords, setIsSentenceInWords] = useState(false);
   
-  
+  const naloziBesede = (uid: string) => {
+    fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+        setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+      })
+      .catch((error) => console.error(error));
+  };
 
 
   useEffect(() => {
@@ -164,7 +173,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
     setShowModal(false);
     onCheck()
   };
-
+  const [showTranslation, setShowTranslation] = useState(false);
   return (
     <form onSubmit={handleSubmit}>
 
@@ -172,10 +181,31 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
 
 
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '900px', minHeight: '70vh' }}>
-
+{isSentenceInWords ? (
+      <div></div>
+    ) : (
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nova beseda!</i>
+    )}
 <Row className="align-items-center justify-content-center w-100 " style={{ marginBottom: '40px' }}>
     <Col md={6} xl={12} className="text-center">
-        <div className="myHeading2 ">Kako se reče "{exercise.sentence}"?</div>
+    <div className="text-container">
+    
+    <div
+className={`tooltip-container ${isSentenceInWords ? 'hoverable' : ''}`}
+onMouseEnter={() => setShowTranslation(true)}
+onMouseLeave={() => setShowTranslation(false)}
+>
+<h4 className={` ${!isSentenceInWords ? 'purple-text' : ''}`} > 
+Kako se reče:  "{exercise.sentence}"
+</h4>
+
+{!isSentenceInWords && showTranslation && (
+<div className="custom-tooltip">
+  Prevod: {exercise.resitev}
+</div>
+)}
+</div>
+    </div>
     </Col>
 </Row>
 
@@ -208,7 +238,7 @@ const TipNaloge2 = ({ exercise, uid, document, onCheck }: TipNaloge2Props) => {
           <Row className="align-items-center">
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
-              <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+              <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center mb-2">
                 <span className="btn-text">Preskoči</span>
               </Button>
             </Col>

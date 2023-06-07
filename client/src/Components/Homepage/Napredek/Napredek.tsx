@@ -7,7 +7,7 @@ const Napredek = () => {
         <div className="vsebina col-12">
             <Row className="col-10">
                 <Col className=" col-12 col-lg-6 col-xl-5">
-                    <img src={napredek}></img>
+                    <img src={napredek} alt="napredek"></img>
                 </Col>
                 <Col className=" col-12 col-lg-6 col-xl-5">
                     <h3 className="naslov-vsebina">

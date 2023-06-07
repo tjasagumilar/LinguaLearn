@@ -321,54 +321,54 @@ const Exercises = () => {
       };
     
 
-  const generateExercises = async (uid: string) => {
-    try {
-      const numExercises = 10;
-      const exercisePromises = [
-        fetchStavekExercise(uid),
-        fetchStavek2Exercise(uid),
-        fetchStavek3Exercise(uid),
-        fetchStavek4Exercise(uid),
-        fetchStavek5Exercise(uid),
-      ];
-  
-      for (let i = 5; i < numExercises; i++) {
-        const random = Math.random();
-        let exercisePromise;
-        
-        if (random < 0.2) {
-          exercisePromise = fetchStavekExercise(uid);
-        } else if (random < 0.4) {
-          exercisePromise = fetchStavek2Exercise(uid);
-        } else if (random < 0.6) {
-          exercisePromise = fetchStavek3Exercise(uid);
-        } else if (random < 0.8) {
-          exercisePromise = fetchStavek4Exercise(uid);
-        } else {
-          exercisePromise = fetchStavek5Exercise(uid);
+      const generateExercises = async (uid: string) => {
+        try {
+          const numExercises = 10;
+          const exercisePromises = [
+            fetchStavekExercise(uid),
+            fetchStavek2Exercise(uid),
+            fetchStavek3Exercise(uid),
+            fetchStavek4Exercise(uid),
+            fetchStavek5Exercise(uid),
+          ];
+      
+          for (let i = 5; i < numExercises; i++) {
+            const random = Math.random();
+            let exercisePromise;
+            
+            if (random < 0.2) {
+              exercisePromise = fetchStavekExercise(uid);
+            } else if (random < 0.4) {
+              exercisePromise = fetchStavek2Exercise(uid);
+            } else if (random < 0.6) {
+              exercisePromise = fetchStavek3Exercise(uid);
+            } else if (random < 0.8) {
+              exercisePromise = fetchStavek4Exercise(uid);
+            } else {
+              exercisePromise = fetchStavek5Exercise(uid);
+            }
+            
+            exercisePromises.push(exercisePromise);
+          }
+      
+          const generatedExercises = await Promise.all(
+            exercisePromises.map((exercisePromise, i) => {
+              return exercisePromise.then(exercise => {
+                return { ...exercise, index: i, solved: false };
+              });
+            })
+          );
+      
+          await saveExercises(generatedExercises, uid)
+          setExercises(generatedExercises);
+          setCurrentExerciseIndex(0)
+          setCurrentExercise(generatedExercises[0])
+      
+          setIsLoading(false);
+        } catch (error) {
+          console.error('An error occurred:', error);
         }
-        
-        exercisePromises.push(exercisePromise);
       }
-  
-      const generatedExercises = await Promise.all(
-        exercisePromises.map((exercisePromise, i) => {
-          return exercisePromise.then(exercise => {
-            return { ...exercise, index: i, solved: false };
-          });
-        })
-      );
-  
-      await saveExercises(generatedExercises, uid)
-      setExercises(generatedExercises);
-      setCurrentExerciseIndex(0)
-      setCurrentExercise(generatedExercises[0])
-  
-      setIsLoading(false);
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
-  }
 
   const saveExercises = async (exercises: Exercise[], uid: string) => {
     try {
@@ -439,7 +439,7 @@ const Exercises = () => {
   });
     }
 
-    console.log(nivo)
+
     
 
 
@@ -567,7 +567,7 @@ const Exercises = () => {
   return (
     <div>
    
-      <Container>
+   <Container className="myCustomContainer">
         <br />
         <Row className="align-items-center justify-content-center">
           <Col xs={12} sm={12} md={12} lg={12} className="text-center">

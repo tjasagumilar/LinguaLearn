@@ -50,7 +50,7 @@ const TipNaloge1 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
       .catch((error) => console.error(error));
   };
 
-  console.log(words)
+ 
 
   useEffect(() => {
     setAudioSource(prevAudioSource => {
@@ -171,7 +171,8 @@ const [showTranslation, setShowTranslation] = useState(false);
 return (
   <form onSubmit={(e) => e.preventDefault()}>
     <div>
-   <Container className="p-3 pb-100 rounded text-dark col-sm-md-lg-6" style={{ maxWidth: '900px', maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+    <Container className="myContainer p-3 rounded text-dark col-sm-md-lg-6" style={{ maxWidth: '900px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
+
     <Row className="align-items-center mt-3 mb-4">
         <Col md={6}>
         {isSentenceInWords ? (
@@ -188,12 +189,13 @@ return (
         </Col>
         <Col xs={7} md={9} lg={9} xl={9}>
         <div className="bubble11">
-            <Button
-              onClick={() => audioRef.current && audioRef.current.play()}
-              className="buttonZvok mb-3 custom-button"
-            >
-              <BsFillVolumeUpFill style={{ fontSize: '50px', color: 'blue' }} />
-            </Button>
+        <Button
+  onClick={() => audioRef.current && audioRef.current.play()}
+  className="buttonZvok mb-3 custom-button"
+>
+  <BsFillVolumeUpFill className="volume-icon" style={{ fontSize: '50px', color: 'blue' }} />
+</Button>
+
             <div className="text-container">
     
             <div
@@ -201,9 +203,10 @@ return (
       onMouseEnter={() => setShowTranslation(true)}
       onMouseLeave={() => setShowTranslation(false)}
     >
-      <h4 className={`mb-0 font-weight-bold ${!isSentenceInWords ? 'purple-text' : ''}`}>
-        {exercise.sentence}
-      </h4>
+      <h4 className={` ${!isSentenceInWords ? 'purple-text' : ''}`} >
+  {exercise.sentence}
+</h4>
+
       {!isSentenceInWords && showTranslation && (
         <div className="custom-tooltip">
           Prevod: {exercise.resitev}
@@ -246,7 +249,7 @@ return (
 
 
       <Row className="mt-2">
-  <h5 className="mb-0">Razpoložljive besede:</h5>
+  <h4 className="mb-0">Razpoložljive besede:</h4>
   <br /><br />
   <Col >
     <div className="d-flex flex-wrap">
@@ -262,7 +265,7 @@ return (
       ))}
     </div>
   </Col>
- 
+
 </Row>
 
 
@@ -274,7 +277,7 @@ return (
     <Row className="align-items-center">
     <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
-  <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+  <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center mb-2">
     <span className="btn-text">Preskoči</span>
   </Button>
 </Col>
@@ -282,7 +285,7 @@ return (
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2">
         <Button 
           onClick={handleCheck} 
-          className="btn first1 w-60 d-flex align-items-center justify-content-center"
+          className="btn first1 w-40 d-flex align-items-center justify-content-center"
           disabled={selectedWords.length === 0}
         >
           <span className="btn-text">Preveri</span>

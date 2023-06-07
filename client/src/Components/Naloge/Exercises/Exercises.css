@@ -44,6 +44,7 @@
     padding: 12px 24px; 
   }
   
+  
   .text-gray {
     color: gray;
   }
@@ -98,4 +99,19 @@
   .modal-header {
     border-bottom: none !important;
   }
+
+
+    
   
+  @media (max-width: 576px) {
+    .myCustomContainer {
+      position: fixed;
+      top: -100px; 
+      padding-top: 50px;
+    }
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap');
+
+body {
+  font-family: 'Outfit', sans-serif;
+}

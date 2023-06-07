@@ -89,6 +89,8 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
         setShowModal(true);
     };
 
+    
+
     const updateCorrectSolved = async (uid: string, document: string) => {
         try {
             const response = await fetch(`${BASE_URL}/solvedCorrect`, {
@@ -135,7 +137,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
 
     return (
         <form onSubmit={(e) => e.preventDefault()}>
-            <Container className="p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
+            <Container className="myContainer p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
                 <Row className="align-items-center">
                     <Col md={6}>
                         <h4 className="mb-0 font-weight-bold">Dotakni se besed, ki jih slišiš.</h4>
@@ -230,7 +232,7 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
                     <Row className="align-items-center">
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
-                            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+                            <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center mb-2">
                                 <span className="btn-text">Preskoči</span>
                             </Button>
                         </Col>

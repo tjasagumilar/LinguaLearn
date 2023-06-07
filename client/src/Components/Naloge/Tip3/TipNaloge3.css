@@ -7,7 +7,7 @@
   .btnfirst3 {
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out !important;
     border: 2px solid #6389fa !important;
-    padding: 0.4em 4em !important; 
+    padding: 0.8em 4em !important; 
     border-radius: 0.5em !important; 
     background-color: white;
     color:#6389fa;
@@ -35,4 +35,8 @@
   .image-styled:hover {
     transform: scale(1.05);
   }
-  
+  @media (max-width: 576px) {
+    .image-styled {
+      max-width: 190px !important;
+    }
+  }

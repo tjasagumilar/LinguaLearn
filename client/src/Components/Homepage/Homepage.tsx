@@ -11,7 +11,7 @@ const Homepage = () => {
 
     useEffect(() => {
         document.body.style.backgroundColor = '#FFFFFF';
-      }, []);
+    }, []);
 
     return (
         <div>
@@ -21,7 +21,7 @@ const Homepage = () => {
                 <Skupnost />
                 <Napredek />
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

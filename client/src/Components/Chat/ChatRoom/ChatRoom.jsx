@@ -27,7 +27,6 @@ function ChatRoom({ languageCode }) {
                     .then(response => response.json())
                     .then(data => {
                         setPhotoURL(require(`../../../Assets/${data.slika}`));
-                        /*console.log('photoURL:', data.slika);*/
                     })
                     .catch(error => {
                         console.log(error);
@@ -77,12 +76,12 @@ function ChatRoom({ languageCode }) {
                 <span ref={dummy}></span>
             </main>
             <form onSubmit={sendMessage}>
-                <input
+                <input className="sporocilo-input"
                     value={formValue}
                     onChange={(e) => setFormValue(e.target.value)}
                     placeholder="povej nekaj lepega..."
                 />
-                <button type="submit" disabled={!formValue}>✉️</button>
+                <button type="submit" className="poslji" disabled={!formValue}>✉️</button>
             </form>
         </>
     );

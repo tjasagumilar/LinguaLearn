@@ -3,7 +3,7 @@ import slika from "../../Assets/languages.png"
 import { useState, useEffect } from "react";
 import { auth } from "../../Config/firebase";
 import logging from "../../Config/logging";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Col } from "reactstrap";
 import Row from 'react-bootstrap/Row';
 import { BASE_URL } from "../../api";

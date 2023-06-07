@@ -7,7 +7,7 @@ const Onas = () => {
         <div className="onas-box col-12">
             <div className="onas-vsebina col-10">
                 <div className="slika-onas col-md-12 col-lg-5 col-xl-4">
-                    <img src={onas}></img>
+                    <img src={onas} alt="onas"></img>
                 </div>
                 <div className="besedilo-onas col-10 col-md-10 col-lg-6 col-xl-4">
                     <h3 className="onas-naslov">
@@ -22,7 +22,7 @@ const Onas = () => {
             </div>
             <div className="onas-vsebina col-10">
                 <div className="slika-onas col-md-12 col-lg-5 col-xl-4">
-                    <img src={vizija}></img>
+                    <img src={vizija} alt="vizija"></img>
                 </div>
                 <div className="besedilo-onas col-10 col-md-10 col-lg-6 col-xl-4">
                     <h3 className="onas-naslov" >

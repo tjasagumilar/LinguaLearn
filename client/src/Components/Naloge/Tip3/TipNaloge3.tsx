@@ -62,6 +62,45 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
     setSelectedWordIndex(index);
   };
 
+  const updateYourWords = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+    const type = "beseda"
+      try {
+        const response = await fetch(`${BASE_URL}/yourWords`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+        });
+  
+  
+        if (!response.ok) {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error' + error)
+      }
+    }
+  
+    const updateYourMistakes = async (uid: string, newWord: string, slovenskiPrevod: string) => {
+      const type = "beseda"
+        try {
+          const response = await fetch(`${BASE_URL}/yourMistakes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid: uid, newWord: newWord,language: language, slovenskiPrevod: slovenskiPrevod, type: type}),
+          });
+    
+    
+          if (!response.ok) {
+            throw new Error('Error: ' + response.status);
+          }
+        } catch (error) {
+          console.error('Error' + error)
+        }
+      }
   
 
 
@@ -87,35 +126,42 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
 
 
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  if(selectedWordIndex == null){
-    return null;
-  }
-
-
-  const selectedWord = availableWords[selectedWordIndex]
-
-  fetch(`${BASE_URL}/prevedi/${language}/${selectedWord}`)
-    .then(response => response.json())
-    .then(async data => {
-      const translation = data.translation;
-
-      const isAnswerCorrect = exercise.sentence === translation;
-      setSelectedWordIndex(null)
-
-      if (isAnswerCorrect) {
-        await updateCorrectSolved(uid, document)
-      }
-      console.log(isAnswerCorrect)
-      setIsCorrect(isAnswerCorrect);
-      setShowModal(true);
-
-    })
-    .catch(error => {
-      console.error(error);
-    });
-};
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(selectedWordIndex == null){
+      return null;
+    }
+  
+    const selectedWord = availableWords[selectedWordIndex]
+  
+    fetch(`${BASE_URL}/prevedi/${language}/${selectedWord}`)
+      .then(response => response.json())
+      .then(async data => {
+        const translation = data.translation;
+  
+        const isAnswerCorrect = exercise.sentence === translation;
+        setSelectedWordIndex(null)
+  
+        if (isAnswerCorrect) {
+      
+          const slovenianTranslationResponse = await fetch(`${BASE_URL}/prevedi/sl/${exercise.sentence}`);
+          const slovenianData = await slovenianTranslationResponse.json();
+          const slovenianTranslation = slovenianData.translation;
+          await updateCorrectSolved(uid, document)
+          await updateYourWords(uid, exercise.sentence, slovenianTranslation)
+        } else{
+          await updateYourMistakes(uid, exercise.sentence, selectedWord)
+        }
+        console.log(isAnswerCorrect)
+        setIsCorrect(isAnswerCorrect);
+        setShowModal(true);
+  
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
 
 
   const handleSkip = () => {
@@ -140,19 +186,24 @@ return (
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '1200px', minHeight: '70vh' }}>
   <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
     <Col md={8} xl={12} sm={8} lg={8} className="text-center">
-      <div className="myHeading2">Kaj je na sliki?</div>
+      <h3>Kaj je na sliki?</h3>
     </Col>
   </Row>
 
   <Row className="justify-content-center w-100 mb-4">
-  <Col md={12} xl={7} sm={9} lg={9} className="text-center">
-    <Image src={url} alt="Generated Image" className="image-styled" style={{ width: '35%', maxWidth: '300px' }} />
+  <Col md={12} xl={7} sm={12} lg={9} className="text-center">
+  <Image
+  src={url}
+  alt="Generated Image"
+  className="image-styled img-fluid"
+  style={{ maxWidth: '220px' }}
+/>
   </Col>
 </Row>
 
       {availableWords.map((word, index) => (
         <Row className="justify-content-center w-100 mb-4 mt-3" key={index}>
-          <Col md={5} xl={5} sm={5} lg={5} className="text-center">
+          <Col md={5} xl={4} sm={5} lg={5} className="text-center">
             <span
               onClick={() => handleWordClickAvailable(index)}
               className={`btnfirst3  ${selectedWordIndex === index ? 'isSelected' : ''}`}
@@ -174,7 +225,7 @@ return (
           <Row className="align-items-center">
           <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-2"></Col>
                         <Col xs={2} sm={2} md={2} lg={2} xl={2} className="text-center mb-2 mb-sm-0">
-              <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center">
+              <Button onClick={handleSkip} className="btn first1p w-60 d-flex align-items-center justify-content-center mb-2">
                 <span className="btn-text">Preskoči</span>
               </Button>
             </Col>

@@ -2,33 +2,55 @@
     color: blue;
   }
 
+
+ .mic-button {
+  display: flex!important;
+  justify-content: center!important;
+  align-items: center!important;
+  width: 100px!important;
+  height: 100px!important;
+  border-radius: 50px!important;
+  background-color: #6389fa !important;
+  color: white !important;
+  cursor: pointer !important;
+  transition: background-color 0.5s ease !important;
+}
+
+@media (max-width: 600px) {
   .mic-button {
-    display: flex!important;
-    justify-content: center!important;
-    align-items: center!important;
     width: 100px!important;
     height: 100px!important;
-    border-radius: 50px!important;
-    background-color: #6389fa !important;
-    color: white !important;
-    cursor: pointer !important;
-    transition: background-color 0.5s ease !important;
+    margin-top: -30px!important;  
   }
-  
-  .mic-button.active {
-    background-color: #6389fa !important;
-    animation: pulse-effect 1s infinite !important;
+}
+
+
+@media (max-width: 400px) {
+  .mic-button {
+    width: 80px!important;
+    height: 80px!important;
+    margin-top: -50px!important; 
   }
+}
+
+.mic-button.active {
+  background-color: #6389fa !important;
+  animation: pulse-effect 1s infinite !important;
+}
+
+
+
+
   
   @keyframes pulse-effect {
     0% {
-      box-shadow: 0 0 0 20px rgb(255, 153, 0);
+      box-shadow: 0 0 0 10px rgb(0, 238, 255);
     }
     70% {
-      box-shadow: 0 0 0 10px rgba(255, 153, 0, 0.562);
+      box-shadow: 0 0 0 5px rgba(0, 238, 255, 0.397);
     }
     100% {
-      box-shadow: 0 0 0 5px rgba(253, 152, 0, 0.26);
+      box-shadow: 0 0 0 2px rgba(0, 238, 255, 0.842);
     }
   }
 
