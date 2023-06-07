@@ -6,6 +6,7 @@ import './TipNaloge3.css';
 import { BASE_URL } from '../../../api';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaTimesCircle } from 'react-icons/fa';
+import { Word } from '../../MojeBesede/MojeBesede';
 
 interface TipNaloge3Props {
   exercise: Exercise;
@@ -29,14 +30,27 @@ const TipNaloge3 = ({exercise,  uid, document, onCheck}: TipNaloge3Props) => {
  const [audioSource, setAudioSource] = useState<string>(`${BASE_URL}/tts?tts=${encodeURIComponent(availableWords[0])}&language=${language}`);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [showModal, setShowModal] = useState(false);
+  const [isSentenceInWords, setIsSentenceInWords] = useState(false);
+  const [words, setWords] = useState<Word[]>([]);
+
+  const naloziBesede = (uid: string) => {
+    fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+        setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+      })
+      .catch((error) => console.error(error));
+  };
 
   useEffect(() => {
     setAvailableWords(exercise.availableWords);
     seturl(exercise.pageURL)
+    naloziBesede(uid);
   }, [exercise.availableWords]);
 
   const playAudio = () => {
-    if (audioRef.current) {
+    if (audioRef.current && audioRef.current.paused) {
       audioRef.current.pause();
       audioRef.current.load();
       audioRef.current.play();
@@ -186,7 +200,12 @@ return (
 <Container className="p-3 rounded bg-white text-dark w-100 d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: '1200px', minHeight: '70vh' }}>
   <Row className="align-items-center justify-content-center w-100" style={{ marginBottom: '40px' }}>
     <Col md={8} xl={12} sm={8} lg={8} className="text-center">
-      <h3>Kaj je na sliki?</h3>
+    {isSentenceInWords ? (
+      <div></div>
+    ) : (
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
+    )}
+      <h4>Kaj je na sliki?</h4>
     </Col>
   </Row>
 

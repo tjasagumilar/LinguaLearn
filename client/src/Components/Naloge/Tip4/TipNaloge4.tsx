@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { BASE_URL } from '../../../api';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaTimesCircle } from 'react-icons/fa';
+import { Word } from '../../MojeBesede/MojeBesede';
 
 interface TipNaloge1Props {
     exercise: Exercise;
@@ -32,15 +33,29 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const audioRef2 = useRef<HTMLAudioElement>(null);
     const [availableWords, setAvailableWords] = useState<string[]>(exercise.availableWords)
+    const [isSentenceInWords, setIsSentenceInWords] = useState(false);
+    const [words, setWords] = useState<Word[]>([]);
+
+    const naloziBesede = (uid: string) => {
+        fetch(`${BASE_URL}/getWords?uid=${uid}&language=${language}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setWords(data);
+            setIsSentenceInWords(data.some((word: string) => word === exercise.sentence));
+          })
+          .catch((error) => console.error(error));
+      };
+    
 
     useEffect(() => {
         setAvailableWords(exercise.availableWords);
+        naloziBesede(uid);
       }, [exercise.availableWords]);
     
 
 
   const playAudio = () => {
-    if (audioRef2.current) {
+    if (audioRef2.current && audioRef2.current.paused) {
       audioRef2.current.pause();
       audioRef2.current.load();
       audioRef2.current.play();
@@ -133,11 +148,16 @@ const TipNaloge4 = ({ exercise, uid, document, onCheck }: TipNaloge1Props) => {
       };
 
 
-
+    
 
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             <Container className="myContainer p-3 rounded bg-white text-dark w-100" style={{ maxWidth: '900px' }}>
+            {isSentenceInWords ? (
+      <div></div>
+    ) : (
+      <i style={{ fontSize: '19px', color: 'purple' }}>Nova poved!</i>
+    )}
                 <Row className="align-items-center">
                     <Col md={6}>
                         <h4 className="mb-0 font-weight-bold">Dotakni se besed, ki jih slišiš.</h4>
