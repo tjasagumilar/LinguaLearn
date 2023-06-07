@@ -46,6 +46,78 @@
     color: #6389fa;
   }
 
-  .volume-button {
+  .volume-button2 {
     margin-right: 10px;
   }
+
+@media (max-width: 576px) { 
+  h3.heading {
+    font-size: 1rem;
+  }
+  
+  .volume-button2 svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media (min-width: 768px) { 
+  h3.heading {
+    font-size: 1.5rem;
+  }
+  
+  .volume-button2 svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media (min-width: 992px) { 
+  h3.heading {
+    font-size: 2rem;
+  }
+  
+  .volume-button2 svg {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.word, .slovenskiPrevod {
+  font-size: 16px; 
+}
+
+
+@media (min-width: 576px) {
+  .word, .slovenskiPrevod {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 768px) {
+  .word, .slovenskiPrevod {
+    font-size: 20px;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .word, .slovenskiPrevod {
+    font-size: 22px;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .word, .slovenskiPrevod {
+    font-size: 24px;
+  }
+}
+.volume-button2:hover {
+
+  background: none;
+  color: orange;
+
+}
