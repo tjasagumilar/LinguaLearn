@@ -9,6 +9,17 @@
   animation: slideIn 1.0s ease;
 }
 
+@keyframes slideIn {
+  0% {
+      transform: translateY(-50px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
 .onas-vsebina, .slika-onas {
   display: flex;
   flex-direction: row;
